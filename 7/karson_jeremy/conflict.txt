@@ -2,6 +2,7 @@ This is a file
 
 Edit it as much or as little as you want
 
+<<<<<<< HEAD
 Im editing a LOT
 
 Because I am a creative guy.
@@ -9,3 +10,4 @@ Because I am a creative guy.
 I love comp sci almost as much as I love my mother.
 
 Im hungry af!
+>>>>>>> 9da1af6902ac9cb85ec5cf6d6c0610b9598e089b
