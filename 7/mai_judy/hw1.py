@@ -29,7 +29,7 @@ def isPrime(n):
             i+=2
         return True
 
-print fact(5)
+print fact(6)
 print fib(5)
 print isPrime(37)
 print isPrime(33)
