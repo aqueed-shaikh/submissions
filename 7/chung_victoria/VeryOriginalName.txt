@@ -7,4 +7,8 @@ Common Conclusion
 Very Original Author
 
 
+<<<<<<< HEAD
 
+=======
+Being lovey dovey with a goddess~
+>>>>>>> d53f8a581b23503bfd12a473599abd088ddd241a
