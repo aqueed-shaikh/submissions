@@ -8,6 +8,7 @@ Very Original Author
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 being lovey dovey with a goddess~
 =======
 <<<<<<< HEAD
@@ -18,3 +19,13 @@ Being lovey dovey with a goddess~
 >>>>>>> f455405f22249e6dd5587f55c3969b1405bf6994
 
 Loljk she's kinda annoying and keeps on asking me to help her with homework.
+=======
+<<<<<<< HEAD 		>>>>>>>>>>>>> TAIL <<<<<<<<<<
+
+=======
+Being lovey dovey with a goddess~
+>>>>>>> 
+
+Yo tengo hambre.
+You better bring cookies tomorrow.
+>>>>>>> a480dfbf22ba9f307f6205f8d26d323b2aa84a87
