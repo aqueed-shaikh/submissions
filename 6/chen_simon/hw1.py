@@ -53,3 +53,7 @@ def die():
         print rand
         roll = raw_input('Roll again:')
 die()
+
+def hiworld():
+    s = "hello world!";
+    print s;
