@@ -7,7 +7,7 @@ def main():
     input = raw_input("hi! what is your name?")
     for n in input:
         print("*********WARNING*************WARNING*********************")
-    
+    print("BLUE SCREEN OF DEATH AWAITS")
     err()
 
     haoxin = raw_input("How many times do you want to smack haoxin?":)
