@@ -1,5 +1,10 @@
 import random
 
+<<<<<<< HEAD
+for x in range(0, random.randrange(0, 999)):
+    print "I AM HERMAN HEAR ME ROAR"
+print "meow"
+=======
 
 total_fear = 0
 
@@ -13,3 +18,4 @@ print "meow. total fear: %i"%total_fear
 
 
 
+>>>>>>> 995de77d830fc93d8ab5ff0588b1f4956391aa3c
