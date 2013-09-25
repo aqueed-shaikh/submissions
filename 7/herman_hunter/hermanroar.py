@@ -1,11 +1,15 @@
 import random
 
 
+total_fear = 0
+
 for x in range(0, random.randrange(1, 999)):
     print "I AM HERMAN NUMBER %i HEAR ME ROAR"%(x*x)
-print "meow"    
+    num = random.randrange(100, 450)
+    print "fear level: %i"%num
+    total_fear += num
 
-for x in range(0, random.randrange(0, 999)):
-    print "I AM HERMAN HEAR ME ROAR"
+print "meow. total fear: %i"%total_fear    
+
 
 
