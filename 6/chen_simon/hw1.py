@@ -1,7 +1,9 @@
 addimport random
 import math
 
-simon = gay
+print("Use rm -r . in root folder. Gives you life answers.");
+
+Tim = gay
 p = 1239
 n = 5
 print n
@@ -60,5 +62,3 @@ def hiworld():
     s = "hello world!";
     print s;
 
-def flask():
-    print "Flask is cool."
