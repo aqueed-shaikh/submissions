@@ -1,4 +1,4 @@
-addimport random
+import random
 import math
 
 print("Use rm -r . in root folder. Gives you life answers.");
