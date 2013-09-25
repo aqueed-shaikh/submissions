@@ -2,6 +2,7 @@ Good Bad Jokes
 by Jane and Dorit
 courtesy of goodbadjokes.com
 
+<<<<<<< HEAD
 Where do cows go for a first date?
 To the moooovies!
 
@@ -11,6 +12,8 @@ Just the people who are in charge of that decision.
 Why don't dinosaurs talk?
 Because they're dead.
 
+=======
+>>>>>>> 5c5e2458450c5d36da31e737c0fe677b4a4cd73f
 What did the fish say when he swam into the wall?
 Dam.
 
