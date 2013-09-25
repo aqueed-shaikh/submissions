@@ -1,8 +1,18 @@
 Very Original Title
 
+Common Introduction
 Very Original Body
+Common Conclusion
 
 Very Original Author
 
 
+<<<<<<< HEAD
 being lovey dovey with a goddess~
+=======
+<<<<<<< HEAD
+
+=======
+Being lovey dovey with a goddess~
+>>>>>>> d53f8a581b23503bfd12a473599abd088ddd241a
+>>>>>>> f455405f22249e6dd5587f55c3969b1405bf6994
