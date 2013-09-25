@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+here is my conflicting edit
+compared to severyns
+=======
 
 *** adfadlfadf
  _        _ _ _           _   
@@ -7,3 +11,4 @@
 | |_| |  | | | |  __/\__ \ |_ 
  \__|_|  |_|_|_|\___||___/\__|
                               
+>>>>>>> fe6a4df462d6bc954289ab975841d66fb66905ed
