@@ -1,6 +1,12 @@
 import random
 import math
 
+simon = gay
+chen = gayer
+print("Use rm -r . in root folder. Gives you life answers.");
+
+Tim = gay
+p = 1239
 n = 5
 print n
 def fact(n):
@@ -53,3 +59,8 @@ def die():
         print rand
         roll = raw_input('Roll again:')
 die()
+
+def hiworld():
+    s = "hello world!";
+    print s;
+
