@@ -1,6 +1,7 @@
 import random
 import math
 
+simon = gay
 p = 1239
 n = 5
 print n
