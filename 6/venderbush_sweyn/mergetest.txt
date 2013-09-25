@@ -1,1 +1,2 @@
-here is a merge test
+here is my conflicting edit
+compared to severyns
