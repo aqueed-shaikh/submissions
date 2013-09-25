@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 I'M STAGING A CONFLICT.
+||||||| merged common ancestors
+=======
+Conflict inbound.
+>>>>>>> origin/master
