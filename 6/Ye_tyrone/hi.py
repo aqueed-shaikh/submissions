@@ -17,3 +17,6 @@ def out:
 <h1>You're out </h1>
 <a href = "/"> go back? </a>
 """
+
+if __name__ == '__main__':
+    hoarx.run()
