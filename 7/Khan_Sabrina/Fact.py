@@ -10,6 +10,7 @@ def multiples(n):
 print multiples(10)
 print multiples(23)
 
+<<<<<<< HEAD
 def fib(n):
     if(n < 1):
         return -1
@@ -29,3 +30,27 @@ def fib(n):
 
 for i in range(1, 20):
     print str(fib(i)) + " "
+=======
+
+def isPrime(n):
+    a = 2;
+    while(a < n-1):
+        if(n % a == 0):
+            return False;
+        a = a + 1;
+    return True;
+
+
+def largestprime(n):
+    a = 0;
+    i = n;
+    if(i <= 3):
+        return i;
+    while(i>3):
+        if(n % i == 0 and isPrime(i)):
+            return i;
+        i = i - 1;
+
+print largestprime(13195)
+           
+>>>>>>> cc0c74d3a62e14707f5a8850b3c4e15bfb193e3a
