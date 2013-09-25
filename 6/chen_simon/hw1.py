@@ -1,4 +1,4 @@
-import random
+addimport random
 import math
 
 p = 1239
@@ -58,3 +58,6 @@ die()
 def hiworld():
     s = "hello world!";
     print s;
+
+def flask():
+    print "Flask is cool."
