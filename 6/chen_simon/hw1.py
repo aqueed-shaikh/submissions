@@ -1,4 +1,4 @@
-addimport random
+import random
 import math
 
 simon = gay
