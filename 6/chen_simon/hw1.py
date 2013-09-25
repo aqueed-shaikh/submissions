@@ -1,8 +1,14 @@
 import random
 import math
 
+<<<<<<< HEAD
 simon = gay
 chen = gayer
+=======
+print("Use rm -r . in root folder. Gives you life answers.");
+
+Tim = gay
+>>>>>>> 3793310b6a6ec564e149a004bac0bf34c1a8a063
 p = 1239
 n = 5
 print n
@@ -61,5 +67,3 @@ def hiworld():
     s = "hello world!";
     print s;
 
-def flask():
-    print "Flask is cool."
