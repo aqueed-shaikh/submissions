@@ -1,6 +1,7 @@
 import random
 import math
 
+p = 1239
 n = 5
 print n
 def fact(n):
