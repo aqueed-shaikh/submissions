@@ -10,5 +10,9 @@ def main():
     print("BLUE SCREEN OF DEATH AWAITS")
     err()
 
+    haoxin = raw_input("How many times do you want to smack haoxin?":)
+    for w in range(1,int(haoxin)+1):
+        print("Haoxin got smacked!"
+
 if __name__ == "__main__":
     main()
