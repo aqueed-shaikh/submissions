@@ -2,6 +2,7 @@ import random
 import math
 
 simon = gay
+chen = gayer
 p = 1239
 n = 5
 print n
