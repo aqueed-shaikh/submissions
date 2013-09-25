@@ -1,0 +1,17 @@
+Very Original Title
+
+Common Introduction
+Very Original Body
+Common Conclusion
+
+Very Original Author
+
+
+<<<<<<< HEAD 		>>>>>>>>>>>>> TAIL <<<<<<<<<<
+
+=======
+Being lovey dovey with a goddess~
+>>>>>>> 
+
+Yo tengo hambre.
+You better bring cookies tomorrow.
