@@ -11,10 +11,10 @@ template="""
 <p>%(people)s decided to %(verbs)s to the %(places)s.</p>
 """
 
-d={'people':'Bob'#,'Jane'],
-   'verbs':'jump'#,'walk'],
-   'things':'bat'#,'sandwich','money'],
-   'adverbs':'quickly'#,'sexily','arduously'],
+d={'people':'Bob',#,'Jane'],
+   'verbs':'jump',#,'walk'],
+   'things':'bat',#,'sandwich','money'],
+   'adverbs':'quickly',#,'sexily','arduously'],
    'places':'park'#,'store','gym']
    }
 
