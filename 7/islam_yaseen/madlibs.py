@@ -11,16 +11,20 @@ template="""
 <p>%(people)s decided to %(verbs)s to the %(places)s.</p>
 """
 
-d={'people':'Bob',#,'Jane'],
-   'verbs':'jump',#,'walk'],
-   'things':'bat',#,'sandwich','money'],
-   'adverbs':'quickly',#,'sexily','arduously'],
-   'places':'park'#,'store','gym']
-   }
+verb_list=['jump','walk']
+people_list=['Bob','Jane']
+thing_list=['bat','sandwich','money']
+
+#d={'people':',
+#   'verbs':'jump',',
+#   'things':,
+#   'adverbs':'quickly','sexily','arduously'],
+#   'places':'park','store','gym']
+#   }
 
 @madlibs.route("/")
 def site():
-    return template(d)
+    return template%(d)
 
 if __name__=="__main__":
     madlibs.debug=True
