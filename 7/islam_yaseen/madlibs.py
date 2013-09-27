@@ -24,7 +24,7 @@ place_list=['park','store','gym']
 def site():
     d={'name1':name_list[(random.random()*len(name_list))],
        'verb1':verb_list[(random.random()*len(verb_list))],
-       'thing1'thing_list[(random.random()*len(thing_list))]:,
+       'thing1':thing_list[(random.random()*len(thing_list))],
        'adverb1':adverb_list[(random.random()*len(adverb_list))],
        'place1':place_list[(random.random()*len(place_list))]]
     }
