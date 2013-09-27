@@ -22,13 +22,13 @@ place_list=['park','store','gym']
 
 @madlibs.route("/")
 def site():
-    d={'name1':name_list[(random.random()*len(name_list))],
-       'verb1':verb_list[(random.random()*len(verb_list))],
-       'thing1':thing_list[(random.random()*len(thing_list))],
-       'adverb1':adverb_list[(random.random()*len(adverb_list))],
-       'place1':place_list[(random.random()*len(place_list))]]
+    d={'name1':name_list[int(random.random()*len(name_list))],
+       'verb1':verb_list[int(random.random()*len(verb_list))],
+       'thing1':thing_list[int(random.random()*len(thing_list))],
+       'adverb1':adverb_list[int(random.random()*len(adverb_list))],
+       'place1':place_list[int(random.random()*len(place_list))]
     }
-    return template%(d
+    return template%(d)
 
 if __name__=="__main__":
     madlibs.debug=True
