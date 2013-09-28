@@ -16,7 +16,7 @@ words = {"Names":["Ash", "Gary", "Paul", "May", "Dawn", "Serena", "Brock", "Lanc
          "Nicknames":["bum", "dump", "derp", "idjit", "munion", "snack", "chicken", "waffle", "pickle", "dipshi", "trainer", "dipwad", "Supreme Overlord"],
          "Verbed": ["hopped", "stepped", "jumped", "walked", "sang", "danced", "flew", "tumbled", "tripped", "mimed", "rolled", "hugged", "glomped", "drooled on"],
          "Adverbs": ["lovingly", "happily", "quietly", "loudly", "slowly", "romantically", "fabulously", "attractively", "festively", "hotly"]
-}
+     }
 
 @app.route("/")
 def home():
@@ -43,8 +43,6 @@ def madlibs():
                            verb1 = words["Verbs"][random.randrange(0, len(words["Verbs"]))],
                            verb2 = words["Verbs"][random.randrange(0, len(words["Verbs"]))],
                            verb3 = words["Verbs"][random.randrange(0, len(words["Verbs"]))],
-
-
                            pokemon1 = words["Pokemon"][random.randrange(0, len(words["Pokemon"]))],
                            pokemon2 = words["Pokemon"][random.randrange(0, len(words["Pokemon"]))],                          
                            nickname1 = words["Nicknames"][random.randrange(0, len(words["Nicknames"]))],
@@ -54,10 +52,10 @@ def madlibs():
                            adverb1 = words["Adverbs"][random.randrange(0, len(words["Adverbs"]))],
                            adverb2 = words["Adverbs"][random.randrange(0, len(words["Adverbs"]))],
                            pastverb = words["Verbed"][random.randrange(0, len(words["Verbed"]))]
-)
+                       )
 
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host="0.0.0.0", port = 5000)
+    app.run()
 
