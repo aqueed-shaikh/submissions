@@ -15,7 +15,7 @@ def home():
             "N3": random.choice(["Cheddar Cheese", "King", "Waffle", "Peanut Butter", "Jelly"]),
             "N4": random.choice(["People", "Flowers", "Grass", "Water", "Mitsubishi"]),
             "N5": random.choice(["Sharnadoes", "Whole Wheat Bread", "Apples", "Frying Pans"]),
-            "V3": random.chocie(["Steal", "Devour", "Jumping On", "Crying On", "Licking"]),
+            "V3": random.choice(["Steal", "Devour", "Jumping On", "Crying On", "Licking"]),
             "N6": random.choice(["Lollipops", "Honey", "Bears", "Frogs", "Pigeons"])
         })
 

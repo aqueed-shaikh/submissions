@@ -1,27 +1,37 @@
+# TEAM MEMBERS: JASPER LU & STEVE ZHU
+
 import random
+import re
+
+from word import Word
 
 from flask import Flask
 from flask import render_template
 
+
 app = Flask(__name__)
 
 WORDS = {
-    'propernoun': ('Steve', 'Jasper', 'Roger', 'Ben', 'Jing', 'Jason', 'Marlena', 'Jane', 'Pascu'),
+    'name': ('Steve', 'Jasper', 'Roger', 'Ben', 'Jing', 'Jason', 'Marlena', 'Jane', 'Pascu'),
     'noun': ('laptop', 'clock', 'chair', 'gun', 'clock', 'toilet'),
-    'verb': ('runs', 'shoots', 'kills', 'steals', 'saves', 'naps'),
+    'verb': ('run', 'shoot', 'kill', 'steal', 'save', 'nap'),
     'adjective': ('fabulous', 'harmonious', 'wordy', 'slow', 'fast', 'dumb'),
     'place': ('McDonalds', 'Sydney', 'Burger King', 'the Sahara', 'Google Headquarters')
 }
-
-l = [WORDS[key][random.randrange(len(WORDS[key]))] for key in WORDS]
-
-print l
-
+COUNTS = {
+    'name': 2,
+    'noun': 1,
+    'verb': 1,
+    'adjective': 1,
+    'place': 1
+}
 
 @app.route("/")
 def madlibs():
-    return render_template('madlibs.html', l=l)
+    words = {key: random.sample(WORDS[key], COUNTS[key]) for key in WORDS}
+    print words
+    return render_template('madlibs.html', words=words)
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host="0.0.0.0", port=5005)
+    # app.run(host="0.0.0.0", port=5005)
