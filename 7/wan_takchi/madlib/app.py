@@ -7,21 +7,27 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-  return "<h1>This is the homepage</h1>"
-
+  return render_template("home.html")
 
 @app.route("/madlib")
 def generate():
-  s="""
-    One day, %(name)s went to the %(place)s airport. Moments before boarding, %(thing)s 
-    fell from his bag. He picked it up and %(verb)s to the gate. %(num)i %(timeunit)s passed 
-    and the plane finally lifted off. When the %(adj)% flight attendant approached him asking if he
-    wanted something to drink, he reponded with, "I would like %(drink)s please." The attendant filled
-    up the cup with %(drink)s instead and was about to hand it over, but spilled it all over. At that very 
-    moment, the %(adj)s flight captain fell asleep, and so did the co-pilot, so the plane went out of control.
-    %(num)i %(timeunit)s later, the plane crashed onto an uncharted island. There were %(time)i casualties. 
-    At that time, %(num)i supposedly extinct creatures surrounded them and ate them all. And then there were none.
-    p.s. There are two references in here! 
-    """
-    
-    
+  names = ["John", "Haru", "Dmitry", "Kevin", "Zac"]
+  places= ["JFK", "Yoshi Island", "Desertland", "Swampar", "Hell"]
+  things= ["toy duckie", "pot", "DS", "cards", "chess piece", "donut", "bat", "time machine", "fortune ball"]
+  times = ["five", "one hundred", "one", "a thousand", "eternity"]
+  timeunits= ["years", "seconds", "minutes", "hours", "weeks", "millenia"]
+  adjs=["fat", "monstrous", "hot", "ugly", "dirty", "beautiful", "cute"]
+  drinks=["apple juice", "orange juice", "saliva", "mud", "dirt", "urine", "poop extract"]
+  dictionary = {"name" : random.choice(name),
+                "place" : random.choice(places),
+                "thing" : random.choice(things),
+                "time": random.choice(times),
+                "timeunit": random.choice(timeunits),
+                "adj": random.choice(adjs),
+                "drink": random.choice(drinks)
+                }
+  return render_template("madlib.html")
+
+if __name__ == '__main__':
+  app.run()
+  
