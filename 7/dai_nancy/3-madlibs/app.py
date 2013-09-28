@@ -10,7 +10,7 @@ words = {"Names":["Ash", "Gary", "Paul", "May", "Dawn", "Serena", "Brock", "Lanc
          "Location":["Pallet Town", "Lavender Town", "Violet City", "Cerulean", "New York", "Rome", "Slums of Brookyln", "Jail", "Little Root Town", "Lilycove City", "Blackthorn City", "Hogwarts", "Bermuda Triangle"],
          "Pronouns":["he", "she", "it"],
          "Adjectives": ["happy", "sad", "ugly", "fugly", "disgusting", "greasy", "sparkling", "fabulous", "flamboyant", "wimpy", "gorgeous", "pretty", "scrawny", "fat", "obese", "chubby"],
-         "Verbs":["hop", "step", "jump", "sing", "dance", "walk", "fly", "tumble", "trip", "double-layout front summersalt", "mime", "roll", "hug", "glomp", "drool on"]
+         "Verbs":["hop", "step", "jump", "sing", "dance", "walk", "fly", "tumble", "trip", "double-layout front summersalt", "mime", "roll", "hug", "glomp", "drool on"],
          "Pokemon": ["Magic Karp", "Bidoof", "Zubat", "Feebas", "Mew", "Arceus", "Charizard", "Blastoise", "Venasaur", "Pikachu", "Pichu", "Raichu", "Wailord", "Skitty", "Eevee", "Jolteon", "Espeon", "Mewtwo", "Lucario", "Lugia", "Yugi", "Ho-Oh", "Ditto", "Ralts", "Pidgey", "Rattata", "Metapod", "Ampharos", "Sunkern", "Diglett", "Rayquaza", "Celebi", "Dragonite"],
          "Level":["-1000", "0", "5", "10", "50", "100", "3241", "12", "23", "329", "980","789", "364", "21", "32"],
          "Nicknames":["bum", "dump", "derp", "idjit", "munion", "snack", "chicken", "waffle", "pickle", "dipshi", "trainer", "dipwad", "Supreme Overlord"],
@@ -54,9 +54,10 @@ def madlibs():
                            adverb1 = words["Adverbs"][random.randrange(0, len(words["Adverbs"]))],
                            adverb2 = words["Adverbs"][random.randrange(0, len(words["Adverbs"]))],
                            pastverb = words["Verbed"][random.randrange(0, len(words["Verbed"]))]
-                           
+)
+
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host="0.0.0.0", port = 5000))
+    app.run(host="0.0.0.0", port = 5000)
 
