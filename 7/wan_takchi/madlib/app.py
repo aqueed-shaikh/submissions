@@ -26,7 +26,7 @@ def generate():
                 "adj": random.choice(adjs),
                 "drink": random.choice(drinks)
                 }
-  return render_template("madlib.html")
+  return render_template("story.html")
 
 if __name__ == '__main__':
   app.run()
