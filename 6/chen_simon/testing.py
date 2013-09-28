@@ -1,12 +1,13 @@
 from flask import Flask
+from flask import render_template
 
 app = Flask(__name__)
 
 
-@app.route("/index")
-def index():
+@app.route("/home")
+def home():
     page = """
-          <h1>This is my first page</h1>
+          <h1>MadLibs</h1>
           <ul>
           <li> 1 This is cool</li>
           <li> 2 Hello, World</li>
