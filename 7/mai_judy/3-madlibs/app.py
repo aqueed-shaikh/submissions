@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def test():
-    names = ['Suzy','Vivian','Tommy','Brian','Isabella','Judy','Christine']
+    names = ['Suzy','Vivian','Isabella','Judy','Christine','Nancy','Stephanie']
     places = ['Stuyvesant', 'the park', 'the mall', 'the classroom', 'the mineshaft']
     things = ['carrot', 'bear', 'giraffe', 'refrigerator', 'poker game', 'Tardis']
 
