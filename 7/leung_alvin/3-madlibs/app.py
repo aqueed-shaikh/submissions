@@ -7,15 +7,17 @@ app = Flask(__name__)
 blanks = {
     'NAMES': ['Elmo','Pikachu','Sheldon','Batman','Mr. Z'],
 	'PRONOUNS': ['he','she','they','me','you','we'],
-    'NOUNS': ['potatoes','lollipops','tornadoes','peanut butter','bacon','dollars'],
-    'ADJS': ['crazy','big','stinky','lonely','boring'],
+    'NOUNS': ['potatoes','lollipops','tornadoes','peanut butter','bacon','dollars','people','computers'],
+    'ADJS': ['crazy','big','stinky','lonely','boring','sticky'],
     'VERBS': ['sing','PMS', 'sleep'],
     'ADVS': ['lovingly','happily','crazily','angrily']
 }
 
 @app.route("/")
 def home():
-    return "<h1>This is the home page</h1>"
+    return """<h1>This is the home page</h1><br>
+		Alvin Leung's and Vivian Wang's Madlibs:<br>
+		<a href = "http://localhost:5000/madlibs">Clicky</a>"""
 
 @app.route("/madlibs")
 def madlibs():
@@ -36,7 +38,7 @@ def madlibs():
 		adj2 = blanks['ADJS'][random.randrange(0,len(blanks['ADJS']))],
 		adj3 = blanks['ADJS'][random.randrange(0,len(blanks['ADJS']))],
 		adj4 = blanks['ADJS'][random.randrange(0,len(blanks['ADJS']))],
-		adj5 = blanks['ADJS'][random.randrange(0,len(blanks['ADJS']))],
+		#adj5 = blanks['ADJS'][random.randrange(0,len(blanks['ADJS']))],
 		adj6 = blanks['ADJS'][random.randrange(0,len(blanks['ADJS']))],
 		adj7 = blanks['ADJS'][random.randrange(0,len(blanks['ADJS']))],
 		verb1 = blanks['VERBS'][random.randrange(0,len(blanks['VERBS']))],
@@ -45,6 +47,7 @@ def madlibs():
 		adverb1 = blanks['ADVS'][random.randrange(0,len(blanks['ADVS']))],
 		adverb2 = blanks['ADVS'][random.randrange(0,len(blanks['ADVS']))],
 		adverb3 = blanks['ADVS'][random.randrange(0,len(blanks['ADVS']))],
+		adverb4 = blanks['ADVS'][random.randrange(0,len(blanks['ADVS']))]
 	)
 
 if __name__ == "__main__":
