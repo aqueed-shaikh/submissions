@@ -3,7 +3,7 @@ from flask import render_template
 
 from random import randrange
   
-
+ 
 app = Flask(__name__)
 pnouns = ["Bob", "Mr. Zamansky", "Helen", "Julie", "Mr. Platek", "Susie", "Mister Rogers", "Salvatore Dali", "Pablo Picasso", "Jimmy Fallon", "Troy", "Abed", "Britta", "Jeff", "Annie", "Shirley", "Pierce", "John", "Hank", "Elmo", "Big Bird", "Mario", "Luigi"]
 
