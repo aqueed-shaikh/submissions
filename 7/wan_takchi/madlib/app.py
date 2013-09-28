@@ -21,6 +21,7 @@ def generate():
     moment, the %(adj)s flight captain fell asleep, and so did the co-pilot, so the plane went out of control.
     %(num)i %(timeunit)s later, the plane crashed onto an uncharted island. There were %(time)i casualties. 
     At that time, %(num)i supposedly extinct creatures surrounded them and ate them all. And then there were none.
+    p.s. There are two references in here! 
     """
     
     
