@@ -1,3 +1,4 @@
+#Team Members: Nancy Dai & Michele Lin (Soft Dev Pd 7)
 from flask import Flask
 from flask import render_template
 
@@ -13,7 +14,7 @@ words = {"Names": ["Ash", "Gary", "Paul", "May", "Dawn", "Serena", "Brock", "Lan
                    "Camper", "Rocket Grunt", "Kimono Girl", "Lady", "Pokemon Breeder", 
                    "Rich Boy", "Beauty"],
          "Location": ["Pallet Town", "Lavender Town", "Violet City", "Cerulean", 
-                     "New York", "Rome", "Slums of Brookyln", "Jail", 
+                     "New York", "Rome", "the Slums of Brooklyn", "Jail", 
                       "Little Root Town", "Lilycove City", "Blackthorn City", 
                       "Hogwarts", "Bermuda Triangle"],
          "Pronouns": ["he", "she", "it"],
