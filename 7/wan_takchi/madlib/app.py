@@ -29,5 +29,6 @@ def generate():
   return render_template("story.html")
 
 if __name__ == '__main__':
+  app.debug=True
   app.run()
   
