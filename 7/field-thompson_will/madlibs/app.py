@@ -5,9 +5,9 @@ import random
 
 app = Flask(__name__)
 
-templates = ['story.html']
+templates = ['story.html'] #add file names of html templates from which to pick
 nouns = ['block', 'guitar', "Mr. Zamansky's beard", "Mr. Brown's hair", "golf club", "golf ball"]
-tverbs = ['ran', 'walked', 'swam', 'floated', 'flew', 'escaped', 'hopped', 'skipped']
+tverbs = ['ran', 'walked', 'swam', 'floated', 'flew', 'escaped', 'hopped', 'skipped'] #verbs to do with moving
 names = ['Mr. Zamansky', 'Mr. Brown', 'Mr. Brooks', 'Mr. DW', 'Mr. K', 'Mr. Platek', 'Thluffy']
 places = ['Stuyvesant High School', 'TriBeCa', 'chez Hunter', 'the International Space Station', 'Atlantis']
 
