@@ -11,16 +11,17 @@ app = Flask(__name__)
 def home():
     words = {
         "P1": random.choice(["Brian", "Ben", "Jing"]),
+        "N0": random.choice(["hill", "country"]),
         "P2": random.choice(["Seven", "Six", "Four", "Roger"]),
-        "V1": random.choice(["Kick", "Eat", "Step on", "Laugh at", "Sneeze on", "Chase"]),
-        "N1": random.choice(["Trees", "Redbull", "Snicker Bars", "Chikcen Wings", "Mac Keyboards"]),
-        "V2": random.choice(["Pray to", "Rub", "Wash", "Touch", "Sing at"]),
-        "N2": random.choice(["Cloud", "Mountain", "Chair", "Bacon"]),
-        "N3": random.choice(["Cheddar Cheese", "King", "Waffle", "Peanut Butter", "Jelly"]),
-        "N4": random.choice(["People", "Flowers", "Grass", "Water", "Mitsubishi"]),
-        "N5": random.choice(["Sharnadoes", "Whole Wheat Bread", "Apples", "Frying Pans"]),
-        "V3": random.choice(["Steal", "Devour", "Jumping On", "Crying On", "Licking"]),
-        "N6": random.choice(["Lollipops", "Honey", "Bears", "Frogs", "Pigeons"])
+        "V1": random.choice(["kick", "eat", "step on", "laugh at", "sneeze on", "chase"]),
+        "N1": random.choice(["trees", "redbull", "Snicker bars", "chicken wings", "Mac keyboards"]),
+        "V2": random.choice(["prayed to", "rubbed", "washed", "touched", "sung at"]),
+        "N2": random.choice(["cloud", "mountain", "chair", "bacon"]),
+        "N3": random.choice(["cheddar cheese", "king", "waffle", "peanut butter", "jelly"]),
+        "N4": random.choice(["people", "flowers", "grass", "water", "Mitsubishi"]),
+        "N5": random.choice(["Sharknadoes", "whole-wheat bread", "apples", "frying pans"]),
+        "V3": random.choice(["steal", "devour", "jump on", "cry on", "lick"]),
+        "N6": random.choice(["lollipops", "honey", "bears", "frogs", "pigeons"])
     }
     return render_template("madlibs.html", d=words)
 
