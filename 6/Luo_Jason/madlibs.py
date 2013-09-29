@@ -27,7 +27,7 @@ def madlibs():
 <h1> Madlibs! </h1>
 Project by: Jason Luo, Marlena Lui
 
-Your madlib:
+<h2>Your madlib:</h2>
 "One day %(PROPERNOUN)s was %(VERB)s through the %(PLACE)s. There he found a(n) %(ADJECTIVE)s %(NOUN)s."
 
 """

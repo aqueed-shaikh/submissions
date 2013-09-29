@@ -81,7 +81,6 @@ def madlibs():
         pastverb = words["PastVerbs"][random.randrange(0, len(words["PastVerbs"]))]
     )
 
-
 if __name__ == "__main__":
     app.debug = True
     app.run()

@@ -1,0 +1,36 @@
+from flask import Flask
+from flask import render_template
+from random import randint as ri
+
+
+app=Flask(__name__)
+
+
+@app.route("/")
+def home():
+    return "This is home."
+
+@app.route("/madlib")
+def madlib():
+    d={
+    'pn':['he','she','it'],
+    'v':['walking','gliding','flying'],
+    'pl':['dark alley','basement','subway tracks'],
+    'adj':['fat','sweaty','ugly', 'beautiful'],
+    'noun':['boy','girl','thing']
+    }
+    return render_template(
+        "madlib.html",
+        pn=d['pn'][ri(0,3)],
+        v=d['v'][ri(0,3)],
+        pl=d['pl'][ri(0,3)],
+        adj=d['adj'][ri(0,3)],
+        noun=d['noun'][ri(0,3)]
+        )
+
+@app.route("/test/")
+def test():
+    return render_template("test.html",name="Jason")
+
+if __name__=="__main__":
+    app.run()
