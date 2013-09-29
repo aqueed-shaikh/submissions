@@ -11,14 +11,14 @@ for num in stats:
     sum += num
 
 mean = float(sum) / len(stats)
-print("The mean is: " + str(mean))
+print("The mean is %.2f" %(mean))
 
 median = stats[len(stats) / 2]
-print("The median is: " + str(median))
+print("The median is %i" %(median))
 
 var = 0
 for num in stats:
     var += (num - mean)**2
 var = var / len(stats)
 stdev = math.sqrt(var)
-print("The standard deviation is: " + str(stdev))
+print("The standard deviation is %.2f" %(stdev))
