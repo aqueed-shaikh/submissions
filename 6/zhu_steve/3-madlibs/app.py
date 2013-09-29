@@ -28,10 +28,10 @@ COUNTS = {
 
 @app.route("/")
 def madlibs():
-    words = {key: random.sample(WORDS[key], COUNTS[key]) for key in WORDS}
+    WORDS = {key: [Word(w) for w in WORDS[key]] for key in WORDS}
     print words
-    return render_template('madlibs.html', words=words)
+    return render_template('madlibs.html', w = WORDS)
 
 if __name__ == "__main__":
     app.debug = True
-    # app.run(host="0.0.0.0", port=5005)
+    app.run(host="0.0.0.0", port=5005)
