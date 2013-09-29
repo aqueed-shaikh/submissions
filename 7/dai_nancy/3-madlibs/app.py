@@ -3,6 +3,7 @@ from flask import Flask
 from flask import render_template
 
 import random
+import groupinator
 
 app = Flask(__name__)
 
@@ -80,6 +81,15 @@ def madlibs():
         adverb2 = words["Adverbs"][random.randrange(0, len(words["Adverbs"]))],
         pastverb = words["PastVerbs"][random.randrange(0, len(words["PastVerbs"]))]
     )
+
+@app.route("/groupinate")
+def groupinate():
+    temp = groupinator.groupinator()
+    name = ""
+    li = "%i, %s, %s \n"
+    for l in temp:
+        name = name + li%(l[0], l[1], l[2])
+    return render_template("groupinator.html", name)
 
 if __name__ == "__main__":
     app.debug = True
