@@ -1,3 +1,5 @@
+#Team: Timothy Ong and Jason Zhen
+
 from flask import Flask
 from flask import render_template
 import random
