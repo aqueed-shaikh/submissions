@@ -1,3 +1,7 @@
+#! /usr/bin/env python
+# Team members:
+# Ben Kurtovic and Jing Lin
+
 import random
 from flask import Flask, render_template
 
