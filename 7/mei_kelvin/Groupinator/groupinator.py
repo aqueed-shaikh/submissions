@@ -25,17 +25,23 @@ for i in range (len(lines)):
 
 numba = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8]
 a = 0
+c = 0
 Groups = []
 
 while isNotEmpty(P6):
     b = int(random.random() * (len(P6) - 1))
-    Groups.append([numba[a], P6.pop(b)[2], P6.pop(b)[3]])
+    Groups.append([numba[a], P6[b][2], P6.pop(b)[3]])
     a = a + 1
 
-print Groups
-#print P6
-#print "split"
-#print P7
-        
-    
+while isNotEmpty(P7):
+    b = int(random.random() * (len(P7) - 1))
+    Groups.append([numba[c], P7[b][2], P7.pop(b)[3]])
+    c = c + 1
+
+
+newfile = open ("Groups.txt", "w")
+for i in range(len(Groups)):
+    newfile.write (str(Groups[i][0]) + "," + Groups[i][1] + "," + Groups[i][2] + "\n")
+
+newfile.close()
     
