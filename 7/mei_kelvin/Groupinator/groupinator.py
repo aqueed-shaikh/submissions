@@ -1,3 +1,6 @@
+#every time this is run new groups will be generated and the old groups 
+#will be lost
+
 import random
 
 lines = open("students.txt").readlines()
