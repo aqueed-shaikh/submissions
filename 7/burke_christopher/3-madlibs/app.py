@@ -13,10 +13,19 @@ def madlib():
     verb = ('run','explode','dig')
     
     d = {}
-    rand = random.randrange(0,3)
+    rand = random.randrange(0,len(animal))
     d['ANIMAL'] = animal[rand]
+
+    rand = random.randrange(0,len(name))
+    d['NAME'] = name[rand]
+
+    rand = random.randrange(0,len(verb))
+    d['VERB'] = verb[rand]
     
 
     s = "The once was a %(ANIMAL)s named %(NAME)s, who liked to %(VERB)s."
 
-    return render_template("template.html", s=s);
+    return render_template("template.html", s=s%(d));
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port = 5005)
