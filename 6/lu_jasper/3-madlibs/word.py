@@ -12,6 +12,9 @@ class Word:
     def __str__(self):
         return self._word
 
+    def plural(self):
+        return self._word + 's'
+
     def gerund(self):
         w = self._word
         if w[-1] == 'e':
