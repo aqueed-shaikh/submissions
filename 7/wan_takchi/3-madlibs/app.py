@@ -18,7 +18,7 @@ def generate():
   timeunits= ["years", "seconds", "minutes", "hours", "weeks", "millenia"]
   adjs=["fat", "monstrous", "hot", "ugly", "dirty", "beautiful", "cute"]
   drinks=["apple juice", "orange juice", "saliva", "mud", "dirt", "urine", "poop extract"]
-  dictionary = {"name" : random.choice(name),
+  dictionary = {"name" : random.choice(names),
                 "place" : random.choice(places),
                 "thing" : random.choice(things),
                 "time": random.choice(times),
