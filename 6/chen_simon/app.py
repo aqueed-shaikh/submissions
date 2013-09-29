@@ -1,27 +1,15 @@
 from flask import Flask
+from flask import render_template
 
 app = Flask(__name__)
 
 
-@app.route("/index")
-def index():
-    page = """
-          <h1>This is my first page</h1>
-          <ul>
-          <li> 1 This is cool</li>
-          <li> 2 Hello, World</li>
-          <li> 3 First attempt</li>
-          <li> 4 </li>
-          </ul>
-          """
-    return page
+@app.route("/home")
+def home():
 
-@app.route("/index/name")
-def name():
-    page ="""
-        <h2> Cool Stuff will happen. <h2>
-"""
-    return page
+	return render_template("madLib.html",d=d)
+
+
 
 if __name__ == "__main__":
     app.debug = True
