@@ -23,7 +23,7 @@ def lottery():
 @app.route("/madlibs")
 def madlibs():
     pnoun = ["Claus", "Brown", "Zamansky", "Platek", "Dursley", "Jaishankar", "Wu", "Yuen"]
-	pnouns = pnoun[randrange(0, len(pnouns))]
+	pnouns = pnoun[randrange(0, len(pnoun))]
 	return render_template("madlibs.html", propernoun = pnouns)
 
 	
