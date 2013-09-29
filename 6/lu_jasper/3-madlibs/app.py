@@ -8,6 +8,9 @@ from word import Word
 from flask import Flask
 from flask import render_template
 
+def shuffle(list):
+    random.shuffle(list)
+    return list
 
 app = Flask(__name__)
 
@@ -18,20 +21,12 @@ WORDS = {
     'adjective': ('fabulous', 'harmonious', 'wordy', 'slow', 'fast', 'dumb'),
     'place': ('McDonalds', 'Sydney', 'Burger King', 'the Sahara', 'Google Headquarters')
 }
-COUNTS = {
-    'name': 2,
-    'noun': 1,
-    'verb': 1,
-    'adjective': 1,
-    'place': 1
-}
 
 @app.route("/")
 def madlibs():
-    words = {key: random.sample(WORDS[key], COUNTS[key]) for key in WORDS}
-    print words
-    return render_template('madlibs.html', words=words)
+    w = {key: shuffle([Word(w) for w in WORDS[key]]) for key in WORDS}
+    return render_template('madlibs.html', w = w)
 
 if __name__ == "__main__":
     app.debug = True
-    # app.run(host="0.0.0.0", port=5005)
+    app.run(host="0.0.0.0", port=5005)
