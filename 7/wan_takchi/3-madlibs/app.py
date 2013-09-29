@@ -19,7 +19,7 @@ def generate():
   timeunits= ["years", "seconds", "minutes", "hours", "weeks", "millenia"]
   adjs=["fat", "monstrous", "hot", "ugly", "dirty", "beautiful", "cute"]
   drinks=["apple juice", "orange juice", "saliva", "mud", "dirt", "urine", "poop extract"]
-<<<<<<< HEAD
+
   return render_template("story.html",
                          name = random.choice(names),
                          place = random.choice(places),
@@ -34,19 +34,4 @@ if __name__ == '__main__':
   app.debug=True
   app.run(host="0.0.0.0", port=5008)
  
-=======
-  dictionary = {"name" : random.choice(names),
-                "place" : random.choice(places),
-                "thing" : random.choice(things),
-                "time": random.choice(times),
-                "timeunit": random.choice(timeunits),
-                "adj": random.choice(adjs),
-                "drink": random.choice(drinks)
-                }
-  return render_template("story.html")
 
-if __name__ == '__main__':
-  app.debug=True
-  app.run(host="0.0.0.0", port = 5005)
-  
->>>>>>> 77756cc79302a4db9e0076a7468de01111278e7c
