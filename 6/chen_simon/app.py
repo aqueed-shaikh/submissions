@@ -22,8 +22,12 @@ def index():
 
 @app.route("/madLibs")
 def madLibs():
-    n = ['Tim', 'Simon', 'CoolMan']
+    n = ['Tim', 'Simon', 'Frankie', 'Siimon' , 'Jonathan Parker', 'Alex', 'Z', 'Tony', 'Sine Nomen', 'Richard', 'Jason', 'Mario', 'Ken', 'Odahviing']
+    adj = ['bad', 'strong', 'beautiful', 'good', 'fantastic', 'ugly', 'heavy', 'light', 'godli', 'bright', 'weak', 'l33t', 'strang', 'cool']
+    place = ['China', 'Forest', 'Road', 'America', 'Orange County', 'Bermuda Triangle', 'Atlantic Ocean', 'Home', 'Nameless City', 'Markarth', 'Riften', 'Solitude']
+    noun = ['noob', 'elite', 'poop', 'diarrhea', 'rock', 'cat', 'dog', 'mouse' , 'dragon', 'book', 'SAT', 'Poi', 'pillow', 'sun', 'table', 'bed', 'water', 'fire']
     random.shuffle(n)
+    random.shuffle(adj)
     d = {'name' : n.pop()}
     return render_template("madlibs.html", d = d)
 
