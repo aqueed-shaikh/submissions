@@ -2,7 +2,7 @@
 
 from flask import Flask
 from flask import render_template
-import random
+from random import randrange as rr
 
 app = Flask(__name__)
 
@@ -11,21 +11,32 @@ def home():
     return "Welcome to the home page"
 
 bank = {
-    "NAMES"  : ['Sam', 'Brian', 'Anthony', 'Tommy', 'Johnson', 'William', 'Peyton Manning', 'Mike Vick'],
-    "VERBS"  : ['trolled', 'smacked', 'smacked', 'threw', 'pants\'d', 'talked', 'punched'],
-    "ADJS"   : ['stupid', 'sleepy', 'bored', 'genius', 'great', 'sad', 'happy', 'cocky'],
-    "ADVS"   : ['skillfully', 'stupidly', 'quickly', 'slowly', 'quietly'],
-    "NOUNS"  : ['hammer', 'textbook', 'sledgehammer', ' marker', 'pipecleaner', 'Ducky tie', 'dagger', 'dog'],
-    "PLACES" : ['5th floor boys bathroom', 'London', 'Trampa', 'Mumbai', 'Canaderp', 'Chicago']
+    "name"  : ['Sam', 'Brian', 'Anthony', 'Tommy', 'Johnson', 'William', 'Peyton Manning', 'Mike Vick'],
+    "v"     : ['troll', 'smacked', 'throw',  'talk', 'punch', 'fly', 'jump'],
+    "adj"   : ['stupid', 'sleepy', 'bored', 'genius', 'great', 'sad', 'happy', 'cocky'],
+    "adv"   : ['skillfully', 'stupidly', 'quickly', 'slowly', 'quietly'],
+    "n"     : ['hammer', 'textbook', 'sledgehammer', ' marker', 'pipecleaner', 'Ducky tie', 'dagger', 'dog'],
+    "pl"    : ['5th floor boys bathroom', 'London', 'Trampa', 'Mumbai', 'Canaderp', 'Chicago']
 }
 
 @app.route("/madlibs")
 def madlibs():
-    return render_template("madlibs.html", 
-                           name1 = bank["NAMES"][random.randrange(0,len(bank["NAMES"]))],
-                           verb1 = bank["VERBS"][random.randrange(0,len(bank["VERBS"]))],
-                           noun1 = bank["NOUNS"][random.randrange(0,len(bank["NOUNS"]))]
-)
+    return render_template(
+        "madlibs.html", 
+        name1 = bank["name"][rr(0,len(bank["name"]))],
+        name2 = bank["name"][rr(0,len(bank["name"]))],
+        name3 = bank["name"][rr(0,len(bank["name"]))],
+        v1    = bank["v"]   [rr(0,len(bank["v"]))],
+        noun1 = bank["n"]   [rr(0,len(bank["n"]))],
+        adv1  = bank['adv'] [rr(0,len(bank['adv']))],
+        pl1   = bank['pl']  [rr(0,len(bank['pl']))],
+        pl2   = bank['pl']  [rr(0,len(bank['pl']))],
+        adj1  = bank['adj'] [rr(0,len(bank['adj']))],
+        adj2  = bank['adj'] [rr(0,len(bank['adj']))],
+        adj3  = bank['adj'] [rr(0,len(bank['adj']))],
+        adj4  = bank['adj'] [rr(0,len(bank['adj']))],
+        n1    = bank['n']   [rr(0,len(bank['n']))]
+        )
 
 
 if __name__ == "__main__":
