@@ -1,3 +1,20 @@
+# Object files
+*.o
+
+# Libraries
+*.lib
+*.a
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
 *.py[cod]
 
 # C extensions
@@ -17,7 +34,6 @@ develop-eggs
 .installed.cfg
 lib
 lib64
-6
 
 # Installer logs
 pip-log.txt
@@ -34,3 +50,6 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# Swap files
+.swp
