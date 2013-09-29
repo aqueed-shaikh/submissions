@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask
+from flask import Flask, render_template
 from random import randrange
 
 NOUNS = ['apple', 'bus', 'candle','dolphin','elephant','flask','guillotine',
@@ -28,11 +28,15 @@ def randWord(x):
 
 app = Flask(__name__)
 
+
+
 @app.route("/")
 def madlibs():
     proper_noun1 = randWord(PROPER_NOUNS)
     noun1 = randWord(NOUNS)
     adj1 = randWord(ADJECTIVES)
-    return render_template(template.html, proper_noun1 = proper_noun1,
+    return render_template('madlibs.html', proper_noun1 = proper_noun1,
                            noun1 = noun1, adj1 = adj1)
 
+
+app.run(debug = True,port = 5621)
