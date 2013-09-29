@@ -43,7 +43,6 @@ def createDict(d):
 def root(name="genesis"):
     values = shelve.open("values/" + name)
     d=createDict(values)
-    print(d)
     return render_template(name + ".html", d=d)
 
 @app.route('/favicon.ico')
