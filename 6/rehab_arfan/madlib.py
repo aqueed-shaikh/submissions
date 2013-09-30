@@ -1,29 +1,28 @@
-from random import randrange
+import random
 from flask import Flask, render_template
 
 app = Flask(__name__)
 
-NAMES = ['Crazy', 'Insane', 'The Z', 'Brown', 'Weirdo']
+@app.route('/')
+def home_page():    
+    NAMES = ['The Z', 'Brown', 'Weirdo', 'Robert', 'Emily', 'Jabberwocky']
 
-VERBS = ['fell', 'ran', 'murdered', 'jogged', 'chased']
+    VERBS = ['fell', 'ran', 'murdered', 'jogged', 'chased', 'stalked']
 
-PLACES = ['ocean', 'grass', 'forest', 'lake']
+    PLACES = ['ocean', 'forest', 'lake', 'mountains', 'Jupiter']
 
-ADJECTIVES = ['evil', 'suicidal', 'homicidal', 'freaky']
+    ADJECTIVES = ['evil', 'suicidal', 'homicidal', 'freaky', 'crazy', 'insane']
 
-NOUNS = ['meow', 'roar', 'cheetah', 'cat']
+    NOUNS = ['cheetah', 'cat', 'lion', 'chupacabra', 'centaur', 'minotaur']
 
-@app.route("/")
-def home():
-    d = { 'name' : NAMES[randrange(len(NAMES))],
-          'verb' : VERBS[randrange(len(VERBS))],
-          'place' : PLACES[randrange(len(PLACES))],
-          'adjective' : ADJECTIVES[randrange(len(ADJECTIVES))],
-          'noun' : NOUNS[randrange(len(NOUNS))]
-        }
-    
-    return render_template('index.html', d = d)
+    name = random.choice(NAMES)
+    verb = random.choice(VERBS)
+    place = random.choice(PLACES)
+    adjective = random.choice(ADJECTIVES)
+    noun = random.choice(NOUNS)
+          
+    return render_template("madlib.html", name = name, verb = verb, place = place, adjective = adjective, noun = noun)
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug = True)
