@@ -50,7 +50,6 @@ def madlibs():
     a['THING'] = thing[rand]
 
     return render_template("madlibs2.html", a=a)
-    t = "%(NAMES)s was in the %(PLACE)s when he %(VERB2)s a %(THING)s"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port = 5005)
