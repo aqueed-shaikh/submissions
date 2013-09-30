@@ -1,3 +1,6 @@
+# Jane Argodale and Edric Huang
+# Period 6
+
 from flask import Flask
 from flask import render_template
 import random
