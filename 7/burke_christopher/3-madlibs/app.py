@@ -12,6 +12,11 @@ def madlib():
     animal = ('bug','giraffe','dog')
     name = ('Barry','Jon','Arin')
     verb = ('run','explode','dig')
+    pastverb = ('ate','punched','grabbed')
+    adjective = ('red','strange','stupid')
+    thing = ('cheeseburger','notebook','keyboard')
+    name2 = ('Daniel','Leo','Mark')
+    place = ('movie theater','McDonalds','park')
         
     d = {}
     
@@ -24,7 +29,22 @@ def madlib():
     rand = random.randrange(0,len(verb))
     d['VERB'] = verb[rand]
 
-    s = "There once was a %(ANIMAL)s named %(NAME)s, who liked to %(VERB)s."
+    rand = random.randrange(0,len(pastverb))
+    d['PASTVERB'] = pastverb[rand]
+
+    rand = random.randrange(0,len(adjective))
+    d['ADJECTIVE'] = adjective[rand]
+
+    rand = random.randrange(0,len(thing))
+    d['THING'] = thing[rand]
+    
+    rand = random.randrange(0,len(name2))
+    d['NAME2'] = name2[rand]
+
+    rand = random.randrange(0,len(place))
+    d['PLACE'] = place[rand]
+
+    s = "There once was a %(ANIMAL)s named %(NAME)s, who liked to %(VERB)s. One day, he %(PASTVERB)s a %(ADJECTIVE)s %(THING)s with his friend %(NAME2)s, but they got bored and went to a %(PLACE)s."
     
     return render_template("template.html", s=s%(d))
 
