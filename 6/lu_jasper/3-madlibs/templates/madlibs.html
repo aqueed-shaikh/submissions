@@ -2,11 +2,14 @@
 <html>
 	<head>
 		<title>Madlibs</title>
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900' rel='stylesheet' type='text/css'>
+		<link href='{{ url_for('static', filename='style.css') }}' rel='stylesheet' type='text/css'>
 	</head>
 	<body>
-		<h1>Awesome Story</h1>
-		<p>
-			{{w['name'][0]}} and {{w['name'][1]}} are going out tonight! It's Halloween and they are ready to {{w['verb'][0]}}. So watch your {{w['noun'][0]}} or treating; they want your {{w['noun'][1]}}! {{w['name'][0]}} likes pumpkins and {{w['name'][0]}} likes {{w['noun'][2].plural()}}. While {{w['verb'][1].gerund()}} on doors for all your {{w['noun'][3]}}s, watch the house down the {{w['place'][0]}}. It's scary with spider webs and broken {{w['noun'][4].plural()}}. It's where {{w['name'][0]}} and {{w['name'][1]}} live.
-		</p>
+		<div class='story'>
+			<h1>AWESOME STORY</h1>
+			<h3>by Jasper Lu and Steve Zhu</h3>
+			<p>{{w['name'][0]}} and {{w['name'][1]}} are going out tonight! It's Halloween and they are ready to {{w['verb'][0]}}. So watch your {{w['noun'][0]}} or treating, they want your {{w['noun'][1]}}! {{w['name'][0]}} likes pumpkins and {{w['name'][0]}} likes {{w['noun'][2].plural()}}. While {{w['verb'][1].gerund()}} on doors for all your {{w['noun'][3]}}s, watch the house down at {{w['place'][0]}}. It's scary with spider webs and broken {{w['noun'][4].plural()}}. It's where {{w['name'][0]}} and {{w['name'][1]}} live.</p>
+		</div>
 	<body>
 </html>
