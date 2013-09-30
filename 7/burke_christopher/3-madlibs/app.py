@@ -7,7 +7,7 @@ import random
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/madlib1")
 def madlib():
     animal = ('bug','giraffe','dog')
     name = ('Barry','Jon','Arin')
@@ -28,7 +28,7 @@ def madlib():
     
     return render_template("template.html", s=s%(d))
 
-@app.route("/madlibs")
+@app.route("/madlib2")
 def madlibs():
     names = ('Martin','Luis','Paulo', 'Brian', 'Frank')
     place = ('park', 'library', 'Death Star')
