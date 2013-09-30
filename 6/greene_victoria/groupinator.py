@@ -1,22 +1,38 @@
+#GROUPINATOR!!!
+#By Victoria Greene and Dorit Rein
+
+from flask import Flask
 import random
 
-pd6 = ["Ahn,Jae Bum", "Argodale,Jane", "Cahn,David", "Chen,Simon", "Cohen,Eli", "Coppa,Aaron", "Greene,Victoria", "Huang,Edric", "Kozak,Severyn", "Kurtovic,Benjamin", "Lam,Raymond", "Lin,Helen", "Lin,Jing Chao", "Li,Roger", "Lui,Marlena", "Lu,Jasper", "Luo,Jason", "Ong,Timothy", "Rehab,Arfan", "Rein,Dorit", "Tang,Derek", "Venderbush,Sweyn", "Wakefield,Joshua", "Wu,Jia Sen", "Ye,Tyrone", "Yin,Jeffrey", "Yuen,Jared", "Zarenberg,Andrew", "Zheng,Stanley", "Zhen,Jason", "Zhu,Julie", "Zhu,Steve"]
+app = Flask(__name__)
 
-pd7 = ["Attal,Benjamin", "Burke,Christopher", "Cahn,Jack", "Chin,Joshua", "Chuk,Brian", "Chung,Victoria", "Conybeare,Sebastian", "Dai,Nancy", "Dolotov,Glib", "Duda,Justin", "Ezratty,Maia", "Field Thompson,William", "Galasinao,Nicholas", "Han,Jason", "Herman,Hunter", "Hofing,Joshua", "Islam,Yaseen", "Karson,Jeremy", "Khan,Sabrina", "Leung,Alvin", "Lin,Hanson", "Lin,Michele", "Luo,Haoxin", "Mai,Judy", "Mei,Kelvin", "Pedraza,Cristian", "Rosenberg,Noah", "Sheikh,Shaan", "Siu,Isabella", "Sterling,Zane", "Wan,Tak Chi", "Xu,Christine"]
+pd6 = []
+pd7 = []
 
+lines = open("students").readlines()
+for line in lines:
+    if (line[0] == '1'):
+        pd6.append(line[4:])
+    else:
+        pd7.append(line[4:])
+        
 def shuffleandcombine(c1,c2):
     random.shuffle(c1)
     random.shuffle(c2)
     combined = c2 + c1
     return combined
 
-def makegroups(c1,c2):
-    class1 = shuffleandcombine(c1,c2);
-    groups = ""
+@app.route("/")
+def home():
+    class1 = shuffleandcombine(pd6,pd7);
+    groups = "SOFTDEV GROUPS:<br><br>"
     i = 0
     while len(class1) > 0:
-        groups += (str)(i/4+1) + "," + class1.pop() + "\n"
+        groups += (str)(i/4+1) + "," + class1.pop() + "<br>"
         i += 1
+    groups += "<br><a href=/>Make new groups</a>"
     return groups
 
-print makegroups(pd6,pd7)
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
