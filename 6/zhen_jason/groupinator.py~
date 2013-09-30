@@ -1,0 +1,4 @@
+lines =open(students).readlines()
+newlines=
+for l in lines:
+    newlines = l.strip()
