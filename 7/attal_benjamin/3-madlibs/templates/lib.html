@@ -1,6 +1,8 @@
 <form id=form method=POST action="/results/{{file}}">
-{% for item in words %}
-<input type=text name="{{item}}" value="{{item}}"><br>
+{% for key, value in words.iteritems() %}
+<input type=text name="{{key}}" value="{{value}}"><br>
 {% endfor %}
 <input type=submit>
-</form>
+</form><br>
+
+<a href="/random/{{file}}">Random!</a>
