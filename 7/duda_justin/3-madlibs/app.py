@@ -22,7 +22,7 @@ def madlib():
        }
 s = "It was a %(days)s, and %(names)s was at home. He %(verbs)s a %(nouns)s in the %(places)s. He was very %(adjs)s and %(d)s. " 
     
-    return render_template("madlib.html",s = s%(d);
+    return render_template("madlib.html",s = s%(d));
 
 @app.route("/")
 def home():
