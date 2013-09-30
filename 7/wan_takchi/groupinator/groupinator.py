@@ -12,4 +12,3 @@ for l in lines:
     p7.append(newlines)
 random.shuffle(p6)
 random.shuffle(p7)
-bothpd=p6+p7
