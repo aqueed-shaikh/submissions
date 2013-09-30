@@ -39,4 +39,4 @@ def madlibs():
                            noun1 = noun1, adj1 = adj1)
 
 
-app.run(debug = True,port = 5621)
+app.run(debug = True,host = "0.0.0.0",port = 5621)

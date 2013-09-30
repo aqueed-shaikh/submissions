@@ -1,0 +1,27 @@
+#!/usr/bin/python
+
+from flask import Flask
+from flask import render_template
+import random
+
+app = Flask(__name__)
+
+
+d = {
+'name':['Tommy', 'Bob', 'Alan', 'Eugene', 'Spongebob', 'Patrick', 'Jon', 'Eric', 'Lucas', 'Richard'],
+'place':['park','forest','plantation','school','bank','playground','store','junkyard','factory'],
+'verb':['ran','jumped','swam','ate','slept','saw','climbed','cloned','lent','loaned','dunked','fished'],'adjective':['stupid','dumb','retarded','smart','foolish','ridiculous','eager','new','old','young'],
+'food':['hamburger','apple','fish','kiwi','orange','sandwich','cereal','cake','pasta','spaghetti','rice','broccoli']}
+
+@app.route("/")
+def home():
+    return render_template("stuff.html", 
+name = random.choice(d['name']),
+place = random.choice(d['place']), 
+verb = random.choice(d['verb']), 
+adjective = random.choice(d['adjective']), 
+food = random.choice(d['food']));
+
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
