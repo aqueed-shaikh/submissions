@@ -1,3 +1,5 @@
+#3-madlibs by Justin Duda and Christine Xu
+
 from flask import Flask
 from flask import render_template
 
@@ -19,22 +21,14 @@ def madlib():
        'place': random.choice(places),
        'noun': random.choice(nouns),
        'adj': random.choice(adjs)
-       }
-s = "It was a %(days)s, and %(names)s was at home. He %(verbs)s a %(nouns)s in the %(places)s. He was very %(adjs)s and %(d)s. " 
-    
-    return render_template("madlib.html",s = s%(d);
+       }    
+    return render_template("madlib.html", d=d);
 
 @app.route("/")
 def home():
-    return "<h1> JUSTIN AND CHRISTINE ROCK THE WORLD!!! </hl>"
     return render_template("index.html");
 
 
 if __name__=="__main__":
     app.debug=True
     app.run(host="0.0.0.0",port=5006)
-
-
-@app.route("/about")
-def about():
-    return "<h1>This is the about page</h1>"
