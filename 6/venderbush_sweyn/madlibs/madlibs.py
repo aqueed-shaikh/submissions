@@ -15,14 +15,15 @@ words['noun'] = nouns
 words['adjective'] = adjectives
 words['name'] = names
 words['place'] = places
+
 def initDict():
-	Genesis = shelve.open("values/genesis")
-	Genesis['noun'] = 3
-	Genesis['name'] = 1
-	Genesis['adjective'] = 2
-	Genesis['verb'] = 3
-	Genesis['place'] = 1
-	Genesis.close()
+	genesis = shelve.open("values/genesis")
+	genesis['noun'] = 3
+	genesis['name'] = 1
+	genesis['adjective'] = 2
+	genesis['verb'] = 3
+	genesis['place'] = 1
+	genesis.close()
 	exodus = shelve.open("values/exodus")
 	exodus['noun'] = 0
 	exodus['name'] = 2
@@ -30,12 +31,12 @@ def initDict():
 	exodus['verb'] = 2
 	exodus['place'] = 1
 	exodus.close()
+
 def createDict(d):
     passDict = {}
     for key in d:
 	for i in range(d[key]):
 		passDict[key+str(i)] = choice(words[key])
-			
     return passDict
 
 @app.route("/")
