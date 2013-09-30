@@ -5,11 +5,11 @@ from random import choice
 app = Flask(__name__)
 
 words={}
-nouns=["ninja", "chair", "pancake", "statue", "unicorn", "rainbows", "laser beams", "senor", "bunny", "captain", "nibblets", "cupcake", "carrot", "gnome", "glitter", "potato", "salad", "toejam", "curtain"]
+nouns=["ninja", "chair", "pancake", "statue", "unicorn", "rainbow", "laser beam", "senor", "bunny", "captain", "nibblet", "cupcake", "carrot", "gnome", "glitter", "potato", "salad", "toejam", "curtain"]
 adjectives=["shining", "crispy", "soaring", "endless", "sparkling", "fluttering", "spiky", "scrumptious", "eternal", "slimy", "slick", "gilded", "ancient", "smelly", "glowing", "rotten", "decrepit", "lousy", "grimy", "rusty", "sloppy", "muffled", "foul", "rancid", "fetid"]
-names = ["jim", "felix", "rochanelle", "liquanaishanda", "sweynaynagram", "sean toodle" ]
+names = ["Jim", "Felix", "Rochanelle", "Liquanaishanda", "Sweynaynagram", "Sean Toodle" ]
 verbs = ["paint", "dance", "swim", "twerk"]
-places = ["Tihuana", "Aruba", "Jupiter", "South Austrailia" ]
+places = ["Tihuana", "Aruba", "Jupiter", "South Australia" ]
 words['verb'] = verbs
 words['noun'] = nouns
 words['adjective'] = adjectives
@@ -51,5 +51,6 @@ def favicon():
     pass
 
 if __name__ == "__main__":
+    initDict()
     app.run()
 
