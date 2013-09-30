@@ -14,14 +14,14 @@ adjectives = ['happy', 'sad', 'angry', 'confused', 'blue', 'chartreuse', 'perple
 
 
        
-def nounk():
+def noun():
 	return random.choice(nouns);
 def verb():
 	return random.choice(tverbs);
 def place():
 	return random.choice(places);
 def adjective():
-	return random.choice(adjective);
+	return random.choice(adjectives);
 def name():
 	return random.choice(names);
 @app.route("/")
