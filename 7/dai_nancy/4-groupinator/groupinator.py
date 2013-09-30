@@ -17,7 +17,7 @@ def groupinator():
     j = 1
     k = 0
     while j < 9:
-        pd6[k].insert(0,j)
+        pd6[k].insert(0,str(j))
         groups.append(pd6[k])
         i += 1
         k += 1
@@ -27,7 +27,7 @@ def groupinator():
     k = 0
     i = 0
     while j < 17:
-        pd7[k].insert(0,j)
+        pd7[k].insert(0,str(j))
         groups.append(pd7[k])
         i += 1
         k += 1
@@ -38,4 +38,5 @@ def groupinator():
 
 if __name__ == "__main__":
     for l in groupinator():
+        l = ", ".join(l);
         print l
