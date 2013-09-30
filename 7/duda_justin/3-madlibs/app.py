@@ -24,6 +24,7 @@ def madlib():
        }    
     return render_template("madlib.html", d=d);
 
+
 @app.route("/")
 def home():
     return render_template("index.html");
