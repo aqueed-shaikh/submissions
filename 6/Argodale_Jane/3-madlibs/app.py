@@ -27,3 +27,6 @@ def kafka():
 
 if __name__=="__main__":
 	app.run()
+
+#Now Kafka can be cute and about cats instead of sad and about cockroaches. 
+#We opted to use lists for each nasty, dark word for replacements that made sense, rather than just have giant lists for each part of speech.
