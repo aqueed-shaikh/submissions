@@ -38,10 +38,10 @@ for root, dir, files in os.walk("mlibs"):
     mlibs['stories'][f[:f.find('.mlib')]] = story
     mlibs['inputs'][f[:f.find('.mlib')]] = list
 
-def convert_lower(s):
-  return without_digits(s.replace('_', ' ').lower())
+def readable(s):
+  return no_digits(s.replace('_', ' ').lower())
 
-def without_digits(s):
+def no_digits(s):
   return ''.join(c for c in s if not c.isdigit())
 
 @app.route("/")
@@ -53,7 +53,7 @@ def index():
 def madlib(name='story1'):
   words = {}
   for i in mlibs['inputs'][name]:
-    words[i] = convert_lower(i)
+    words[i] = readable(i)
   return render_template('lib.html', words=words, file=name)
 
 @app.route("/results/")
@@ -66,10 +66,10 @@ def results(name='story1'):
 
 @app.route("/random/")
 @app.route("/random/<name>")
-def random_lib(name='story1'):
+def randomlib(name='story1'):
   words = {}
   for i in mlibs['inputs'][name]:
-    words[i] = random.choice(pos[without_digits(i)])
+    words[i] = random.choice(pos[no_digits(i)])
   return mlibs['stories'][name] % words
 
 if __name__ == '__main__':
