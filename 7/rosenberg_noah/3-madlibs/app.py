@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#group members: Noah Rosenberg & Shaan Sheikh
 
 from flask import Flask, render_template
 from random import randrange
