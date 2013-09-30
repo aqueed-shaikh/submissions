@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import csv
 import random
 
@@ -20,6 +22,8 @@ def shuffledLists(file="/Users/sweyn/Dropbox/School/SoftDev/classcode/resources/
 
     return [students1,students2]
 
+#Pre: takes a list of 2 lists, one of each class
+#Post: returns a list of lists, one for each group
 def makeGroups(studentsList):
     groups = []
     groupnum = 1
@@ -34,6 +38,7 @@ def makeGroups(studentsList):
         groups.append(classGroups)
     return groups
 
+#Prints each member of each group in order
 def printGroups(groupList):
     for eachclass in groupList:
         for group in eachclass:
