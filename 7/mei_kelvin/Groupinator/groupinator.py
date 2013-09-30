@@ -27,6 +27,7 @@ for i in range (len(lines)):
         P7.append(lines[i])
 
 numba = [1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,7,8,8,8,8]
+numba2 = [9,9,9,9,10,10,10,10,11,11,11,11,12,12,12,12,13,13,13,13,14,14,14,14,15,15,15,15,16,16,16,16]
 a = 0
 c = 0
 Groups = []
@@ -38,7 +39,7 @@ while isNotEmpty(P6):
 
 while isNotEmpty(P7):
     b = int(random.random() * (len(P7) - 1))
-    Groups.append([numba[c], P7[b][2], P7.pop(b)[3]])
+    Groups.append([numba2[c], P7[b][2], P7.pop(b)[3]])
     c = c + 1
 
 
