@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template
-from random import randint as ri
+from random import randrange as rr
 
 
 app=Flask(__name__)
@@ -13,7 +13,7 @@ def home():
 @app.route("/madlib")
 def madlib():
     d={
-    'pn':['The girl','she','it'],
+    'pn':['the girl','she','it'],
     'v':['walking','gliding','flying'],
     'pl':['dark alley','basement','subway tracks'],
     'adj':['fat','sweaty','ugly'],
@@ -21,11 +21,11 @@ def madlib():
     }
     return render_template(
         "madlib.html",
-        pn=d['pn'][ri(0,2)],
-        v=d['v'][ri(0,2)],
-        pl=d['pl'][ri(0,2)],
-        adj=d['adj'][ri(0,2)],
-        noun=d['noun'][ri(0,2)]
+        pn  =d['pn']  [rr(0, len(d['pn'])   ) ],
+        v   =d['v']   [rr(0, len(d['v'])    ) ],
+        pl  =d['pl']  [rr(0, len(d['pl'])   ) ],
+        adj =d['adj'] [rr(0, len(d['adj'])  ) ],
+        noun=d['noun'][rr(0, len(d['noun']) ) ]
         )
 
 @app.route("/test/")
@@ -33,4 +33,4 @@ def test():
     return render_template("test.html",name="Jason")
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run(host= "0.0.0.0", port=4646)
