@@ -1,3 +1,3 @@
-Once upon a %(NOUN1)s there was a %(PROFESSION1)s, who loved to %(VERB1)s.  
-One very nice and %(ADJECTIVE1)s day, %(PROFESSION1)s decided to go to the %(PLACE1)s to buy some %(PLURAL_NOUN1)s.  
+Once upon a(n) %(NOUN1)s there was a(n) %(PROFESSION1)s, who loved to %(VERB1)s.  
+One very nice and %(ADJECTIVE1)s day, %(PRONOUN1)s decided to go to the %(PLACE1)s to buy some %(PLURAL_NOUN1)s.  
 The end.

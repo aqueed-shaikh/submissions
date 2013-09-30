@@ -23,7 +23,8 @@ pos = {
     'PLACE': ['market', 'six flags', 'greece', 'venezuela', 'mt. st. helens', 'volcano', 'general store', 'fight club'],
     'PROFESSION': ['trumpeteer', 'horse', 'horse rider', 'dog walker', 'cat trainer', 'cattle rancher', 'insurance salesesman'],
     'PLURAL_NOUN': ['clocks'],
-    'ADJECTIVE': ['smelly', 'brown', 'neon purple', 'cushy', 'comfortable', 'chair-like', 'hairy']
+    'ADJECTIVE': ['smelly', 'brown', 'neon purple', 'cushy', 'comfortable', 'chair-like', 'hairy'],
+    'PRONOUN': ['he', 'she', 'it', 'tuna']
 }
 
 for root, dir, files in os.walk("mlibs"):
