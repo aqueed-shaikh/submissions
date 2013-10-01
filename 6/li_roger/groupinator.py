@@ -1,19 +1,6 @@
 #! /usr/bin/env python
-
 import random, math
-
-lines=open("students").readlines()
-s = {}
-s['6'] = [];
-s['7'] = [];
-for l in lines:
-	l = l.strip().split(",")[1:]
-	s[l[0]].append(l[1:])
-random.shuffle(s['6'])
-random.shuffle(s['7'])
-ind = 0
-for c in s:
-	for l in s[c]:
-		ind+=1
-		l.insert(0,str(math.ceil(ind/4)))
-		print(",".join(l))
+s = [[],[]]
+[s[int(l.split(",")[0])-1].append(l.strip().split(",")[2:]) for l in open("students").readlines()]
+[random.shuffle(i) for i in s]
+[print(str(math.floor(i/4)+1)+","+(",".join((s[0]+s[1])[i]))) for i in range(len(s[0]+s[1]))]
