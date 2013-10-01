@@ -1,13 +1,9 @@
 #! /usr/bin/env python
 import random, math
-lines=open("students").readlines()
 s = [[],[]]
-for l in lines:
+for l in open("students").readlines():
 	l = l.strip().split(",")[1:]
 	s[int(l[0])-6].append(l[1:])
-for i in s:
-	random.shuffle(i);
-for c in range(len(s)):
-	for i in range(len(s[c])):
-		s[c][i].insert(0,str(math.floor(i/4)+1+c*8))
-		print(",".join(s[c][i]))
+[random.shuffle(i) for i in s]
+s = s[0] + s[1]
+[print(str(math.floor(i/4)+1)+","+(",".join(s[i]))) for i in range(len(s))]
