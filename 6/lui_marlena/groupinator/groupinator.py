@@ -25,11 +25,18 @@ for m in pd6:
     if counter > 4:
         group = group + 1
         counter = 1
-    if group > 8:
-        break
     print group
     print m[3:]
     counter = counter + 1
 
 
-#random.shuffle(pd7)
+random.shuffle(pd7)
+counter2 = 1
+group2 = 1
+for n in pd7:
+    if counter2 > 4:
+        group2 = group2 + 1
+        counter2 = 1
+    print group2
+    print n[3:]
+    counter2 = counter2 + 1
