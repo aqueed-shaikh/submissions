@@ -1,0 +1,17 @@
+from flask import Flask
+from flask import render_template
+
+import random
+
+
+app = Flask(__name__)
+
+@app.route("/")
+def madlib():
+    d = {'THING': 'bug',
+         'NAME': 'Barry',
+         'VERB': 'run'}
+
+    s = "The once was a %(THING)s named %(NAME)s, who liked to %(VERB)s."
+
+    return render_template("template.html", d=d);
