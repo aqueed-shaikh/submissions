@@ -16,7 +16,7 @@ for x in newlines:
         pd7.append(x)
 
 for m in pd6:
-    m.strip()
+    m.lstrip("1,6,")
 
 random.shuffle(pd6)
 counter = 1
@@ -25,12 +25,8 @@ for m in pd6:
     if counter > 4:
         group = group + 1
         counter = 1
-    print group
-    print m[3:]
+    print group, m[3:]
     counter = counter + 1
-<<<<<<< HEAD
-=======
-
 
 random.shuffle(pd7)
 counter2 = 1
@@ -39,7 +35,5 @@ for n in pd7:
     if counter2 > 4:
         group2 = group2 + 1
         counter2 = 1
-    print group2
-    print n[3:]
+    print group2, n[3:]
     counter2 = counter2 + 1
->>>>>>> 47c60d1156cac37e26cb716f43589afcfcdc1ea7
