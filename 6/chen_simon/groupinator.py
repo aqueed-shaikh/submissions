@@ -19,11 +19,6 @@ for l in splited:
         period6.append(l)
     else:
         period7.append(l)
-print "Do you want the groups to be random?(yes)"
-s = raw_input();
-if s == 'yes':
-    random.shuffle(period6)
-    random.shuffle(period7)
 
 ans = '';
 
