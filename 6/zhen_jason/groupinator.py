@@ -3,12 +3,12 @@ from random import shuffle
 lines =open('students').readlines()
 p6=[]
 p7=[]
-groups=[]
+#groups=[]
 
 for l in lines:
     newlines = l.strip()
     nl=newlines.split(',')
-    groups.append(newlines)
+    #groups.append(newlines)
     if nl[1]=='6':
         p6.append(newlines)
     elif nl[1]=='7':
