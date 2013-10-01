@@ -18,8 +18,8 @@ mlibs = {
 }
 
 pos = {
-    'NOUN': ['dog', 'cat', 'clock', 'day', 'sun', 'moon', 'poop', 'fart', 'cow', 'cow pie', 'fruit fly', 'octopus', 'king crab'],
-    'VERB': ['fart', 'smell', 'lick', 'kick', 'stun', 'punch', 'grab', 'eat', 'roll over', 'scratch', 'fight'],
+    'NOUN': ['dog', 'cat', 'clock', 'day', 'sun', 'moon', 'poop', 'fart', 'cow', 'cow pie', 'fruit fly', 'octopus', 'king crab', 'dead body', 'tuna sandwich'],
+    'VERB': ['fart', 'smell', 'lick', 'kick', 'stun', 'punch', 'grab', 'eat', 'roll over', 'scratch', 'fight', 'dye', 'tickle', 'poke', 'puke on'],
     'PLACE': ['market', 'six flags', 'greece', 'venezuela', 'mt. st. helens', 'volcano', 'general store', 'fight club'],
     'PROFESSION': ['trumpeteer', 'horse', 'horse rider', 'dog walker', 'cat trainer', 'cattle rancher', 'insurance salesesman'],
     'PLURAL_NOUN': ['clocks'],
