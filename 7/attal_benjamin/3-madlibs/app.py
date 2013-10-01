@@ -51,9 +51,7 @@ def index():
 @app.route("/input/")
 @app.route("/input/<name>")
 def madlib(name='story1'):
-  words = {}
-  for i in mlibs['inputs'][name]:
-    words[i] = readable(i)
+  words = zip(mlibs['inputs'][name], (readable(w) for w in mlibs['inputs'][name]))
   return render_template('lib.html', words=words, file=name)
 
 @app.route("/results/")
