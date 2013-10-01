@@ -10,12 +10,12 @@ pd7 = [l.strip()[4:] for l in lines if l[0] == '2']
 def group(list, gnum):
     ret = []
     random.shuffle(list)
-    i = 1
+    i = 0
     for item in list:
-        print str(gnum) + item
+        print str(gnum) + "," + item
         i += 1
         if (i % 4 == 0):
             gnum += 1
 
-group(pd6, 0)
+group(pd6, 1)
 group(pd7, 9)
