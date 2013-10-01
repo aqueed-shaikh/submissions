@@ -1,0 +1,11 @@
+#!/usr/bin/python
+from flask import Flask
+app = Flask(__name__)
+@app.route("/groupinator")
+
+def groupinator():
+    lines = open("students.dat").readlines()
+    newlines = []
+    for l in lines:
+        newlines = l.strip()
+    
