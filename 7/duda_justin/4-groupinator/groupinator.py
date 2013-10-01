@@ -1,3 +1,4 @@
+#Groupinator completed by Justin Duda and Christine Xu
 
 import random
 
