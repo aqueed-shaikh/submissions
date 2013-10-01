@@ -30,7 +30,7 @@ for m in pd6:
 
 random.shuffle(pd7)
 counter2 = 1
-group2 = 1
+group2 = 9
 for n in pd7:
     if counter2 > 4:
         group2 = group2 + 1
