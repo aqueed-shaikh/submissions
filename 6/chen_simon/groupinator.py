@@ -20,6 +20,13 @@ for l in splited:
     else:
         period7.append(l)
 
+#checks if the reader wants a random list
+print "Do you want the groups to be random?(yes)"
+s = raw_input();
+if s == 'yes':
+    random.shuffle(period6)
+    random.shuffle(period7)
+
 ans = '';
 
 f = 1.0
