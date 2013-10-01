@@ -1,0 +1,1 @@
+lines = open(students).readlines()
