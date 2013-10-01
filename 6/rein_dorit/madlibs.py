@@ -12,7 +12,6 @@ def hello():
     template = "Once upon a time, in a far away %s, %s was %s. But he was %s. But the %s %s %s him and banished him. He was forced to flee to %s where he was %s. He screamed out %s and saw %s. He was supposed to go the %s at %s %s with %s, his fiance. But there was nothing he could do because he had been banished. But then, in a sudden turn of %s, he was allowed %s to his home. And they all %s %s ever after."
 
 
-
     Place1 = random.sample(set(["land", "France", "ball", "Berlin", "Punxsutawney", "Madagascar"]),1);
     Place2 = random.sample(set(["land", "France", "ball", "Berlin", "Punxsutawney", "Madagascar"]),1);
     Place3 = random.sample(set(["land", "France", "ball", "Berlin", "Punxsutawney", "Madagascar"]),1);
@@ -34,7 +33,7 @@ def hello():
     Adverb = random.sample(set(["happily", "slowly", "annoyingly", "sweetly", "jokingly", "angrily"]), 1);
 
 
-    result = template%(Place1, Name1, Gerund, Adjective1, Adjective2, NewName, VerbPast1, Place2, Adjective3, Exclamation, Color, Place3, Time, VerbInf, Name2, Noun, VerbInf2, VerbPast2, Adverb);
+    result = "A MAD LIBS FAIRYTALE...<br><br>" + template%(Place1, Name1, Gerund, Adjective1, Adjective2, NewName, VerbPast1, Place2, Adjective3, Exclamation, Color, Place3, Time, VerbInf, Name2, Noun, VerbInf2, VerbPast2, Adverb) + "<br><br><a href=/>Fill in new words!</a>";  
 
     return result
 
