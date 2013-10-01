@@ -9,17 +9,12 @@ for l in lines:
 
 pd6 = []
 pd7 = []
-
 for x in newlines:
     if x[0] == "1":
         pd6.append(x)
     else:
         pd7.append(x)
 
-<<<<<<< HEAD
-for l in pd6:
-    print l
-=======
 for m in pd6:
     m.strip()
 
@@ -35,7 +30,3 @@ for m in pd6:
     print group
     print m[3:]
     counter = counter + 1
-
-
-#random.shuffle(pd7)
->>>>>>> 31dfe407e0687162b2bd1e25037a05766b539016
