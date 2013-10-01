@@ -2,6 +2,7 @@
 
 import random
 
+
 lines = open('students').readlines()
 newlines =[]
 for l in lines:
