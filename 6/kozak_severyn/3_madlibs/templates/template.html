@@ -9,7 +9,7 @@ populates empty fields with randomly selected words.-->
 			Monty Python
 		</title>
 		<style media="screen" type="text/css">
-
+				
 			.boxed {
 				font-style: normal;
 				outline: 1px solid #CECECE;
@@ -18,8 +18,9 @@ populates empty fields with randomly selected words.-->
 			}
 
 			.centered {
+				font-style:italic;
 				line-height: 140%;
-				width:310px;
+				width:360px;
 				height:150px;
 				position:absolute;
 				left:50%;
@@ -28,12 +29,21 @@ populates empty fields with randomly selected words.-->
 				text-align: center;
 			}
 
+			p:first-child:first-letter { 
+				float: left; 
+				color: red; 
+				font-size: 300%; 
+				line-height: 60px; 
+				padding-top: 4px; 
+				padding-right: 8px; 
+				padding-left: 3px; 
+				font-family: Georgia; }
+
 		</style>
 	</head>
 	<body>
 		<div class="centered">
 			<p>
-			<i>
 				<span style="color:red; font-size: 200%; font-family: serif; font-style: normal;">
 				We're</span> knights of the round <span class="boxed">{{words.O[0]}}</span><br>
 				we <span class="boxed">{{words.V[0]}}</span> whenever we're able<br>
@@ -57,7 +67,6 @@ populates empty fields with randomly selected words.-->
 				it's a busy life in <span class="boxed">{{words.P[2]}}</span><br>
 
 				i have to push the <span class="boxed">{{words.O[2]}}</span> a lot<br>
-			</i>
 			</p>
 		</div>
 	</body>
