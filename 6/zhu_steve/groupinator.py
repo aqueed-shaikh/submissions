@@ -6,7 +6,7 @@ if len(sys.argv) == 1: sys.argv.append("students")
 l = [[],[]]
 for p in open(sys.argv[1]).readlines():
 	p = p.strip().split(',')
-	l[int(p[1])-6].append(','.join(p[2:]))
+	l[int(p[0])-1].append(','.join(p[2:]))
 
 for p in l:
 	random.shuffle(p)
