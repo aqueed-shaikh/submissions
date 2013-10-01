@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+# groupinator.py
 import random, math
 s = [[],[]]
 for l in open("students").readlines(): s[int(l.split(",")[0])-1].append(l.strip().split(",")[2:])
