@@ -1,5 +1,8 @@
+from __future__ import print_function
+#This is very implementations specific
+#Works in python 3 on windows 64 in idle
 #Hello World Program
-__builtins__=None 
+#__builtins__=None 
 
 (lambda object="".__class__.__bases__[0]:(
     lambda allClasses=object.__subclasses__():(
