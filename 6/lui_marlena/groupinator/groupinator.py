@@ -1,11 +1,15 @@
 #!/usr/bin/python
-from flask import Flask
-app = Flask(__name__)
-@app.route("/groupinator")
+lines = open("students.dat").readlines()
 
-def groupinator():
-    lines = open("students.dat").readlines()
-    newlines = []
-    for l in lines:
-        newlines = l.strip()
-    
+newlines = []
+for l in lines:
+    newlines.append( l.strip())
+
+pd6 = []
+pd7 = []
+for x in newlines:
+    if x[0] == "1":
+        pd6.append(x)
+    else:
+        pd7.append(x)
+
