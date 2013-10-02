@@ -1,3 +1,7 @@
+#WORKED WITH RAYMOND LAM PERIOD 6
+#WORKED WITH RAYMOND LAM PERIOD 6
+
+
 #!/usr/bin/python
 import random
 
@@ -51,3 +55,6 @@ for others in period7:
     print group2, others[4:]
     counter2 = counter2 + 1
 
+
+#WORKED WITH RAYMOND LAM PERIOD 6
+#WORKED WITH RAYMOND LAM PERIOD 6
