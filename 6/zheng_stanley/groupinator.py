@@ -20,8 +20,8 @@ for name in striplines:
 
 #prints groups for period 6
 #get rid of excess info
-for peers in period6:
-    peers.lstrip("1,6,")
+#for peers in period6:
+#    peers.lstrip("1,6,")
 #shuffle period6-(list)
 random.shuffle(period6)
 counter = 1
@@ -37,8 +37,8 @@ for peers in period6:
 
 #prints groups for period 7
 #get rid of excess info
-for others in period7:
-    others.lstrip("2,7,")
+#for others in period7:
+#    others.lstrip("2,7,")
 #shuffle period7-(list)
 random.shuffle(period7)
 counter2 = 1
