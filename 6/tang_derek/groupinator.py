@@ -1,7 +1,6 @@
 #Arfan Rehab, Derek Tang
 
 import random
-
 def groupinator():
     lines = open("students").readlines()
     pd6 = []
