@@ -18,8 +18,8 @@ mlibs = {
 }
 
 pos = {
-    'NOUN': ['dog', 'cat', 'clock', 'day', 'sun', 'moon', 'poop', 'fart', 'cow', 'cow pie', 'fruit fly', 'octopus', 'king crab'],
-    'VERB': ['fart', 'smell', 'lick', 'kick', 'stun', 'punch', 'grab', 'eat', 'roll over', 'scratch', 'fight'],
+    'NOUN': ['dog', 'cat', 'clock', 'day', 'sun', 'moon', 'poop', 'fart', 'cow', 'cow pie', 'fruit fly', 'octopus', 'king crab', 'dead body', 'tuna sandwich'],
+    'VERB': ['fart', 'smell', 'lick', 'kick', 'stun', 'punch', 'grab', 'eat', 'roll over', 'scratch', 'fight', 'dye', 'tickle', 'poke', 'puke on'],
     'PLACE': ['market', 'six flags', 'greece', 'venezuela', 'mt. st. helens', 'volcano', 'general store', 'fight club'],
     'PROFESSION': ['trumpeteer', 'horse', 'horse rider', 'dog walker', 'cat trainer', 'cattle rancher', 'insurance salesesman'],
     'PLURAL_NOUN': ['clocks'],
@@ -38,10 +38,10 @@ for root, dir, files in os.walk("mlibs"):
     mlibs['stories'][f[:f.find('.mlib')]] = story
     mlibs['inputs'][f[:f.find('.mlib')]] = list
 
-def convert_lower(s):
-  return without_digits(s.replace('_', ' ').lower())
+def readable(s):
+  return no_digits(s.replace('_', ' ').lower())
 
-def without_digits(s):
+def no_digits(s):
   return ''.join(c for c in s if not c.isdigit())
 
 @app.route("/")
@@ -51,9 +51,7 @@ def index():
 @app.route("/input/")
 @app.route("/input/<name>")
 def madlib(name='story1'):
-  words = {}
-  for i in mlibs['inputs'][name]:
-    words[i] = convert_lower(i)
+  words = zip(mlibs['inputs'][name], (readable(w) for w in mlibs['inputs'][name]))
   return render_template('lib.html', words=words, file=name)
 
 @app.route("/results/")
@@ -66,10 +64,10 @@ def results(name='story1'):
 
 @app.route("/random/")
 @app.route("/random/<name>")
-def random_lib(name='story1'):
+def randomlib(name='story1'):
   words = {}
   for i in mlibs['inputs'][name]:
-    words[i] = random.choice(pos[without_digits(i)])
+    words[i] = random.choice(pos[no_digits(i)])
   return mlibs['stories'][name] % words
 
 if __name__ == '__main__':
