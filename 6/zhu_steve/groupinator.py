@@ -13,6 +13,6 @@ for p in l:
 
 l = l[0] + l[1] # people
 l = [l[x:x+4] for x in xrange(0, len(l), 4)] # groups
-l = [",".join([str(x + 1), group]) for x in xrange(len(l)) for group in l[x]] # people
-
-print '\n'.join(l)
+for x in xrange(len(l)):
+	for group in l[x]:
+		print ",".join([str(x + 1), group]) 

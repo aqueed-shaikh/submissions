@@ -30,10 +30,11 @@ def part_of_speech(dictionary_name='dictionary.txt'):
     dictionary = {}
     for entry in entries:
         entry = entry.strip()
-        word, pos, *stuff= re.split(r"\s+", entry)
-        pos=pos[0]
-        if stuff:
+        temp = re.split(r"\s+", entry)
+        if len(temp) > 2:
             continue
+        word, pos = temp
+        pos=pos[0]
         if pos == 'C' or pos == 'D' or pos == 'P' or pos == 'r':
             continue
         dictionary[word]=pos[0]
