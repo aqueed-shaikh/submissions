@@ -1,0 +1,4 @@
+<h1> Hello, welcome to Madlibs </h1>
+
+
+<h3> {{d['names']}} was in the {{d['place']}} when he {{d['verb2]}} a {{d['thing']}} </h3>

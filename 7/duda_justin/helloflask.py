@@ -1,10 +1,15 @@
 
 from flask import Flask
+from flask import render_template
+
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "Hello World!"
+    return "<h2>Hello World!</h2>"
+
+if __name__ == '__main__':
+    app.run()
 
 
 def fact(n):
