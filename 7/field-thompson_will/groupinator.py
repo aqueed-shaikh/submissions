@@ -1,5 +1,12 @@
 #!/usr/bin/python
 
+# TO MR. ZAMANSKY: 
+# You and I talked about this being commited a little late. I accidentally removed it from the repo instead of moving it last time I commited.
+# There should be a record of this existing inside a directory called 'groupinator' under a previous commit (on 9/30).
+# Sorry about that! -Will
+
+# Will Field-Thompson & Hunter Herman:
+
 import random
 
 lines = open("students").readlines()
