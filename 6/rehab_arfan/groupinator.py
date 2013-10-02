@@ -1,18 +1,54 @@
-# Arfan Rehab, Derek Tang
-from random import shuffle
+#Arfan Rehab, Derek Tang
 
-text = open('students').read()
-lines = text.split('\n')[:-1]
-names = []
+import random
 
-for l in lines:
-    line = l.split(',')
-    period = int(line[1])
-    name = ' '.join(line[2:][::-1]
+def groupinator():
+    lines = open("students").readlines()
+    pd6 = []
+    pd7 = []
+    groups = []
 
-shuffle(names)
+    for temp in lines:
+        temp = temp.strip()
+        temp = temp.split(",")
+        if (temp[0] is "1"):
+            pd6.append(temp[2:])
+        else:
+            pd7.append(temp[2:])
 
-groups = []
+    random.shuffle(pd6)
+    random.shuffle(pd7)
 
+    i = 0
+    j = 1
+    k = 0
 
+    #for period 6 groups
+    #8 groups in total
+    while j < 9:
+        pd6[k].insert(0,str(j))
+        groups.append(pd6[k])
+        i += 1
+        k += 1
+        if i == 4:
+            i = 0
+            j += 1
 
+    k = 0
+    i = 0
+
+    #for period 7 groups
+    while j < 17:
+        pd7[k].insert(0,str(j))
+        groups.append(pd7[k])
+        i += 1
+        k += 1
+        if i == 4:
+            i = 0
+            j += 1
+    return groups
+
+if __name__ == "__main__":
+    for temp in groupinator():
+        temp = ",".join(temp);
+        print temp
