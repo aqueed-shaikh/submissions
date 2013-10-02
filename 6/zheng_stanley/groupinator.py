@@ -6,7 +6,7 @@ lines = open("students.txt").readlines()
 #strip the lines
 striplines = []
 for l in lines:
-    strip striplines.append( l.strip())
+    striplines.append( l.strip())
 
 #put the students into lists based on periods
 period6 = []
