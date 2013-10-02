@@ -33,8 +33,8 @@ for peers in period6:
     counter = counter + 1
 
 #prints groups for period 7
-for others in period6:
-    others.lstrip("1,6,")
+for others in period7:
+    others.lstrip("2,7,")
 
 random.shuffle(period7)
 counter2 = 1
