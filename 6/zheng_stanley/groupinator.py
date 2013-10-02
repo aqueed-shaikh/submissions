@@ -38,7 +38,7 @@ for others in period7:
 
 random.shuffle(period7)
 counter2 = 1
-group2 = 1
+group2 = 9
 for others in period7:
     if counter2 > 4:
         group2 = group2 + 1
