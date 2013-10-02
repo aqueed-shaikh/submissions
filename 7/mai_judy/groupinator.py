@@ -1,7 +1,6 @@
-
+#!/usr/bin/python
 #Isabella Siu and Judy Mai
 from random import shuffle
-
 
 lines = open("students").readlines()
 
@@ -9,8 +8,8 @@ newlines = []
 for l in lines:
     newlines.append(l.strip().split(','))
 
+pd5 = []
 pd6 = []
-pd7 = []
 
 for l in newlines:
     if l[0] == "1":
@@ -34,6 +33,7 @@ for student in pd6:
 
 group = 9
 count = 0
+
 for student in pd7:
     if count == 4:
         group += 1
