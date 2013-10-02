@@ -1,0 +1,23 @@
+#!flask/bin/python
+
+from flask import Flask
+from flask import render_template
+import random
+
+template1="""
+<h1>This is a lucky number page</h1>
+
+Hi %s
+<br>
+your lucky number is: %i
+<hr>
+"""
+
+app = Flask(__name__)
+
+@app.route("/demo")
+def hello():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    app.run()

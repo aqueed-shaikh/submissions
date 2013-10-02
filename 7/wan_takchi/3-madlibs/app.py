@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#worked alone since I couldn't find a partner
 from flask import Flask
 from flask import render_template
 
@@ -32,6 +33,6 @@ def generate():
 
 if __name__ == '__main__':
   app.debug=True
-  app.run(host="0.0.0.0", port=5008)
+  app.run(host="0.0.0.0", port=5000)
  
 
