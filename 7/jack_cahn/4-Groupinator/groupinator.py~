@@ -1,0 +1,3 @@
+#!/usr/bin/python
+lines=open("Users/student/classcode/resources/groupinator/student").readlines()
+print(lines); 
