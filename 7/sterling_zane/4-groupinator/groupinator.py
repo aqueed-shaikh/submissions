@@ -1,8 +1,8 @@
 #the three-line version
-names = [', '.join(line.split(',')[2:]) for line in open('students').read().split('\n')[:-1]
+names = [','.join(line.split(',')[2:]) for line in open('students').read().split('\n')[:-1]
 									   if int(line.split(',')[1]) == 7]
 x,groups = __import__('random').shuffle(names), [[]]
-[groups[-1].append(name) if len(groups[-1]) < 4 else groups.append([name]) for name in names]
+[groups[-1].append('%d,%s'%(len(groups) + 8, name)) if len(groups[-1]) < 4 else groups.append(['%d,%s'%(len(groups) + 9, name)]) for name in names]
 
 
 #the readable version
@@ -32,4 +32,5 @@ x,groups = __import__('random').shuffle(names), [[]]
 
 
 for group in groups:
-	print group
+	for person in group:
+		print person
