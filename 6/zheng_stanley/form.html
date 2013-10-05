@@ -1,0 +1,30 @@
+
+<h1>This is the form</h1>
+
+
+<form method="GET">
+Username: <input type="text" name="username">
+<p>
+
+
+How awesome is that thing?
+
+
+<hr>
+{% for number in range(10) %}
+
+
+
+  {% if number == 3 %}
+<input type="radio" name="rating" value={{number}} checked>{{number}}</input>
+  {% else %}
+    <input type="radio" name="rating" value={{number}}>{{number}}</input>
+  {% endif %}
+{% endfor %}
+
+<hr>
+<input type="submit" name="button" value="Submit">
+<p>
+<input type="submit" name="button" value="Cancel">
+
+</form>
