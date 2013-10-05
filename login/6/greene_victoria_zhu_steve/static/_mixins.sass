@@ -1,0 +1,28 @@
+@mixin placeholder($fontFamily, $fontWeight)
+	::-webkit-input-placeholder
+		font-weight: $fontWeight
+		font-family: $fontFamily
+	\:-moz-placeholder
+		font-weight: $fontWeight
+		font-family: $fontFamily
+	::-moz-placeholder
+		font-weight: $fontWeight
+		font-family: $fontFamily
+	\:-ms-input-placeholder
+		font-weight: $fontWeight
+		font-family: $fontFamily
+
+@mixin center-outer
+	height: 100%
+	text-align: center
+	&:before
+		display: inline-block
+		height: 100%
+		background-color: blue
+		content: ''
+		vertical-align: middle
+		font-size: 0
+
+@mixin center-inner
+	display: inline-block
+	vertical-align: middle
