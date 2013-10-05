@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 app = Flask(__name__)
 
@@ -10,7 +10,11 @@ def home():
 
 @app.route('/login')
 def login():
-	return render_template('login.html')
+	return render_template('login.html', title='Login', stylesheet=url_for('static', filename='login.css'))
+
+@app.route('/register')
+def register():
+	return render_template('register.html', title='Register', stylesheet=url_for('static', filename='register.css'))
 
 if __name__ == '__main__':
 	app.debug = True
