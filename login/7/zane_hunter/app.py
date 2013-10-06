@@ -11,9 +11,11 @@ def home():
 @app.route('/register')
 def register():
 	
-
+	
 	return render_template("render.html")
-
+@app.route('/login/')
+def login():
+	return render_template("login.html")
 
 if __name__ == "__main__":
 	app.debug = True
