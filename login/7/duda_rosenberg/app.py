@@ -9,15 +9,6 @@ app.config['SHELVE_FILENAME'] = 'shelve'
 shelve.init_app(app)
 
 
-if (__name__ == '__main__'):
-    app.debug = True
-    app.run(host = '0.0.0.0', port = 5100)
-
-
-
-
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -28,11 +19,11 @@ def login():
     if request.method == 'GET':
         return render.template('login.html')
     elif shelve[username] == password:
-        return redirect('/welcome')
+        return render.template('welcome.html')
     else:
         return render_template("login.html")
 
 
-if (__name__ == '__main__'):
+if (__name__ == "__main__"):
     app.debug = True
-    app.run(host = '0.0.0.0', port = 5005)
+    app.run(host = "0.0.0.0", port = 5005)
