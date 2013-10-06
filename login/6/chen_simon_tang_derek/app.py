@@ -12,22 +12,37 @@ def home():
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
     if request.method == "GET" :
-        page = """<h1>Login</h1>
-        <br>
-        <h3> Please login to continue </h3>
-        <form method = "post">
-        <h4>Username:</h4>
-        <input type ="text" name = "username">
-        <br>
-        <h4>Password:</h4>
-        <input type ="text" name = "password">
-        <br>
-        <input type ="submit" name = "button" value = "login">
-        <input type ="submit" name = "button" value = "cancel">
+        return render_template("login.html")
+    else:
+        idu = request.form['id']
+        id = idu.encode('ascii','ignore')
+        s = shelve.open("sessions")
+
+@app.route("/register", methods = ['GET', 'POST'])
+def register():
+    if request.method == "GET" :
+        return render_template("register.html")
+
+        
+@app.route("/members")
+def members():
+    if 'username' in session:
+        page = """
+        Hello, this is the member's page.
         """
         return page
-    
-    
+    else:
+        return redirect("/unknown")
+
+@app.route("/unknown")
+def unknown():
+    page = """
+    <h2> You need to login in</h2>
+    <a href="/login">Login here!</a>
+    <br>
+    <a href="/register">Don't have an account?</a>
+    """
+    return page
 
 if __name__ == "__main__":
     app.debug = True
