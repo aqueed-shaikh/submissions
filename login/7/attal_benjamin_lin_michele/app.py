@@ -24,7 +24,7 @@ def login():
         password = request.form['password'].encode('ascii', 'ignore')
         database = shelve.get_shelve()
         if username not in database:
-            return redirect(url_for('register'))
+            return redirect(url_for('register', message='Not a valid username. Please register'))
         elif database[username] == password:
             session['username'] = username
             return redirect(url_for('home'))
@@ -36,6 +36,8 @@ def register():
     if 'username' in session:
         return redirect(url_for('home'))
     elif request.method == 'GET':
+        if 'message' in request.args:
+          return render_template('register.html', message=request.args['message'])
         return render_template('register.html')
     else:
         username = request.form['username'].encode('ascii', 'ignore')
