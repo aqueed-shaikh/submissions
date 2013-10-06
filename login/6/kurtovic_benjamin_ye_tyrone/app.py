@@ -9,6 +9,9 @@ app.config["SHELVE_FILENAME"] = "login.db"
 shelve.init_app(app)
 app.secret_key = "nLOGN"
 
+def format_user(username):
+    return username.lower().encode("utf8")
+
 @app.route("/")
 def index():
     if "username" in session:
@@ -20,22 +23,31 @@ def index():
 def login():
     if request.method == "GET":
         return render_template("login.html")
-    username = request.form["username"]
-    password = request.form["password"]
-    if username not in shelve:
-        return render_template("login.html", error="Incorrect username.")
-    if shelve[username] != password:
-        return render_template("login.html", error="Incorrect password.")
+    username = format_user(request.form["username"])
+    password = request.form["password"].encode("utf8")
+    if not username or not password:
+        return render_template("login.html", error="missing")
+    db = shelve.get_shelve()
+    if username not in db:
+        return render_template("login.html", error="no-user")
+    if db[username] != password:
+        return render_template("login.html", error="incorrect")
     session["username"] = username
     return redirect("/")
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
         return render_template("register.html")
-    username = request.form["username"]
-    password = request.form["password"]
-    shelve[username] = password
+    username = format_user(request.form["username"])
+    password = request.form["password"].encode("utf8")
+    if not username or not password:
+        return render_template("register.html", error="missing")
+    db = shelve.get_shelve()
+    if username in db:
+        return render_template("register.html", error="exists")
+    db[username] = password
+    session["username"] = username
     return redirect("/")
 
 @app.route("/logout")
