@@ -13,12 +13,16 @@ def login():
     if request.method=="GET":
 	return render_template("login.html")
     else:
-	return render_template("login.html")
+	button = request.form['button']
+	if button == 'Login':
+	    return render_template("login.html")
+	else:
+	    return redirect("/register")
 
 @app.route("/")
 def home():
-    if session ['count'] == 0
-    return redirect("/register")
+    if session ['count'] == 0:
+        return redirect("/register")
         
 @app.route("/register",methods = ["GET","POST"])
 def register():
