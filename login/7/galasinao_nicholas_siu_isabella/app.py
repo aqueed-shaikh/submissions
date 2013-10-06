@@ -18,8 +18,8 @@ def register():
         return render_template("register.html")
     else:
         users=shelve.get_shelve()
-        username=request.form["username"]
-        password=request.form["password"]
+        username=request.form["username"].encode("ascii", "ignore")
+        password=request.form["password"].encode("ascii", "ignore")
         if request.form["button"]=="Submit":
             users[username]=password
             return render_template("success.html",username=username)
@@ -29,11 +29,11 @@ def register():
 @app.route("/login", methods=["POST","GET"])
 def login():
     if request.method=="GET":
-        return render.template("login.html")
+        return render_template("login.html")
     else:
         users=shelve.get_shelve()
-        username=request.form["username"]
-        password=request.form["password"]
+        username=request.form["username"].encode("ascii", "ignore")
+        password=request.form["password"].encode("ascii", "ignore")
         if username in users:
             if password==users[username]:
                 session["username"]=username
@@ -43,7 +43,17 @@ def login():
         else:
             return redirect("/register")
 
-    
+@app.route("/logout")
+def logout():
+    session.pop("username")
+    return redirect("/login")
+
+@app.route("/secret")
+def secret():
+    if session["username"]:
+        return "<h1>A wild Secret appeared!</h1>"
+    else:
+        return redirect("/login")
 
 if __name__=="__main__":
     app.debug=True
