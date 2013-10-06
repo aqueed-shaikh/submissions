@@ -8,6 +8,16 @@ app.secret_key="my secret key"
 app.config['SHELVE_FILENAME'] = 'shelve.db'
 shelve.init_app(app)
 
+<<<<<<< HEAD
+=======
+@app.route("/login",methods=['GET','POST'])
+def login():
+    if request.method=="GET":
+	return render_template("login.html")
+    else:
+	return render_template("login.html")
+
+>>>>>>> 26e6feaa880b0f69dab7c7cc3d3f3c13bf7b656f
 @app.route("/")
 def home():
     if session ['count'] == 0
@@ -22,6 +32,7 @@ def register():
 	if button == "Submit":
 	    name = request.form['username']
 	    password = request.form['password']
+<<<<<<< HEAD
             c = session['count'];
             c=c+1;
             session['count']=c
@@ -29,7 +40,15 @@ def register():
             db ["username"] = name
             app.secret_key=name
             db ["password"] = password
+=======
+	    return redirect("/login")
+	else:
+	    return render_template("register.html")
+>>>>>>> 26e6feaa880b0f69dab7c7cc3d3f3c13bf7b656f
 
+@app.route("/success")
+def success():
+    return "<h1> You have successfully logged in!</h1>"
 
 if __name__=="__main__":
     app.debug=True
