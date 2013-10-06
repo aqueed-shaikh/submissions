@@ -10,7 +10,10 @@ shelve.init_app(app)
 
 @app.route("/")
 def home():
-    return "<h1>This is the Home Page</h1>"
+    if "username" in session:
+        return "<h1>This is the Home Page</h1>"
+    else:
+        return redirect("/login")
 
 @app.route("/register", methods=["POST","GET"])
 def register():
@@ -43,7 +46,7 @@ def login():
         else:
             return redirect("/register")
 
-    
+
 
 if __name__=="__main__":
     app.debug=True
