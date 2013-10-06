@@ -1,12 +1,15 @@
 <html>
     <head>
         <title>Login</title>
+        <style>
+            body { font-family: sans-serif; }
+        </style>
     </head>
     <body>
         <h1>Login required</h1>
         <p>Don't have an account? <a href="/register">Register</a>.</p>
         {% if error %}
-            <p>Error:
+            <p><span style="color: red;">Error</span>:
             {% if error == "missing" %}
                 Missing a username or password.
             {% elif error == "no-user" %}
