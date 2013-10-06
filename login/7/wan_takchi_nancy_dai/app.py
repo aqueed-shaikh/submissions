@@ -9,7 +9,7 @@ shelve.init_app(app)
 @app.route("/register",methods=['GET','POST'])
 def register():
     if request.method=="GET":
-    page="""
+        page="""
         <h1>Register</h1>
         <form method="post">
         <input type="text" name="username">
@@ -18,9 +18,8 @@ def register():
         <input type="submit" name="button" value="cancel">
         </form>
         """
-    username = shelve.get_shelve('c')
-    username["username"] = "password"
-    return page
+
+        return page
     
 @app.route("/login",methods=['GET','POST'])
 def login():
@@ -33,15 +32,15 @@ def login():
         <input type="text" name="password" value="password"> 
         <input type="submit" name="button" value="Login">
         <p>
-        Sign up here if you don't have ana ccount. <a href="/register"> Register Now</a>
+        Sign up here if you don't have an account. <a href="/register"> Register Now</a>
         </form>
         """
         return page
     else:
         button = request.form['button']
         user = request.form['username']
-        passer = request.form['password']
-        shelve[user] = passer
+        pass = request.form['password']
+        shelve[user] = pass
 
 if __name__ == "__main__":
     app.debug = True
