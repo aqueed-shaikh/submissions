@@ -9,11 +9,6 @@ app.config['SHELVE_FILENAME'] = 'shelve'
 shelve.init_app(app)
 
 
-if (__name__ == '__main__'):
-    app.debug = True
-    app.run(host = '0.0.0.0', port = 5005)
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -29,6 +24,6 @@ def login():
         return render_template("login.html")
 
 
-if (__name__ == '__main__'):
+if (__name__ == "__main__"):
     app.debug = True
-    app.run(host = '0.0.0.0', port = 5005)
+    app.run(host = "0.0.0.0", port = 5005)
