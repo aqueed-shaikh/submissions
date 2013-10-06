@@ -51,9 +51,7 @@ def index():
 @app.route("/input/")
 @app.route("/input/<name>")
 def madlib(name='story1'):
-  words = {}
-  for i in mlibs['inputs'][name]:
-    words[i] = readable(i)
+  words = zip(mlibs['inputs'][name], (readable(w) for w in mlibs['inputs'][name]))
   return render_template('lib.html', words=words, file=name)
 
 @app.route("/results/")
@@ -62,15 +60,10 @@ def results(name='story1'):
   if request.method == 'POST':
     return mlibs['stories'][name] % request.form
   else:
-    return redirect(url_for('madlib') + name)
-
-@app.route("/random/")
-@app.route("/random/<name>")
-def randomlib(name='story1'):
-  words = {}
-  for i in mlibs['inputs'][name]:
-    words[i] = random.choice(pos[no_digits(i)])
-  return mlibs['stories'][name] % words
+    words = {}
+    for i in mlibs['inputs'][name]:
+      words[i] = random.choice(pos[no_digits(i)])
+    return mlibs['stories'][name] % words
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', debug=True)
