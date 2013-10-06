@@ -1,39 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="1187.39">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.0px; font: 12.0px Helvetica}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.0px; font: 12.0px Consolas; color: #dd1144}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.0px; font: 12.0px Consolas; color: #000080}
-    span.s1 {color: #000080}
-    span.s2 {color: #333333}
-    span.s3 {color: #008080}
-  </style>
+<title> Home </title>
+<style> 
+<link rel="stylesheet" type="text/css" href="#{ url_for('static', filename='stylesheets/register.css') }">
+</style>
 </head>
-<body>
-<p class="p1">&lt;html&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1">&lt;title&gt; Home &lt;/title&gt;</p>
-<p class="p1">&lt;style&gt;<span class="Apple-converted-space"> </span></p>
-<p class="p2">&lt;link rel="stylesheet" type="text/css" href="#{ url_for('static', filename='stylesheets/register.css') }"&gt;</p>
-<p class="p2">&lt;/head&gt;</p>
-<p class="p2">&lt;body&gt;<span class="Apple-converted-space"> </span></p>
-<p class="p1">&lt;h1&gt; Our program allows you to access the tools you need for an everyday Stuyvesant student. &lt;/h1&gt;</p>
-<p class="p1">&lt;h2&gt; Please input your information in order to get access to our wonderful utility. &lt;/h2&gt;<span class="Apple-converted-space"> </span></p>
-<p class="p3"><br></p>
-<p class="p1">Username you would like: &lt;input type = "text" name = "username"&gt;&lt;/input&gt;</p>
-<p class="p1">And the password: &lt;input type = "text" name="password"&gt;&lt;/input&gt;<span class="Apple-converted-space"> </span></p>
-<p class="p3"><br></p>
-<p class="p1">Finally, give us your email for consistent updates: &lt;input type = "text" name="email"&gt;&lt;/input&gt;</p>
-<p class="p1">Then, hit submit:</p>
-<p class="p4"><span class="s1">&lt;input</span><span class="s2"> </span><span class="s3">type=</span>"submit"<span class="s2"> </span><span class="s3">name=</span>"button"<span class="s2"> </span><span class="s3">value=</span>"Submit"<span class="s1">&gt;&lt;/input&gt;</span></p>
-<p class="p5">&lt;/form&gt;</p>
+<body> 
+<h1> Our program allows you to access the tools you need for an everyday Stuyvesant student. </h1>
+<h2> Please input your information in order to get access to our wonderful utility. </h2> 
+<form method = "post">
+Username you would like: <input type = "text" name = "username"></input>
+And the password: <input type = "text" name="password"></input> 
+
+Finally, give us your email for consistent updates: 
+<input type = "text" name="email"></input>
+Then, hit submit:
+<input type="submit" name="button" value="Submit"></input>
+</form>
 </body>
 </html>
