@@ -31,6 +31,13 @@ def register():
             db ["username"] = name
             app.secret_key=name
             db ["password"] = password
+            return redirect("/home")
+	else:
+	    return render_template("register.html")
+
+@app.route("/success")
+def success():
+    return "<h1> You have successfully logged in!</h1>"
 
 if __name__=="__main__":
     app.debug=True
