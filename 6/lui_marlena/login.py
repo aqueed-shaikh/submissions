@@ -6,8 +6,11 @@ app = Flask(__name__)
 app.config['SHELVE_FILENAME'] = 'username.db'
 shelve.init_app(app)
 
+
+
 @app.route("/register")
 def register():
+    #db = shelve.open(   )?
     page="""<h1>Register</h1>
         <form method="post">
         <input type="text" name="username">
@@ -16,8 +19,8 @@ def register():
         <input type="submit" name="button" value="cancel">
         </form>
         """
-    username = shelve.get_shelve('c')
-    username["username"] = "password"
+   # db = shelve.get_shelve('c')
+   # db[request.form['username']] = request.form['password']
     return page
 
 if __name__ == "__main__":
