@@ -24,7 +24,7 @@ def login():
     if request.method == 'GET':
         return render.template('login.html')
     elif shelve[username] == password:
-        return redirect('/welcome')
+        return render.template('welcome.html')
     else:
         return render_template("login.html")
 
