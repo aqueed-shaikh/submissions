@@ -10,13 +10,11 @@ def home():
 
 @app.route('/login')
 def login():
-	return render_template('login.html',
-		title='Login')
+	return render_template('login.html', title='Login')
 
 @app.route('/register')
 def register():
-	return render_template('register.html',
-		title='Register')
+	return render_template('register.html', title='Register')
 
 if __name__ == '__main__':
 	app.debug = True

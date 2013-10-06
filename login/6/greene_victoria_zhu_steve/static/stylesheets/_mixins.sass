@@ -18,18 +18,17 @@
 	vertical-align: middle
 
 // Outer mixin
-// automatically centers the first div child
+// automatically centers the first span child
 @mixin center-outer
 	height: 100%
 	text-align: center
 	&:before
 		display: inline-block
 		height: 100%
-		background-color: blue
 		content: ''
 		vertical-align: middle
 		font-size: 0
-	div:first-child
+	span:first-child
 		@include center-inner
 
 .center-outer

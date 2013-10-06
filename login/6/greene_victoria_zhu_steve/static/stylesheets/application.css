@@ -5,11 +5,10 @@
   .center-outer:before {
     display: inline-block;
     height: 100%;
-    background-color: blue;
     content: "";
     vertical-align: middle;
     font-size: 0; }
-  .center-outer div:first-child {
+  .center-outer span:first-child {
     display: inline-block;
     vertical-align: middle; }
 
@@ -70,23 +69,7 @@ h1#login-title {
   border-bottom: 1px solid lightgrey;
   font-weight: normal; }
 
-#login-outer {
-  height: 100%;
-  text-align: center; }
-  #login-outer:before {
-    display: inline-block;
-    height: 100%;
-    background-color: blue;
-    content: "";
-    vertical-align: middle;
-    font-size: 0; }
-  #login-outer div:first-child {
-    display: inline-block;
-    vertical-align: middle; }
-
 #login-container {
-  display: inline-block;
-  vertical-align: middle;
   position: relative;
   margin: 0 auto;
   padding: 20px;
@@ -95,3 +78,13 @@ h1#login-title {
   border-radius: 3px;
   background-color: white;
   font-size: 16px; }
+
+a#login-register-link {
+  display: inline-block;
+  margin-top: 10px;
+  border-bottom: 1px dotted #636363;
+  color: #636363;
+  font-size: 14px;
+  text-decoration: none; }
+  a#login-register-link:hover {
+    border-bottom-style: solid; }

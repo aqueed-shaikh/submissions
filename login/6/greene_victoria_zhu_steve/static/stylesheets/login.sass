@@ -29,11 +29,7 @@ h1#login-title
 	border-bottom: 1px solid lightgray
 	font-weight: normal
 
-#login-outer
-	@include center-outer
-
 #login-container
-	@include center-inner
 	position: relative
 	margin: 0 auto
 	padding: 20px
@@ -42,3 +38,13 @@ h1#login-title
 	border-radius: 3px
 	background-color: white
 	font-size: 16px
+
+a#login-register-link
+	display: inline-block
+	margin-top: 10px
+	border-bottom: 1px dotted $textColor
+	color: $textColor
+	font-size: 14px
+	text-decoration: none
+	&:hover
+		border-bottom-style: solid
