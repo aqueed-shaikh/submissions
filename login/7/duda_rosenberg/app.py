@@ -24,16 +24,13 @@ def login():
         #print "2"
         db = shelve.get_shelve("c")
         #print "3"
-        if db.has_key(user):
-            #print "4"
-            if db[user] == pwd:
-                return render_template("welcome.html",username=user, message="How are you doing today?")
-            else:
-                return render_template("login.html", error="The given password does not match the given username")
+        if db.has_key(user) && db[user] == pwd:
+            return render_template("welcome.html",username=user, 
+                                       message="How are you doing today?")
+                                
         else:
-            #print "5"
-            db[user] = pwd
-            return render_template("welcome.html", username=user, message="Hello New User")
+            return  render_template("login.html",
+                                    error="username or password not recognized")
         db.close()
         #print "6"
     else:
