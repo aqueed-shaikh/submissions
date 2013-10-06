@@ -8,7 +8,7 @@
     content: "";
     vertical-align: middle;
     font-size: 0; }
-  .center-outer span:first-child {
+  .center-outer > span:first-child {
     display: inline-block;
     vertical-align: middle; }
 
@@ -40,20 +40,6 @@ body {
   color: #636363;
   font-family: "Open Sans", sans-serif; }
 
-.button, input[type=submit] {
-  -webkit-transition: background-color 0.2s;
-  -moz-transition: background-color 0.2s;
-  -ms-transition: background-color 0.2s;
-  -o-transition: background-color 0.2s;
-  transition: background-color 0.2s;
-  cursor: pointer;
-  color: white;
-  background-color: #74d2ff;
-  border: 1px solid transparent;
-  padding: 10px; }
-  .button:hover, input[type=submit]:hover {
-    background-color: #45c3ff; }
-
 input {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -83,32 +69,50 @@ input {
     outline: none;
     border: 1px solid #74d2ff; }
 
-h1#login-title {
-  margin: 0 0 20px;
-  padding-bottom: 5px;
-  border-bottom: 1px solid lightgrey;
-  font-weight: normal; }
+.button, input[type=submit] {
+  -webkit-transition: background-color 0.2s;
+  -moz-transition: background-color 0.2s;
+  -ms-transition: background-color 0.2s;
+  -o-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+  cursor: pointer;
+  color: white;
+  background-color: #74d2ff;
+  border: 1px solid transparent;
+  padding: 10px; }
+  .button:hover, input[type=submit]:hover {
+    background-color: #45c3ff; }
 
-#login-container {
+.outer-container, #login-container, #register-container {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  position: relative;
   margin: 0 auto;
   padding: 20px;
-  width: 300px;
   border: 1px solid silver;
   background-color: white;
   font-size: 16px; }
 
-a#login-register-link {
+.title {
+  margin: 0 0 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid lightgrey;
+  font-weight: normal; }
+
+a.bottom-link {
   display: inline-block;
   margin-top: 10px;
   border-bottom: 1px dotted #636363;
   color: #636363;
   font-size: 14px;
   text-decoration: none; }
-  a#login-register-link:hover {
+  a.bottom-link:hover {
     border-bottom-style: solid; }
+
+#login-container {
+  width: 300px; }
+
+#register-container {
+  width: 500px; }
