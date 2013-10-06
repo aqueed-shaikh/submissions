@@ -1,4 +1,17 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+.center-outer {
+  height: 100%;
+  text-align: center; }
+  .center-outer:before {
+    display: inline-block;
+    height: 100%;
+    content: "";
+    vertical-align: middle;
+    font-size: 0; }
+  .center-outer span:first-child {
+    display: inline-block;
+    vertical-align: middle; }
+
 ::-webkit-input-placeholder {
   font-weight: 300;
   font-family: "Open Sans"; }
@@ -37,7 +50,7 @@ input {
   font-weight: 300;
   font-size: 14px;
   transition: box-shadow 0.2s; }
-  input:nth-of-type(1) {
+  input:first-of-type {
     margin-top: 0; }
   input:focus {
     outline: none;
@@ -47,7 +60,8 @@ input {
     cursor: pointer;
     color: white;
     background-color: #74d2ff;
-    border: none; }
+    border: none;
+    padding: 10px; }
 
 h1#login-title {
   margin: 0 0 20px;
@@ -55,20 +69,7 @@ h1#login-title {
   border-bottom: 1px solid lightgrey;
   font-weight: normal; }
 
-#login-outer {
-  height: 100%;
-  text-align: center; }
-  #login-outer:before {
-    display: inline-block;
-    height: 100%;
-    background-color: blue;
-    content: "";
-    vertical-align: middle;
-    font-size: 0; }
-
 #login-container {
-  display: inline-block;
-  vertical-align: middle;
   position: relative;
   margin: 0 auto;
   padding: 20px;
@@ -77,3 +78,13 @@ h1#login-title {
   border-radius: 3px;
   background-color: white;
   font-size: 16px; }
+
+a#login-register-link {
+  display: inline-block;
+  margin-top: 10px;
+  border-bottom: 1px dotted #636363;
+  color: #636363;
+  font-size: 14px;
+  text-decoration: none; }
+  a#login-register-link:hover {
+    border-bottom-style: solid; }

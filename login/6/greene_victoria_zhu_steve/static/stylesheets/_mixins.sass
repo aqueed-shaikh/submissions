@@ -1,4 +1,4 @@
-@mixin placeholder($fontFamily, $fontWeight)
+@mixin placeholder-font($fontFamily, $fontWeight)
 	::-webkit-input-placeholder
 		font-weight: $fontWeight
 		font-family: $fontFamily
@@ -12,17 +12,24 @@
 		font-weight: $fontWeight
 		font-family: $fontFamily
 
+// Inner mixin for centering an inner block vertically and horizontally within its parent div
+@mixin center-inner
+	display: inline-block
+	vertical-align: middle
+
+// Outer mixin
+// automatically centers the first span child
 @mixin center-outer
 	height: 100%
 	text-align: center
 	&:before
 		display: inline-block
 		height: 100%
-		background-color: blue
 		content: ''
 		vertical-align: middle
 		font-size: 0
+	span:first-child
+		@include center-inner
 
-@mixin center-inner
-	display: inline-block
-	vertical-align: middle
+.center-outer
+	@include center-outer
