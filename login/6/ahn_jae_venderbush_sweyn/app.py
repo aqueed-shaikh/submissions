@@ -42,25 +42,13 @@ def register():
         button = request.form['button']
         username = request.form['username']
         password = request.form['password']
-        if button == "register":
+        if button == "Submit":
             if not username in logins:
                 logins[username] = {'password':password,'count':8}
                 print logins
                 return "Successfully created account"
             else:
                 return "Username Already Exists"
-
-        
-@app.route("/reset")
-def reset():
-    session.pop('count',None)
-    return redirect(url_for('home'))
-
-@app.route("/test")
-def test():
-    logins = shelve.get_shelve('c')
-    logins["test2"]["test"] = "success"
-    return str(logins)
 
 @app.route("/count")
 def count():
@@ -87,7 +75,7 @@ def count():
 
 @app.route("/")
 def home():
-    return redirect("/count")
+    return redirect("/hidden")
 
 
 if __name__=="__main__":
