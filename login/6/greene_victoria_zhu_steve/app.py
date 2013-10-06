@@ -1,20 +1,22 @@
 #!/usr/bin/python
 
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-	return '<html></html>'
+	return redirect(url_for('login'))
 
 @app.route('/login')
 def login():
-	return render_template('login.html', title='Login', stylesheet=url_for('static', filename='login.css'))
+	return render_template('login.html',
+		title='Login')
 
 @app.route('/register')
 def register():
-	return render_template('register.html', title='Register', stylesheet=url_for('static', filename='register.css'))
+	return render_template('register.html',
+		title='Register')
 
 if __name__ == '__main__':
 	app.debug = True

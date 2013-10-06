@@ -1,4 +1,18 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+.center-outer {
+  height: 100%;
+  text-align: center; }
+  .center-outer:before {
+    display: inline-block;
+    height: 100%;
+    background-color: blue;
+    content: "";
+    vertical-align: middle;
+    font-size: 0; }
+  .center-outer div:first-child {
+    display: inline-block;
+    vertical-align: middle; }
+
 ::-webkit-input-placeholder {
   font-weight: 300;
   font-family: "Open Sans"; }
@@ -37,7 +51,7 @@ input {
   font-weight: 300;
   font-size: 14px;
   transition: box-shadow 0.2s; }
-  input:nth-of-type(1) {
+  input:first-of-type {
     margin-top: 0; }
   input:focus {
     outline: none;
@@ -47,7 +61,8 @@ input {
     cursor: pointer;
     color: white;
     background-color: #74d2ff;
-    border: none; }
+    border: none;
+    padding: 10px; }
 
 h1#login-title {
   margin: 0 0 20px;
@@ -65,6 +80,9 @@ h1#login-title {
     content: "";
     vertical-align: middle;
     font-size: 0; }
+  #login-outer div:first-child {
+    display: inline-block;
+    vertical-align: middle; }
 
 #login-container {
   display: inline-block;
