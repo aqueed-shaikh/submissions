@@ -8,17 +8,10 @@ app.secret_key="my secret key"
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method=="GET":
-        page="""<h1>Login</h1>
-        <form method="post">
-        <input type="text" name="username">
-        <input type="text" name="password">
-        <input type="submit" name="button" value="login">
-        <input type="submit" name="button" value="cancel">
-        </form>
-        """
-        return page
+	return render_template("login.html")
     else:
-        
+	return render_template("login.html")
+
 @app.route("/")
 def home():
     #return redirect(url_for('count'))
@@ -33,8 +26,13 @@ def register():
 	if button == "Submit":
 	    name = request.form['username']
 	    password = request.form['password']
-	else
+	    return redirect("/login")
+	else:
+	    return render_template("register.html")
 
+@app.route("/success")
+def success():
+    return "<h1> You have successfully logged in!</h1>"
 
 if __name__=="__main__":
     app.debug=True
