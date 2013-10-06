@@ -1,9 +1,9 @@
 from flask import Flask, session, redirect, request, url_for, render_template
 from flask.ext import shelve
 
-app = Flask(_name)
+app = Flask(__name__)
 app.config['SHELVE_FILENAME'] = 'shelve.db'
-shelve.int_app(app)
+shelve.init_app(app)
 app.secret_key='my secret key'
 
 @app.route("/")
@@ -52,11 +52,8 @@ def register():
 @app.route("/logout")
 def logout():
     session.pop('username', None)
-    return redirect(url_for(home))
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.debug=True
     app.run(host='0.0.0.0', port = 5000)
-                           
-                                
-                              
