@@ -1,5 +1,15 @@
-{% extends "layout.html" %}
-{% block body %}
+= extends "layout.html"
+= block title
+	Register
+= endblock
+= block body
 	<div id="register-container">
+		<form method="post">
+			<label>Username</label>
+			<input>
+			<label>Password</label>
+			<input>
+			<label>Confirm Password</label>
+		</form>
 	</div>
-{% endblock %}
+= endblock
