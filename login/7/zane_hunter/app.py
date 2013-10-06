@@ -8,6 +8,12 @@ app = Flask(__name__)
 def home():
 	return "<h3> Login </h3>"
 
+@app.route('/register')
+def register():
+	
+
+	return render_template("render.html")
+
 
 if __name__ == "__main__":
 	app.debug = True
