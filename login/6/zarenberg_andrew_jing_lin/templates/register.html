@@ -5,9 +5,9 @@
     <body>
         <h3>Register</h3>
         
-        <% if type == 1 %>
+        {% if type == 1 %}
         <div>Error: Username exists</div>
-        <% endif %>
+        {% endif %}
         
         <form method = "POST">
             Username: <input type = "text" name="username"><br>
