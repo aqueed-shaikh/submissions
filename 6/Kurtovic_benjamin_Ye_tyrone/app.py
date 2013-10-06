@@ -32,6 +32,7 @@ def login():
             usrname = request.form['username']
             pw = request.form['password']
             shelve[usrname] = pw
+            
 
 @app.route("/home")
 def home():
