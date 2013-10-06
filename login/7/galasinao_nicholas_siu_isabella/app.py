@@ -54,7 +54,7 @@ def logout():
 
 @app.route("/secret")
 def secret():
-    if session["username"]:
+    if "username" in session:
         return "<h1>A wild Secret appeared!</h1>"
     else:
         return redirect("/login")
