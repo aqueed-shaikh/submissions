@@ -18,14 +18,25 @@ def index():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if "username" in session:
-        return redirect("/")
-    elif request.method == "GET":
-        return render_template("login.html");
-    else:
-        usrname = request.form["username"]
-        pw = request.form["password"]
-        shelve[usrname] = pw
+    if request.method == "GET":
+        return render_template("login.html")
+    username = request.form["username"]
+    password = request.form["password"]
+    if username not in shelf:
+        return render_template("login.html", error="Incorrect username.")
+    if shelve[username] != password:
+        return render_template("login.html", error="Incorrect password.")
+    session["username"] = username
+    return redirect("/")
+
+@app.route("/register")
+def register():
+    if request.method == "GET":
+        return render_template("register.html")
+    username = request.form["username"]
+    password = request.form["password"]
+    shelve[username] = password
+    return redirect("/")
 
 @app.route("/logout")
 def logout():
