@@ -4,11 +4,11 @@ from flask.ext import shelve
 
 app = Flask(__name__)
 
-app.route('/')
+@app.route('/')
 def home():
 	return "<h3> Login </h3>"
 
 
 if __name__ == "__main__":
 	app.debug = True
-	app.run()
+	app.run(host='0.0.0.0', port=5000)
