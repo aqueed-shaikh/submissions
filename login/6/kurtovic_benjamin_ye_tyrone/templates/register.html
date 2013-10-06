@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Register</title>
+        <style>
+            body { font-family: sans-serif; }
+        </style>
+    </head>
+    <body>
+        <h1>Register</h1>
+        {% if error %}
+            <p><span style="color: red;">Error</span>:
+            {% if error == "missing" %}
+                Missing a username or password.
+            {% elif error == "exists" %}
+                Username already exists. <a href="/login">Login?</a>
+            {% else %}
+                {{error}}
+            {% endif %}
+            </p>
+        {% endif %}
+        <form method="POST">
+            <table>
+                <tr><td>Username:</td><td><input type="text" name="username"></td>
+                <tr><td>Password:</td><td><input type="password" name="password"><br></td>
+                <tr><td colspan="2"><input type="submit" value="Submit"></td></tr>
+            </table>
+        </form>
+    </body>
+</html>
