@@ -3,6 +3,7 @@ from flask import session, url_for, request, redirect, render_template
 import shelve
 
 app = Flask(__name__)
+app.config['SHELVE_FILENAME'] = 'shelve.db'
 app.secret_key = "my secret key"
 
 @app.route("/")
@@ -17,12 +18,28 @@ def login():
         idu = request.form['id']
         id = idu.encode('ascii','ignore')
         s = shelve.open("sessions")
+        
+
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
+    db = shelve.get_shelve()
     if request.method == "GET" :
         return render_template("register.html")
-
+    else:
+        button = request.form['button']
+        if button == "Submit":
+            username = request.form['username']
+            password = request.form['password']
+            confirmpassword = request.form['confirmpassword']
+            if user in data:
+                return render_template("register.html", message = "There is already an account under your name.")
+            elif password != confirmpassword:
+                return render_template("register.html", message = "Please correctly confirm your passwords.")
+            else:
+                db[username] = password
+                session['username'] = username
+                return redirect(url_for('login'))
         
 @app.route("/members")
 def members():
