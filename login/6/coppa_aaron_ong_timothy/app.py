@@ -1,14 +1,17 @@
 from flask import Flask
 from flask import session,url_for, request, redirect, render_template
-import shelve
+from flask.ext import shelve
 
 app = Flask(__name__)
 app.secret_key="ijasdb012fbrfasdffb0vbevs"
+app.config['SHELVE_FILENAME'] = 'users.db'
+shelve.init_app(app)
+
 
 @app.route("/")
 def home():
     if "username" in session:
-        return render_template("hidden_page.html")
+        return render_template("index.html", d=session)
     else:
         return redirect(url_for("login"))
 
@@ -19,10 +22,10 @@ def login():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        s = shelve.open("database")
-        if not s.has_key(username):
+        users = shelve.get_shelve()
+        if not users.has_key(username):
             return redirect(url_for("register"))
-        if s["username"] != password:
+        if users[username] != password:
             return redirect(url_for("login"))
         session["username"] = username
         return redirect(url_for("home"))
@@ -34,10 +37,10 @@ def register():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        s = shelve.open("database")
-        if s.has_key(username):
+        users = shelve.get_shelve()
+        if users.has_key(username):
             return render_template("register.html")
-        s[username] = password
+        users[username] = password
         session["username"] = username
         return redirect(url_for("home"))
 
