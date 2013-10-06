@@ -22,7 +22,7 @@ def login():
         return render_template("login.html")
     username = request.form["username"]
     password = request.form["password"]
-    if username not in shelf:
+    if username not in shelve:
         return render_template("login.html", error="Incorrect username.")
     if shelve[username] != password:
         return render_template("login.html", error="Incorrect password.")
