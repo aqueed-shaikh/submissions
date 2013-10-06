@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<html>
+  
+  <head>
+    <title> Home </title>
+  </head>
+  
+  <body>
+    <h1 style = "text-align: center"> Welcome </h1>
+    <input type = "submit" name = "logout" value = "Logout">
+  </body>
+
+</html>
