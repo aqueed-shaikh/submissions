@@ -1,37 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="1187.39">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.0px; font: 12.0px Helvetica; background-color: #ffffff}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.0px; font: 12.0px Consolas; color: #000080; background-color: #ffffff}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.0px; font: 12.0px Consolas; color: #000080}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.0px; font: 12.0px Consolas; color: #dd2244}
-    span.s1 {color: #333333}
-    span.s2 {color: #008080}
-    span.s3 {color: #dd1144}
-    span.s4 {background-color: #ffffff}
-    span.s5 {color: #011480}
-    span.s6 {color: #323333}
-    span.s7 {color: #dd2244}
-  </style>
+<title> Home </title>
+<style> 
+<link rel="stylesheet" type="text/css" href="#{ url_for('static', filename='stylesheets/home.css')}">
+</style> 
 </head>
 <body>
-<p class="p1">&lt;html&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1">&lt;title&gt; Home &lt;/title&gt;</p>
-<p class="p1">&lt;style&gt;<span class="Apple-converted-space"> </span></p>
-<p class="p2">&lt;link rel="stylesheet" type="text/css" href="#{ url_for('static', filename='stylesheets/home.css') }"&gt;</p>
-<p class="p2">&lt;/head&gt;</p>
-<p class="p2">&lt;body&gt;</p>
-<p class="p2">&lt;h2&gt; Welcome {{username}}! Choose what you would like to do! &lt;/h2&gt;<span class="Apple-converted-space"> </span></p>
-<p class="p3">&lt;a href="http://www.google.com&gt;&lt;input<span class="s1"> </span><span class="s2">type=</span><span class="s3">"link"</span><span class="s1"> </span><span class="s2">name=</span><span class="s3">"button"</span><span class="s1"> </span><span class="s2">value=</span><span class="s3">"Go To Google"</span>&gt;&lt;/a&gt;</p>
-<p class="p4"><span class="s4">&lt;a href="<a href="http://bert.stuy.edu/pbrooks/schedules/schedules.py">http://bert.stuy.edu/pbrooks/schedules/schedules.py</a>&gt;</span><span class="s5">&lt;input</span><span class="s6"> </span><span class="s2">type=</span><span class="s7">"link"</span><span class="s6"> </span><span class="s2">name=</span><span class="s7">"button"</span><span class="s6"> </span><span class="s2">value=</span><span class="s7">"Check the time for today's schedule"</span><span class="s5">&gt;&lt;/a&gt;</span></p>
-<p class="p5"><span class="s5">&lt;a href="http://c9.io&gt;&lt;input</span><span class="s6"> </span><span class="s2">type=</span>"link"<span class="s6"> </span><span class="s2">name=</span>"button"<span class="s6"> </span><span class="s2">value=</span>"Work on HTML in the Cloud"<span class="s5">&gt;&lt;/a&gt;<span class="Apple-converted-space"> </span></span></p>
-</body>
-</html>
+<h2> Welcome {{username}}! Choose what you would like to do! </h2> 
+<a href="http://www.google.com><input type="link" name="button" value="Go To Google"></a>
+<a href="http://bert.stuy.edu/pbrooks/schedules/schedules.py><input type="link" name="button" value="Check the time for today's schedule"></a>
+<a href="http://c9.io><input type="link" name="button" value="Work on HTML in the Cloud"></a> 
