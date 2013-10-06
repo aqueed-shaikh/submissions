@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, request-handler, session, url_for, render_template
+from flask import request, session, url_for, render_template
 from flask.ext import shelve
 users = shelve.get_shelve('users')
 
@@ -7,7 +7,7 @@ app = flask(__name__)
 app.route('/')
 def home():
 
-app.route("/login", methods=['GET', 'POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "GET":
         return render_template("login.html")
@@ -24,7 +24,7 @@ def login():
             return render_template("login.html") #add an error message?
 
         
-app.route("/register", methods=['GET', 'POST'])
+@app.route("/register", methods=['GET', 'POST'])
 def register():
     pass
 
