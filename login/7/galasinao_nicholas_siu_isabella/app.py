@@ -46,7 +46,7 @@ def login():
         else:
             return redirect("/register")
 
-<<<<<<< HEAD
+#<<<<<<< HEAD
 @app.route("/logout")
 def logout():
     session.pop("username")
@@ -54,13 +54,12 @@ def logout():
 
 @app.route("/secret")
 def secret():
-    if session["username"]:
+    if "username" in session:
         return "<h1>A wild Secret appeared!</h1>"
     else:
         return redirect("/login")
-=======
 
->>>>>>> 5762cfd68f458a814eb675ba67b2a2e421eb5552
+#>>>>>>> 5762cfd68f458a814eb675ba67b2a2e421eb5552
 
 if __name__=="__main__":
     app.debug=True
