@@ -1,3 +1,16 @@
+<html>
+<head>
+  <script type="text/javascript">
+    {% if message %}
+      function notify() {
+        alert("{{message}}");
+      };
+      window.onload = notify;
+    {% endif %}
+  </script>
+  <title>Login</title>
+</head>
+<h2>Login</h2>
 <form method=POST>
   <input type=text name=username>
   <input type=password name=password>
@@ -5,3 +18,4 @@
 </form>
 
 <a href="/register">Register</a>
+</html>

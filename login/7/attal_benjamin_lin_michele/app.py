@@ -36,13 +36,13 @@ def register():
     if 'username' in session:
         return redirect(url_for('home'))
     elif request.method == 'GET':
-        return render_template('register.html');
+        return render_template('register.html')
     else:
         username = request.form['username'].encode('ascii', 'ignore')
         password = request.form['password'].encode('ascii', 'ignore')
         database = shelve.get_shelve()
         if username in database:
-            return render_template('register.html', message='Already in use')
+            return render_template('register.html', message='Username already in use')
         else:
             database[username] = password
             session['username'] = username
