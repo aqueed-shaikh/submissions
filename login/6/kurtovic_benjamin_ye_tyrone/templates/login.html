@@ -1,10 +1,26 @@
 <html>
     <head>
         <title>Login</title>
+        <style>
+            body { font-family: sans-serif; }
+        </style>
     </head>
     <body>
         <h1>Login required</h1>
         <p>Don't have an account? <a href="/register">Register</a>.</p>
+        {% if error %}
+            <p><span style="color: red;">Error</span>:
+            {% if error == "missing" %}
+                Missing a username or password.
+            {% elif error == "no-user" %}
+                Username does not exist. <a href="/register">Register?</a>
+            {% elif error == "incorrect" %}
+                Incorrect password.
+            {% else %}
+                {{error}}
+            {% endif %}
+            </p>
+        {% endif %}
         <form method="POST">
             <table>
                 <tr><td>Username:</td><td><input type="text" name="username"></td>

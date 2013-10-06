@@ -1,3 +1,10 @@
+@mixin vendor($property, $value)
+	-webkit-#{$property}: $value
+	-moz-#{$property}: $value
+	-ms-#{$property}: $value
+	-o-#{$property}: $value
+	#{$property}: $value
+
 @mixin placeholder-font($fontFamily, $fontWeight)
 	::-webkit-input-placeholder
 		font-weight: $fontWeight

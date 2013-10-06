@@ -1,7 +1,6 @@
-$blue: #74D2FF
-
 input
-	box-sizing: border-box
+	@include vendor(box-sizing, border-box)
+	@include vendor(transition, box-shadow 0.2s)
 	margin-top: 15px
 	padding: 6px 10px
 	width: 100%
@@ -9,19 +8,12 @@ input
 	color: $textColor
 	font-weight: 300
 	font-size: 14px
-	transition: box-shadow 0.2s
 	&:first-of-type
 		margin-top: 0
 	&:focus
+		@include vendor(box-shadow, 0 0 3px $blue)
 		outline: none
 		border: 1px solid $blue
-		box-shadow: 0 0 3px $blue
-	&[type=submit]
-		cursor: pointer
-		color: white
-		background-color: $blue
-		border: none
-		padding: 10px
 
 h1#login-title
 	margin: 0 0 20px
@@ -30,12 +22,12 @@ h1#login-title
 	font-weight: normal
 
 #login-container
+	@include vendor(border-radius, 3px)
 	position: relative
 	margin: 0 auto
 	padding: 20px
 	width: 300px
 	border: 1px solid #C0C0C0
-	border-radius: 3px
 	background-color: white
 	font-size: 16px
 
