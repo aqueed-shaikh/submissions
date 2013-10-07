@@ -4,7 +4,7 @@ from flask.ext import shelve
 secret = "uniquellama"
 shelf = "thea"
 
-def registerUser(app, usern, passw): 
+def registerUser(usern, passw): 
 	db = shelve.get_shelve(shelf)
 	if not usern in db:
 		hashpass = encrypt(passw)
