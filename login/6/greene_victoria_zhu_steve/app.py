@@ -19,8 +19,6 @@ def register():
 
 if __name__ == '__main__':
 	env.line_statement_prefix = '='
-	env.variable_start_string = '#{'
-	env.variable_end_string = '}'
 	
 	app.debug = True
-	app.run(host='0.0.0.0', port=5000)
+	app.run(host='0.0.0.0')
