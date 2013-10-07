@@ -4,7 +4,7 @@ from flask.ext import shelve
 
 app = Flask(__name__)
 app.secret_key="marlyandme"
-app.config['SHELVE_FILENAME'] = 'username.db'
+app.config['SHELVE_FILENAME'] = 'users.db'
 shelve.init_app(app)
 
 @app.route("/")
@@ -27,7 +27,7 @@ def login():
         if users[username] != password:
             return redirect(url_for("login"))
         session["username"] = username
-        return redirect("/home")
+    return redirect("/home")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -40,9 +40,9 @@ def register():
         if not username in users:
             return render_template("register.html")
         users[username] = password
-        session["username"] = username
-        return redirect("/home")
-                    
+        session['username'] = username
+    return redirect("/")
+
 @app.route("/reset", methods = ['GET', 'POST'])
 def reset():
     session.pop("username", None)
