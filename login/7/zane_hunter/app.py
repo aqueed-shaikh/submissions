@@ -18,7 +18,7 @@ def home():
 	if 'uname' in session: 
 		return render_template("ferns.html",name=session['uname'])
 	else:
-		return "<a href='/login/'><h3> Login </h3></a><a href='/register/'><h3>Register</h3></a>"
+		return render_template("index.html")
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
@@ -49,10 +49,12 @@ def signin():
 			return render_template("whoops.html")
 	else:#get
 		return render_template("login.html")
+
 @app.route('/logout/')
 def logout():
 	session.clear()
 	return redirect(url_for('home'))
+
 if __name__ == "__main__":
 	app.debug = True
 	app.run(host='0.0.0.0', port=5000)
