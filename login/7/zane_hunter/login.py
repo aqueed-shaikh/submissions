@@ -5,7 +5,7 @@ secret = "uniquellama"
 shelf = "thea"
 
 def registerUser(usern, passw): 
-	db = shelve.get_shelve(shelf)
+	db = shelve.get_shelve('c')
 	if not usern in db:
 		hashpass = encrypt(passw)
 		db[usern] = hashpass
@@ -16,7 +16,7 @@ def registerUser(usern, passw):
 		return False
 
 def checkUser(app,usern,passw):
-	db = shelve.get_shelve(shelf)
+	db = shelve.get_shelve('c')
 	hashpass = encrypt(passw)
 	ans = db[usern] == hashpass
 	shelve.close()
