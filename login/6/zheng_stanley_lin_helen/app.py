@@ -23,12 +23,7 @@ def home():
 @app.route("/home")
 def home():
     if 'user' in session:
-        page="""
-        <h1>Welcome home.</h1>
-        <p>
-        <a href="/logout">Logout</a href>
-        """
-        return page
+        return render_template("home.html")
     else:
         return redirect("/login")
 
@@ -55,14 +50,14 @@ def login():
 @app.route("/redo",methods=['GET','POST'])
 def redo():
     if request.method=="GET":
-        return render_template("register.html")
+        return redirect("/login")
     else:
         button = request.form['button']
         user = request.form['username']
         if button=="Login" and user=="username":
             return redirect(url_for('redo'))
         else:
-            return redirect(url_for('user'))
+            return redirect("/home")
     
 
 
@@ -75,7 +70,7 @@ def register():
         button = request.form['button']
         if button=="Register":
             session['username']="username"
-            return page
+            return redirect("/home")
 
 #POP THE USERNAME
 @app.route("/logout")
