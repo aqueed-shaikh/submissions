@@ -11,7 +11,13 @@ app.secret_key = 'my secret key'
 @app.route("/")
 def home():
     if 'username' in session:
-        return "<h1> The main page</h1>"
+        return """
+<h1> The main page</h1>
+<br><br><br>
+<p>Would you like to <a href="/logout">Logout?</a></p>
+
+
+"""
     else:
         return redirect(url_for('login'))
 
@@ -28,12 +34,12 @@ def login():
         if s.has_key(username) and s["%s"%(username)] == password:
             session['username'] = username
             s.close()
-            return redirect(url_for('home'))
+            return redirect('/')
         else:
             s.close()
             return render_template("login.html", incorrect="True")
 
-@app.route("/register")
+@app.route("/register",methods=['GET','POST'])
 def register():
     if request.method =="GET":
         return render_template("register.html")
@@ -43,9 +49,14 @@ def register():
         temp2=request.form['password']
         psswd=temp2.encode('ascii','ignore')
         s = shelve.open("sessions")
-        s[user]=psswd
+        s["%s"%(user)]=psswd
         s.close()
-        return redirect("/home")
+        return redirect("/")
+
+@app.route("/logout")
+def logout():
+    session.pop('username')
+    return redirect('/')
             
         
 
