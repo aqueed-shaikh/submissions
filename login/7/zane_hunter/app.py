@@ -11,7 +11,10 @@ shelve.init_app(app)
 
 @app.route('/')
 def home():
-	return "<h3> Login </h3>"
+	if  'uname' in session: 
+		return render_template("ferns.html",name=session['uname'])
+	else:
+		return "<a href='/login/'><h3> Login </h3></a><a href='/register/'><h3>Register</h3></a>"
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
