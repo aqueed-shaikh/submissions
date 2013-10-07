@@ -37,9 +37,9 @@ def login():
         password = request.form["password"].encode("ascii","ignore")
         users = shelve.get_shelve()
         if not users.has_key(username):
-            return render_template(url_for("login"))
+            return redirect(url_for("login"))
         elif users[username] != password:
-            return render_template("login2.html")
+            return redirect(url_for("login"))
         session["username"] = username
         return redirect(url_for("home"))
 
