@@ -37,7 +37,7 @@ def register():
 		if password != password_confirm:
 			return 'The two passwords are not equal.'
 		elif username in db:
-			return 'An account already exists with that username'
+			return 'An account already exists with that username.'
 		else:
 			db[username] = password
 			session['username'] = username
