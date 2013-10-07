@@ -50,7 +50,7 @@ def logout():
     return redirect('/')
 
 @app.route('/page')
-def page1():
+def page():
 	if logged_in():
 		return render_template('page1.html')
 	return redirect(url_for('login'))
