@@ -72,26 +72,26 @@ def logout():
 @app.route('/registered')
 def registered():
     if 'username' in session:
-        return render_template('registered.html')
+        return render_template('registered.html', user=session['username'])
     return redirect("/")
 
 
 @app.route('/procrastination')
 def procrastination():
     if 'username' in session:
-        return render_template('procrastination.html')
+        return render_template('procrastination.html', user=session['username'])
     return redirect("/")
 
 @app.route('/work')
 def work():
     if 'username' in session:
-        return render_template('work.html')
+        return render_template('work.html', user=session['username'])
     return redirect("/")
 
 @app.route('/future')
 def future():
     if 'username' in session:
-        return render_template('future.html')
+        return render_template('future.html', user=session['username'])
     return redirect("/")
 
 if __name__ == "__main__":
