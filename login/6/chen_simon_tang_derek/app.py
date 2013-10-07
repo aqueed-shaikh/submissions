@@ -22,7 +22,9 @@ def login():
         button = request.form['button']
         accounts = shelve.get_shelve()
         if button == "Login":
-            if accounts[username] == password:
+            if username not in accounts:
+                return redirect("/members")
+            elif accounts[username] == password:
                 session["username"] = username
                 return redirect("/members")
             else:
