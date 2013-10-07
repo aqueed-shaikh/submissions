@@ -31,7 +31,7 @@ def register():
     elif request.method == 'POST':
         user = request.form['user']
         password = request.form['pass']
-        userdb = shelve.get_shelve()
+        userdb = shelve.get_shelve('c')
         if userdb.haskey(user):
             return render_template("register.html",error="Username already exists")
         else:
