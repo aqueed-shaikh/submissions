@@ -21,6 +21,8 @@ def checkUser(app,usern,passw):
 	usern = usern.encode('ascii')
 	passw = passw.encode('ascii')
 	db = shelve.get_shelve('c')
+	if not usern in db:
+		return False
 	hashpass = encrypt(passw)
 	ans = db[usern] == hashpass
 	db.close()
