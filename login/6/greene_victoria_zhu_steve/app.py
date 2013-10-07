@@ -16,22 +16,21 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
-		username = request.form['username'].encode('ascii', 'ignore')
-		password = request.form['password'].encode('ascii', 'ignore')
+		username = get_form_value('username')
+		password = get_form_value('password')
 		db = shelve.get_shelve('c')
 		if username in db and db[username] == password:
 			session['username'] = username
-	
-	if session['username'] != none:
-		redirect(url_for('page1'))
+	if 'username' in sesssion and session['username'] != none:
+		return redirect(url_for('page1'))
 	return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 	if request.method == 'POST':
-		username = request.form['username'].encode('ascii', 'ignore')
-		password = request.form['password'].encode('ascii', 'ignore')
-		password_confirm = request.form['password-confirm'].encode('ascii', 'ignore')
+		username = get_form_value('username')
+		password = get_form_value('password')
+		password_confirm = get_form_value('password-confirm')
 		db = shelve.get_shelve('c')
 		if password != password_confirm:
 			return 'The two passwords are not equal.'
@@ -57,6 +56,14 @@ def accounts():
 	for key in db:
 		acc += key + ":" + db[key] + "\n"
 	return acc
+	
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect('/')
+
+def get_form_value(key):
+	return request.form[key].encode('ascii', 'ignore')
 
 if __name__ == '__main__':
 	env.line_statement_prefix = '='
