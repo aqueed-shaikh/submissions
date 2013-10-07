@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+#Judy Mai & Maia Ezratty 
+
 from flask import Flask, request, url_for, render_template, session, redirect
 from flask.ext import shelve
 
@@ -35,7 +37,6 @@ def register():
             return redirect("home")
         
         
-
 #Make a login page that has a login button and a link to the register page. When you log in, 
 #save the username in the session and then redirect to to some other page.
 @app.route("/login", methods = ["GET", "POST"])
@@ -58,12 +59,12 @@ def login():
         else:
             return render_template("login.html", message = "User/pass don't match.")
 
+
 #Make a logout route that pops the username from the session.
 @app.route("/logout")
 def logout():
     session.pop("username", None)
     return redirect("login")
-
 
 
 if __name__ == "__main__":
