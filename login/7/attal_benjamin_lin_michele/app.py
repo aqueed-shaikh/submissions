@@ -13,6 +13,13 @@ def home():
     else:
         return redirect(url_for('login'))
 
+@app.route('/something')
+def something():
+    if 'username' in session:
+        return render_template('something.html')
+    else:
+        return redirect(url_for('login'))
+
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if 'username' in session:
@@ -56,5 +63,6 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
+    
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
