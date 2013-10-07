@@ -3,6 +3,7 @@
 from flask import Flask, render_template, url_for, redirect, request, session, flash
 from flask.ext import shelve
 from flask.ext.shelve import get_shelve
+import random
 
 app = Flask(__name__)
 app.secret_key = 'WOW SUPER SECRET KEY!1!!!!!!!!!!!!!one'
