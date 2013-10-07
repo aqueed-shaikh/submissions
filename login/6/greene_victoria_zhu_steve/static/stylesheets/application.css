@@ -118,14 +118,14 @@ input {
   border-bottom: 1px solid lightgrey;
   font-weight: normal; }
 
-a.bottom-link {
+a {
   display: inline-block;
   margin-top: 10px;
   border-bottom: 1px dotted #636363;
   color: #636363;
   font-size: 14px;
   text-decoration: none; }
-  a.bottom-link:hover {
+  a:hover {
     border-bottom-style: solid; }
 
 #login-container {
