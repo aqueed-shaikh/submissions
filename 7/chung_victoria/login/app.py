@@ -43,7 +43,7 @@ def register():
         temp2=request.form['password']
         psswd=temp2.encode('ascii','ignore')
         s = shelve.open("sessions")
-        s[user]=psswd
+        s["%s"%(user)]=psswd
         s.close()
         return redirect("/home")
             
