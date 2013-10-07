@@ -14,7 +14,6 @@ def home():
         return render_template("home.html",username=session["username"])
     else:
         return redirect("/login?errormessage="+"0")
-        #return redirect("/login")
 
 @app.route("/login",methods=['GET','POST'])
 def login():
@@ -53,13 +52,21 @@ def login():
 @app.route("/register",methods=['GET','POST'])
 def register():
     if request.method == "GET":
-        return render_template("register.html",error="Hello there!")
+        return render_template("register.html")
+    elif request.form['button'] == "Cancel":
+        return redirect(url_for('login'))
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
         users = shelve.get_shelve()
         if users.has_key(username):
-            return redirect("/register",error="This username already exists.")
+            return render_template("register.html",error="This username already exists.")
+        if len(username) < 4:
+            return render_template("register.html",error="Username must be at least 4 characters.")
+        if len(password) < 6:
+            return render_template("register.html",error="Password must be at least 6 characters.")
+
+            
         users[username] = password
         session["username"] = username
         return redirect("/")
@@ -71,4 +78,4 @@ def logout():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host='0.0.0.0',port=5001)
+    app.run(host='0.0.0.0',port=5002)
