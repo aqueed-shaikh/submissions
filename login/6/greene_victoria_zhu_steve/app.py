@@ -45,7 +45,6 @@ def register():
 		else:
 			db[username] = password
 			session['username'] = username
-			return redirect(url_for('login'))
 	if logged_in():
 		return redirect(url_for('page'))
 	return render_template('register.html', title='Register', error=error)
