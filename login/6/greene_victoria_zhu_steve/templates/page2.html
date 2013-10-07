@@ -1,9 +1,10 @@
 = extends "layout.html"
-=  block title
+= block title
 		Why did the football coach go to the bank?
 = endblock
 = block body
-		<h1><br><br><br>"To get his quarterback!!!"</h1>
-		<br>
-		<a href="{{ url_for('login') }}">Logout</a>
+	<div class="container">
+		<h1>"To get his quarterback!!!"</h1>
+		<a href="{{ url_for('logout') }}">Logout</a>
+	</div>
 = endblock

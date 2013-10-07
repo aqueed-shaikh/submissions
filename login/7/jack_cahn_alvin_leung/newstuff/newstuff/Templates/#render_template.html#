@@ -1,7 +1,0 @@
-<h1>Login Results</h1>
-
-<h2>User: {{d.username}}</h2>
-<h2>Rating: {{d.password}}</h2>
-
-
-<a href="/form">Return to form</a>
