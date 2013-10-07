@@ -1,4 +1,4 @@
-#!/usr/bin/python
+1#!/usr/bin/python
 #!flask/bin/python
 
 #This is Jack Cahn and Alvin Leung's Project
@@ -26,17 +26,17 @@ def sign_in():
 
 @app.route("/register",methods=['GET','POST'])
 def register():
-    my_users = shelve.get_shelve('newShelve')
+    my_users = shelve.get_shelve('c')
     if request.method == 'GET':
         return render_template("register.html",error="")
     elif request.method == 'POST':
-        user = request.form['user'].encode('ascii',"ignore")
-        password = request.form['pass'].encode('ascii',"ignore")
+        user = request.form['user'].encode('ascii','ignore')
+        pw = request.form['pass'].encode('ascii','ignore')
         if my_users.haskey(user):
             return render_template("register.html",error="Username already exists")
         else:
             userdb[user] = pw
-            return redirect(url_for('home'))
+            return redirect(url_for('home')) #Change to sign_in when sign in works
 
 if __name__ == "__main__":
     app.debug = True
