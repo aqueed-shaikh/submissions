@@ -12,6 +12,11 @@
 		    		= block title
 		    		= endblock
 	    		</h1>
+	    		= if error
+	    			<p class="error">
+	    				{{ error }}
+	    			</p>
+	    		= endif
 				= block body
 				= endblock
 			</div>
