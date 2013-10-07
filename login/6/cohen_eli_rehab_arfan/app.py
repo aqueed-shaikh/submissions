@@ -5,12 +5,11 @@ from flask.ext import shelve
 app = Flask(__name__)
 app.config['SHELVE_FILENAME'] = 'shelve.db'
 shelve.init_app(app)
-app.secret_key = "my secret key"
-
+app.secret_key = "abcd"
 
 @app.route("/")
 def home():
-    if "username" in sesson:
+    if "username" in session:
         return render_template("home.html")
     else:
         return redirect("/login")
@@ -30,21 +29,21 @@ def register():
         else:
             data[username] = password
             session["username"] = username
-            return redirect("/login", errormessage = "<h1>Congrats! You have successfully registered!</h1>")
+            return redirect("/login")
 
         
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
     if request.method == "GET":
-        return render_template("login.html", errormessage="<h1>HI!</h1>")
+        return render_template("login.html")
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
         data = shelve.get_shelve()
         if not username in data:
-            return redirect("/login", errormessage="<h1>Username does not exist!</h1>")
+            return redirect("/register")
         elif data[username] != password: 
-            return redirect("/login", errormessage="<h1>Username does not match password.</h1>")
+            return redirect("/register")
         session["username"] = username
         return redirect("/")
 
@@ -56,6 +55,6 @@ def logout():
     return redirect("/")
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     app.debug = True
     app.run(host = "0.0.0.0", port = 5000)
