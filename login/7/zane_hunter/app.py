@@ -20,6 +20,13 @@ def home():
 	else:
 		return render_template("index.html")
 
+@app.route('/wittle')
+def wittle():
+	if 'uname' in session:
+		return render_template('wittle.html')
+	else:
+		redirect(url_for('home'))
+
 @app.route('/register', methods=["POST", "GET"])
 def register():
 	if request.method == "GET":
