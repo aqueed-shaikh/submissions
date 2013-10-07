@@ -18,6 +18,8 @@ def registerUser(usern, passw):
 		return False
 
 def checkUser(app,usern,passw):
+	usern = usern.encode('ascii')
+	passw = passw.encode('ascii')
 	db = shelve.get_shelve('c')
 	hashpass = encrypt(passw)
 	ans = db[usern] == hashpass
