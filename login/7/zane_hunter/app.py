@@ -24,15 +24,15 @@ def register():
 		else:
 			return render_template("register-form.html")
 
-@app.route('/login/',methods="GET,POST")
-def login():
-	if request.method == "POST": #post,get
+@app.route('/login/',methods=["GET","POST"])
+def signin():
+	if request.method == "POST": #post
 		data = request.form
 		if login.checkUser(app,data["uname"],data["passw"]):
 			return render_template("logged.html")
 		else:
 			return render_template("whoops.html")
-	else:
+	else:#get
 		return render_template("login.html")
 
 if __name__ == "__main__":
