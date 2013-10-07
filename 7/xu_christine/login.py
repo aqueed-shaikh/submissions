@@ -54,7 +54,11 @@ Password: <input type="password" name="password" value=""><br>
 
 </form>
 
-
+@app.route('/register', methods=['GET','POST'])
+def register():
+  if request.method == 'POST':
+  return render_template('register.html')
+  
 
 if __name__=="__main__":
     app.debug=True
