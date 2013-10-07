@@ -25,36 +25,37 @@ init_app(app)
 # checks username against password
 def verify_login(u, p):
     db = get_shelve()
-    return db[u] == p
+    return u in db and db[u] == p
 
 #need a more interesting homepage
 @app.route('/')
 def home():
     if 'username' in session:
-        return '<h1>Hi %s!</h1>'%session['username']
-    return "<h1>home</h1>"
+        return render_template("home.html", user=session['username'])
+    return redirect("/login")
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'GET':
         return render_template('register.html')
     elif request.method == 'POST':
-        user = request.form['username']
+        user = request.form['username'].encode("ascii")
         db = get_shelve()
         if user in db: #checks to make sure the username doesn't already exist
             return "Username already in use. Please pick another." + render_template('register.html')
         else:
-            db[user] = request.form['password']
+            db[user] = request.form['password'].encode("ascii")
             session['username'] = user
-            return redirect('/')
+            return redirect('/registered')
+
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
-        user = request.form['username']
-        if verify_login(user, request.form['password']):
+        user = request.form['username'].encode("ascii")
+        if verify_login(user, request.form['password'].encode("ascii")):
             session['username'] = user
             return redirect('/')
         else:
@@ -65,6 +66,33 @@ def login():
 def logout():
     session.pop('username', None)
     return redirect('/')
+
+
+#just something that tells the user that they have successfully registered
+@app.route('/registered')
+def registered():
+    if 'username' in session:
+        return render_template('registered.html', user=session['username'])
+    return redirect("/")
+
+
+@app.route('/procrastination')
+def procrastination():
+    if 'username' in session:
+        return render_template('procrastination.html', user=session['username'])
+    return redirect("/")
+
+@app.route('/work')
+def work():
+    if 'username' in session:
+        return render_template('work.html', user=session['username'])
+    return redirect("/")
+
+@app.route('/future')
+def future():
+    if 'username' in session:
+        return render_template('future.html', user=session['username'])
+    return redirect("/")
 
 if __name__ == "__main__":
     app.debug = True

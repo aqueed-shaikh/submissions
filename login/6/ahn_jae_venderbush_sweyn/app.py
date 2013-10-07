@@ -5,14 +5,14 @@ from flask.ext import shelve
 
 app = Flask(__name__)
 app.secret_key="key"
-app.config['SHELVE_FILENAME'] = 'logins.db'
+app.config['SHELVE_FILENAME'] = 'logins'
 shelve.init_app(app)
 
 
 @app.route("/hidden")
 def hidden():
     if 'username' in session:
-        return "<h1> in the secret page </h1>"
+        return "<h1> This is a hidden page to confirm you are logged in as %s</h1>" % session['username']
     else:
         return redirect(url_for('login'))
 
@@ -26,10 +26,13 @@ def login():
         button = request.form['button']
         username = request.form['username']
         password = request.form['password']
-        if button == "login":
+        if button == "Submit":
             if username in logins and logins[username]['password'] == password:
                 session['username'] = username
-                return "Success"
+                return """
+                Success
+                <a href="/"><span class="s1">Return to Homepage</span></a>
+                """
             else:
                 return "Username and password not on file"
 
@@ -44,18 +47,20 @@ def register():
         password = request.form['password']
         if button == "Submit":
             if not username in logins:
-                logins[username] = {'password':password,'count':8}
-                print logins
+                logins[username] = {'password':password}
                 return "Successfully created account"
             else:
-                return "Username Already Exists"
+                return """
+                Username Already Exists
+                <p>
+                <a href="/register"><span class="s1">Try Again</span></a>
+                """
 
 @app.route("/count")
 def count():
     logins = shelve.get_shelve('c')
     try:
         username = session['username']
-        print username
     except:
         return "Not logged in"
     try:
@@ -66,16 +71,31 @@ def count():
     d = logins[username]
     d['count'] = count
     logins[username] = d
-    print logins
     page="""
     <h1>The count is: %d</h1>
-    <a href="/count">count</a>
+    <p>  
+    <a href="/count">
+    <input type="button" name="button" value="Increment Count">
+    </a> 
+    </p>
     """
     return page%(count)
 
+@app.route("/logout")
+def logout():
+    if 'username' in session:
+        session.pop('username')
+        return render_template('logout.html')
+    else:
+        return redirect('/')
+
 @app.route("/")
 def home():
-    return redirect("/hidden")
+    try:
+        username = session['username']
+        return render_template('Home.html',username=username)
+    except:
+        return redirect(url_for('login'))
 
 
 if __name__=="__main__":
