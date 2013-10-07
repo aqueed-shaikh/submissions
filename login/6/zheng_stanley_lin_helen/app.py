@@ -3,7 +3,7 @@ from flask import session,url_for,request,redirect,render_template
 from flask.ext import shelve
 
 app = Flask(__name__)
-app.config['SHELVE_FILENAME'] = 'login.db'
+app.config['SHELVE_FILENAME'] = 'logins.db'
 shelve.init_app(app)
 app.secret_key="my secret key"
 
@@ -13,45 +13,50 @@ app.secret_key="my secret key"
 @app.route("/")
 def home():
     if 'user' in session:
-        return render_template('home.html',username=session["username"])
+        return render_template('home.html')
     else:
         return redirect("/login")
 
 
 #LOGIN PAGE    
-@app.route("/login",methods=['GET','POST'])
+@app.route("/login",methods = ['GET','POST'])
 def login():
-    logs = shelve.get_shelve()
-    if request.method=="GET":
+    if request.method == "GET":
         return render_template("login.html")
     else:
+        logins = shelve.get_shelve()
         button = request.form['button']
         user = request.form['username']
         passer = request.form['password']
-        if button=="Submit":
-            if user in logins and logins[user]['password']==passer:
-                sessions['username']=username
-                return redirect("/")
-            else:
-                return "INVALID USERNAME AND PASSWORD"
+        if button == "Login":
+            if not user in logins:
+                return redirect("/login")
+            elif logins[user] != passer:
+                return redirect("/login")
+            session['user'] = user
+            return redirect("/")
     
 
 #REGISTER
-@app.route("/register",methods=['GET','POST'])
+@app.route("/register",methods = ['GET','POST'])
 def register():
-    logins=shelve.get_shelve()
-    if request.method=="GET":
-        return render_template("register.html")
+    if request.method == "GET":
+        return render_template("register.html", message = "Type in desired username and password")
     else:
+        logins = shelve.get_shelve()
+        user = request.form['username'].encode("ascii","ignore")
+        passer = request.form['password'].encode("ascii","ignore")
         button = request.form['button']
-        user = request.form['username']
-        passer = request.form['password']
-        if button=="Register":
-            if not user in logins:
-                logins[user] = {'password':passer}
-                return "SUCCESS! :D"
+        if button == "Submit":
+            if logins.has_key(user):
+                return render_template("register.html", message = "Username is taken")
             else:
-                return redirect("/register")
+                logins[user] = passer
+                session['user'] = user
+                return redirect("/login")
+        elif button == "Back":
+            return redirect("/login")
+
 
 #POP THE USERNAME
 @app.route("/logout")
