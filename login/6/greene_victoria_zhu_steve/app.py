@@ -3,6 +3,7 @@
 from flask import Flask, render_template, url_for, redirect, request, session
 from flask.ext import shelve
 from flask.ext.shelve import get_shelve
+import random
 
 app = Flask(__name__)
 app.secret_key = 'WOW SUPER SECRET KEY!1!!!!!!!!!!!!!one'
@@ -45,7 +46,6 @@ def register():
 		else:
 			db[username] = password
 			session['username'] = username
-			return redirect(url_for('login'))
 	if logged_in():
 		return redirect(url_for('page'))
 	return render_template('register.html', title='Register', error=error)
@@ -58,7 +58,11 @@ def logout():
 @app.route('/page')
 def page():
 	if logged_in():
-		return render_template('page1.html', title='Page')
+		a = random.randint(0, 2)
+		if a == 0:
+			return render_template('page1.html', title='Hello there!')
+		else:
+			return render_template('page2.html', title='Want to hear a joke?')
 	return redirect(url_for('login'))
 
 @app.route('/accounts')
