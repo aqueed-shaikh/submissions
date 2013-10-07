@@ -1,4 +1,4 @@
-# Roger Li and Jing Lin
+# Roger Li and Joshua Wakefield
 
 from flask import Flask
 from flask import Flask, session, request, redirect, render_template
