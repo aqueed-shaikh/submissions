@@ -1,7 +1,9 @@
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import request
 from flask.ext import shelve
+import login
 
 app = Flask(__name__)
 app.config['SHELVE_FILENAME'] = "thea"
@@ -34,9 +36,16 @@ def register():
 		else:
 			return render_template("register-form.html")
 
-@app.route('/login/')
+@app.route('/login/',methods="GET,POST")
 def login():
-	return render_template("login.html")
+	if request.method == "POST": #post,get
+		data = request.form
+		if login.checkUser(app,data["uname"],data["passw"]):
+			return render_template("logged.html")
+		else:
+			return render_template("whoops.html")
+	else:
+		return render_template("login.html")
 
 if __name__ == "__main__":
 	app.debug = True

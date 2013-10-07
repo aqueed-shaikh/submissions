@@ -56,13 +56,16 @@ def register():
 @app.route("/members")
 def members():
     if 'username' in session:
-        page = """
-        Hello, this is the member's page.
-        """
+        return render_template("members.html", d = session)
         return page
     else:
         return redirect("/unknown")
 
+@app.route("/logout")
+def logout():
+    session.pop('username', None)
+    return redirect("/")
+    
 @app.route("/unknown")
 def unknown():
     page = """
