@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template, url_for, redirect, session, request
 from flask.ext import shelve
 
+import urllib
 app = Flask(__name__)
 app.secret_key="mysecretkey"
 app.config['SHELVE_FILENAME'] = 'shelve.db'
@@ -12,22 +13,41 @@ def home():
     if "username" in session:
         return render_template("home.html",username=session["username"])
     else:
-        #return redirect("/login",errormessage="<p>Hello there!</p>")
-        return redirect("/login")
+        return redirect("/login?errormessage="+"0")
+        #return redirect("/login")
 
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method == "GET":
-        return render_template("login.html",errormessage="<p>Hello there!</p>")
+        error = request.args.get("error")
+        if error != None:
+            if error == "0":
+                errormessage= "You are not logged in! Login first to access our exclusive site features!"            
+            elif error == "1":
+                errormessage = "Username does not exist. Try again."
+            else:
+                errormessage = "Username does not match password."
+                if session['loginattempts'] > 3:
+                    errormessage = "Login attempts exceeded. This incident will be reported."
+            return render_template("login.html",errormessage=errormessage)
+        else: 
+            return render_template("login.html")
     else:
         Username = request.form["username"].encode("ascii","ignore")
         Password = request.form["password"].encode("ascii","ignore")
         users = shelve.get_shelve()
         if not users.has_key(Username):
-            return redirect("/login",errormessage="<p>Username does not exist. Try again.</p>")
-        elif users[Username] != Password: 
-            return redirect("/login",errormessage="<p>Username does not match password. Try again.</p>")
+            return redirect("/login?error="+"1")
+        elif users[Username] != Password:
+            try:
+                c = session['loginattempts']
+            except:
+                c = 0
+            c = c + 1
+            session["loginattempts"]=c
+            return redirect("/login?error="+"2")
         session["username"] = Username
+        session.pop('loginattempts',None)
         return redirect("/")
 
 @app.route("/register",methods=['GET','POST'])
