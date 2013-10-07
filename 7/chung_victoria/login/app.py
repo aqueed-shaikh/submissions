@@ -11,7 +11,13 @@ app.secret_key = 'my secret key'
 @app.route("/")
 def home():
     if 'username' in session:
-        return "<h1> The main page</h1>"
+        return """
+<h1> The main page</h1>
+<br><br><br>
+<p>Would you like to <a href="/logout">Logout?</a></p>
+
+
+"""
     else:
         return redirect(url_for('login'))
 
@@ -46,6 +52,11 @@ def register():
         s["%s"%(user)]=psswd
         s.close()
         return redirect("/")
+
+@app.route("/logout")
+def logout():
+    session.pop('username')
+    return redirect('/')
             
         
 
