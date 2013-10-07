@@ -1,0 +1,2 @@
+This is an alternate login page, which makes use of SQLAlchemy as a 
+database.  Additionally, it adds a navigation bar.

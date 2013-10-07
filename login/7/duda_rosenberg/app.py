@@ -22,8 +22,7 @@ def login():
         user = str(request.form["usrnm"])
         pwd = str(request.form["psswrd"])
         db = shelve.get_shelve("c")
-
-        if db.has_key(user) && db[user] == pwd:
+        if db.has_key(user) and db[user] == pwd:
             return render_template("welcome.html",username=user, 
                                        message="How are you doing today?")
                                 
@@ -41,8 +40,8 @@ def register():
     else:
         usr = str(request.form['usr'])
         pwd = str(request.form['pwd'])
-        
-        if db.has_key(user): 
+        db = shelve.get_shelve("c")
+        if db.has_key(usr): 
             return render_template('register.html',
                                    error = 'Username already exists')
         else:
