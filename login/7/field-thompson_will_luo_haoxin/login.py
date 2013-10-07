@@ -31,8 +31,7 @@ def verify_login(u, p):
 @app.route('/')
 def home():
     if 'username' in session:
-        return render_template("home.html")
-#        return '<h1>Hi %s!</h1>'%session['username']
+        return render_template("home.html", user=session['username'])
     return redirect("/login")
 
 @app.route('/register', methods=['POST', 'GET'])
