@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from flask import url_for, render_template, redirect
+from flask import url_for, render_template, redirect, session
 import shelve
 
 app = Flask(__name__)
@@ -42,6 +42,11 @@ def register():
         user=temp.encode('ascii','ignore')
         temp2=request.form['password']
         psswd=temp2.encode('ascii','ignore')
+        s = shelve.open("sessions")
+        s[user]=psswd
+        s.close()
+        return redirect("/home")
+            
         
 
 
