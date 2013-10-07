@@ -50,11 +50,15 @@ def logout():
 
 @app.route('/page1')
 def page1():
-	return logged_in() ? render_template('page1.html') : redirect(url_for('login'))
+	if logged_in():
+		return render_template('page1.html')
+	return redirect(url_for('login'))
 
 @app.route('/page2')
 def page2():
-	return logged_in() ? render_template('page2.html') : redirect(url_for('login'))
+	if logged_in():
+		return render_template('page2.html')
+	return redirect(url_for('login'))
 
 @app.route('/accounts')
 def accounts():
