@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import request, session
+from flask import redirect, url_for
 from flask.ext import shelve
 import login
 
@@ -14,7 +15,7 @@ shelve.init_app(app)
 
 @app.route('/')
 def home():
-	if  'uname' in session: 
+	if 'uname' in session: 
 		return render_template("ferns.html",name=session['uname'])
 	else:
 		return "<a href='/login/'><h3> Login </h3></a><a href='/register/'><h3>Register</h3></a>"
@@ -43,7 +44,7 @@ def signin():
 		data = request.form
 		if login.checkUser(app,data["uname"],data["passw"]):
 			session['uname'] = data["uname"]
-			return render_template("logged.html")
+			return redirect(url_for('home'))
 		else:
 			return render_template("whoops.html")
 	else:#get
