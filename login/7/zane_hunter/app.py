@@ -4,6 +4,8 @@ from flask import render_template
 from flask.ext import shelve
 
 app = Flask(__name__)
+app.config['SHELVE_FILENAME'] = "thea"
+shelve.init_app(app)
 
 @app.route('/')
 def home():
@@ -18,7 +20,17 @@ def register():
 		button = request.form['button']
 		d = request.form
 		if button == "Register":
-			return render_template("register-success.html", d=d)
+			shelf = shelve.get_shelve(shelfName);
+
+			if d['username'] in shelf:
+				shelf.close()
+				return render_template("register-failure.html", d=d)
+
+			else:
+				shelf[d['username']] = d['password']
+				shelf.close()
+
+				return render_template("register-success.html", d=d)
 		else:
 			return render_template("register-form.html")
 

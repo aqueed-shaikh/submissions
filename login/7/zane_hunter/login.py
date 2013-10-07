@@ -15,6 +15,7 @@ def checkUser(app,usern,passw):
 	db = shelve.get_shelve(shelf)
 	hashpass = encrypt(passw)
 	return db[usern] == hashpass
+
 def encrypt(passw):
 	encrypter = sha.new(passw)
 	encrypter.update(secret)
