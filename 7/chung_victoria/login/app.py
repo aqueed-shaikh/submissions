@@ -1,9 +1,11 @@
 from flask import Flask
 from flask import request
 from flask import url_for, render_template, redirect
+import shelve
 
 app = Flask(__name__)
 app.secret_key = 'my secret key'
+
 
 
 @app.route("/")
@@ -33,7 +35,15 @@ def login():
 
 @app.route("/register")
 def register():
-    return render_template("register.html")
+    if request.method =="GET":
+        return render_template("register.html")
+    else:
+        temp=request.form['username']
+        user=temp.encode('ascii','ignore')
+        temp2=request.form['password']
+        psswd=temp2.encode('ascii','ignore')
+        
+
 
 if __name__=="__main__":
     app.debug=True
