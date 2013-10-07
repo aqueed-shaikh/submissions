@@ -22,17 +22,7 @@ def register():
 		button = request.form['button']
 		d = request.form
 		if button == "Register":
-			shelf = shelve.get_shelve(shelfName);
-
-			if d['username'] in shelf:
-				shelf.close()
-				return render_template("register-failure.html", d=d)
-
-			else:
-				shelf[d['username']] = d['password']
-				shelf.close()
-
-				return render_template("register-success.html", d=d)
+			return render_template("register-success.html", d=d)
 		else:
 			return render_template("register-form.html")
 
