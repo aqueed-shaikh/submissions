@@ -29,7 +29,7 @@ def register():
 		button = request.form['button']
 		d = request.form
 		if button == "Register":
-			success = login.registerUser(d['username'], d['password'])
+			success = login.registerUser(d['username'], d['password']) and d['password'] == d['passconfirm']
 
 			if success:
 				return render_template("register-success.html", d=d)
