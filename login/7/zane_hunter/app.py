@@ -6,6 +6,9 @@ from flask.ext import shelve
 import login
 
 app = Flask(__name__)
+
+app.secret_key = login.secret
+
 app.config['SHELVE_FILENAME'] = "thea"
 shelve.init_app(app)
 
