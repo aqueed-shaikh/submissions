@@ -6,12 +6,18 @@ from flask.ext import shelve
 import login
 
 app = Flask(__name__)
+
+app.secret_key = login.secret
+
 app.config['SHELVE_FILENAME'] = "thea"
 shelve.init_app(app)
 
 @app.route('/')
 def home():
-	return "<h3> Login </h3>"
+	if  'uname' in session: 
+		return render_template("ferns.html",name=session['uname'])
+	else:
+		return "<a href='/login/'><h3> Login </h3></a><a href='/register/'><h3>Register</h3></a>"
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
@@ -22,19 +28,14 @@ def register():
 		button = request.form['button']
 		d = request.form
 		if button == "Register":
-			shelf = shelve.get_shelve(shelfName);
+			success = login.registerUser(d['username'], d['password'])
 
-			if d['username'] in shelf:
-				shelf.close()
-				return render_template("register-failure.html", d=d)
-
-			else:
-				shelf[d['username']] = d['password']
-				shelf.close()
-
+			if success:
 				return render_template("register-success.html", d=d)
+			else:
+				return render_template("register-form.html", d=d, failure=True)
 		else:
-			return render_template("register-form.html")
+			return render_template("register-form.html", d=d, failure=False)
 
 @app.route('/login/',methods=["GET","POST"])
 def signin():
