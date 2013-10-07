@@ -15,7 +15,7 @@ def home():
         """
         return page%(session['username'])
                   
-    else:
+   else:
 	return "<h1> This is the Main Page. Welcome Everyone!!</h1>"
 	
 <style type="text/css">
