@@ -24,7 +24,7 @@ def login():
 		if username in db and db[username] == password:
 			session['username'] = username
 	if logged_in():
-		return redirect(url_for('page1'))
+		return redirect(url_for('page'))
 	return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -49,16 +49,10 @@ def logout():
     session.pop('username', None)
     return redirect('/')
 
-@app.route('/page1')
+@app.route('/page')
 def page1():
 	if logged_in():
 		return render_template('page1.html')
-	return redirect(url_for('login'))
-
-@app.route('/page2')
-def page2():
-	if logged_in():
-		return render_template('page2.html')
 	return redirect(url_for('login'))
 
 @app.route('/accounts')
