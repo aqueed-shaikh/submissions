@@ -2,7 +2,6 @@ from flask import Flask
 from flask import session,url_for,request,redirect,render_template
 from flask.ext import shelve
 
-
 app = Flask(__name__)
 app.config['SHELVE_FILENAME'] = 'login.db'
 shelve.init_app(app)
@@ -14,7 +13,7 @@ app.secret_key="my secret key"
 @app.route("/")
 def home():
     if 'user' in session:
-        return render_template("page")
+        return redirect("/home")
     else:
         #return redirect(url_for('user'))
         return redirect("/login")
@@ -25,7 +24,7 @@ def home():
 def home():
     if 'user' in session:
         page="""
-        <h1>HOME</h1>
+        <h1>Welcome home.</h1>
         <p>
         <a href="/logout">Logout</a href>
         """
@@ -40,16 +39,7 @@ def login():
     if 'user' in session:
         return redirect("/home")
     elif request.method=="GET":
-        page="""<h2>Main Page</h2>
-        <form method="post">
-        Login: <input type="text" name="username" value="username">
-        <input type="text" name="password" value="password"> 
-        <input type="submit" name="button" value="Login">
-        <p>
-        Don't have an account? <a href="/register"> Register Now</a>
-        </form>
-        """
-        return page
+        return render_template("login.html")
     else:
         button = request.form['button']
         user = request.form['username']
@@ -65,19 +55,7 @@ def login():
 @app.route("/redo",methods=['GET','POST'])
 def redo():
     if request.method=="GET":
-        page="""<h1>Main Page</h1>
-        <form method="post">
-        Invalid Username: Try again
-        <p>
-        Login: <input type="text" name="username" value="username">
-        <input type="text" name="password" value="password">
-        <input type="submit" name="button" value="Login">
-        <p>
-        
-        Don't have a Username? <a href="register"> Register Now</a>
-        </form>
-        """
-        return page
+        return render_template("register.html")
     else:
         button = request.form['button']
         user = request.form['username']
@@ -92,17 +70,7 @@ def redo():
 @app.route("/register",methods=['GET','POST'])
 def register():
     if request.method=="GET":
-        page="""
-        <h1>Register</h1>
-        <form method="post">
-        <input type="text" name="username" value="username">
-        <input type="text" name="password" value="password">
-        <p>
-        <input type="submit" name="button" value="Register">
-        <input type="submit" name="button" value="Cancel">
-        </form>
-        """
-        return page
+        return render_template("register.html")
     else:
         button = request.form['button']
         if button=="Register":
