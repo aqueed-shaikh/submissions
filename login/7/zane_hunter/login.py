@@ -23,7 +23,7 @@ def checkUser(app,usern,passw):
 	db = shelve.get_shelve('c')
 	hashpass = encrypt(passw)
 	ans = db[usern] == hashpass
-	shelve.close()
+	db.close()
 	return ans
 
 def encrypt(passw):
