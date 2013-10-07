@@ -1,4 +1,4 @@
-#Submitted by Christine Xu and Justin Duda
+#Submitted by Christine  and Glib 
 
 from flask import Flask
 from flask import session,url_for,request,redirect,render_template
