@@ -17,10 +17,14 @@ def login():
     #coding how the login page will look
     page ="""<h1>It's the Login Page FOOL!</h1>
         <form method="post">
-        <input type="text" name="username">
-        <input type="text" name="password">
+        Username: <input type="text" name="username"><br>
+        Password: <input type="password" name="password"><br>
         <input type="submit" name="button" value="login">
-        <input type="submit" name="button" value="cancel">
+        <input type="submit" name="button" value="reset"><br><br><br><br><br><br><br>
+        Fool don't got a account? Sign up in all that nature!<br>
+        <input type ="submit" name="button" value="sign up">
+        <br><br><br><br><br><br><br><br>
+        <h6>reference to Mr. T. I highly recommend the movie, The A Team</h6>
         </form>"""
     if request.method == "GET":
         return page
@@ -30,10 +34,12 @@ def login():
             submitpage = "<h1>submitted fool!</h1>"
             username = request.form['username']
             password = request.form['password']
-            submitpage = submitpage #+ username
+            submitpage = submitpage + username + " " + password
             return submitpage
+        elif button=="reset":
+            return redirect ("/login")
         else:
-            return "<h1>NOT submitted fool!</h1>"
+            return redirect ("/register")
 
 @app.route("/logout")
 def logout():
@@ -41,12 +47,14 @@ def logout():
     
 @app.route("/register", methods=['GET','POST'])
 def register():
-    page="""<h1>Login</h1>
+    page="""<h1>Signup page's here fool!</h1>
         <form method="post">
-        <input type="text" name="username">
-        <input type="text" name="password">
-        <input type="submit" name="button" value="login">
-        <input type="submit" name="button" value="cancel">
+        Username: <input type="text" name="username"><br>
+        Password: <input type="password" name="password"><br>
+        <input type="submit" name="button" value="sign up">
+        <input type="submit" name="button" value="cancel"><br><br><br><br><br><br>
+        Fool already got a account? Get back in the game!<br>
+        <input type ="submit" name="button" value="sign in">
         </form>
         """
     return page
