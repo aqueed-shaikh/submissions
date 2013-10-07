@@ -28,12 +28,12 @@ def login():
         if s.has_key(username) and s["%s"%(username)] == password:
             session['username'] = username
             s.close()
-            return redirect(url_for('home'))
+            return redirect('/')
         else:
             s.close()
             return render_template("login.html", incorrect="True")
 
-@app.route("/register")
+@app.route("/register",methods=['GET','POST'])
 def register():
     if request.method =="GET":
         return render_template("register.html")
@@ -45,7 +45,7 @@ def register():
         s = shelve.open("sessions")
         s["%s"%(user)]=psswd
         s.close()
-        return redirect("/home")
+        return redirect("/")
             
         
 
