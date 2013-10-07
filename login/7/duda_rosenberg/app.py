@@ -16,14 +16,13 @@ def index():
 @app.route("/login", methods=['POST','GET'])
 def login():
     if request.method == 'GET':
-        return render_template('login.html', error="")
+        return render_template('login.html')
     elif request.method == "POST":
         #print "1"
         user = str(request.form["usrnm"])
         pwd = str(request.form["psswrd"])
-        #print "2"
         db = shelve.get_shelve("c")
-        #print "3"
+
         if db.has_key(user) && db[user] == pwd:
             return render_template("welcome.html",username=user, 
                                        message="How are you doing today?")
@@ -32,10 +31,26 @@ def login():
             return  render_template("login.html",
                                     error="username or password not recognized")
         db.close()
-        #print "6"
     else:
-        #print "7"
         return render_template("login.html", error="")
+
+@app.route('/register', methods = ['POST','GET'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    else:
+        usr = str(request.form['usr'])
+        pwd = str(request.form['pwd'])
+        
+        if db.has_key(user): 
+            return render_template('register.html',
+                                   error = 'Username already exists')
+        else:
+            db[usr] = pwd
+            db.close
+            return render_template("welcome.html",username=usr)
+
+            
 
 
 if (__name__ == "__main__"):
