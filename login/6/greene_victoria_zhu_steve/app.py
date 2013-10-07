@@ -25,7 +25,7 @@ def login():
 			session['username'] = username
 	if logged_in():
 		return redirect(url_for('page'))
-	return render_template('login.html')
+	return render_template('login.html', title='Login')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -42,7 +42,7 @@ def register():
 			db[username] = password
 			session['username'] = username
 			return redirect(url_for('login'))
-	return render_template('register.html')
+	return render_template('register.html', title='Register')
 
 @app.route('/logout')
 def logout():
@@ -52,7 +52,7 @@ def logout():
 @app.route('/page')
 def page():
 	if logged_in():
-		return render_template('page1.html')
+		return render_template('page1.html', title='Page')
 	return redirect(url_for('login'))
 
 @app.route('/accounts')
@@ -60,7 +60,7 @@ def accounts():
 	db = shelve.get_shelve('c')
 	acc = ""
 	for key in db:
-		acc += key + ":" + db[key] + "\n"
+		acc += key + ":" + db[key] + "<br>"
 	return acc
 
 def logged_in():

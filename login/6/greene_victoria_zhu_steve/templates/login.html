@@ -3,13 +3,12 @@
 	Login
 = endblock
 = block body
-    <div class="container">
-        <h1 class="title">Login</h1>
-        <form method="post">
-            <input id="username" type="username" name="username" placeholder="Username">
-            <input id="password" type="password" name="password" placeholder="Password">
-            <input class="button" type="submit" value="Login">
-        </form>
-    </div>
+    <form method="post">
+        <input id="username" type="username" name="username" placeholder="Username">
+        <input id="password" type="password" name="password" placeholder="Password">
+        <input class="button" type="submit" value="Login">
+    </form>
+= endblock
+= block bottomlink
     <a class="bottom-link" href="{{ url_for('register') }}">Don't have an account? Register here.</a>
 = endblock

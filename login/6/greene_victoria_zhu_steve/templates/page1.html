@@ -3,8 +3,8 @@
 	Hello there!
 = endblock
 = block body
-	<div class="container">
-		<h1>"Did you know that the bikini was invented in ancient Rome?"</h1>
-		<a href="{{ url_for('logout') }}">Logout</a>
-	</div>
+	<h2>"Did you know that the bikini was invented in ancient Rome?"</h2>
+= endblock
+= block bottomlink
+	<a href="{{ url_for('logout') }}">Logout</a>
 = endblock

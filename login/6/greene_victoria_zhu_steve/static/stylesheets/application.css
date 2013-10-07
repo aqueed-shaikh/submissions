@@ -119,6 +119,9 @@ input {
   border-bottom: 1px solid lightgrey;
   font-weight: normal; }
 
+.error {
+  color: red; }
+
 a {
   display: inline-block;
   margin-top: 10px;
