@@ -25,7 +25,7 @@ init_app(app)
 # checks username against password
 def verify_login(u, p):
     db = get_shelve()
-    return db[u] == p
+    return u in db and db[u] == p
 
 #need a more interesting homepage
 @app.route('/')
@@ -40,12 +40,12 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
     elif request.method == 'POST':
-        user = request.form['username'].encode("utf8")
+        user = request.form['username'].encode("ascii")
         db = get_shelve()
         if user in db: #checks to make sure the username doesn't already exist
             return "Username already in use. Please pick another." + render_template('register.html')
         else:
-            db[user] = request.form['password'].encode("utf8")
+            db[user] = request.form['password'].encode("ascii")
             session['username'] = user
             return redirect('/registered')
 
@@ -55,10 +55,8 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
-        user = request.form['username'].encode("utf8")
-        if user not in session:
-            return "the username you entered does not exist, please register for a new username" + render_template('/login.html')
-        elif verify_login(user, request.form['password'].encode("utf8")):
+        user = request.form['username'].encode("ascii")
+        if verify_login(user, request.form['password'].encode("ascii")):
             session['username'] = user
             return redirect('/')
         else:
