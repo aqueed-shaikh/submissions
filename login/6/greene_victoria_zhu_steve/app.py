@@ -21,7 +21,13 @@ def login():
 		db = shelve.get_shelve('c')
 		if username in db and db[username] == password:
 			session['username'] = username
+<<<<<<< HEAD
 			render_template('page1.html')
+=======
+	
+	if session['username'] != none:
+		redirect(url_for('page1'))
+>>>>>>> d9468bf2ec45282a0a224d2e1b87f759f55edf4a
 	return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -40,6 +46,17 @@ def register():
 			return render_template('page2.html')
 	return render_template('register.html')
 
+<<<<<<< HEAD
+=======
+@app.route('/page1')
+def page1():
+	return render_template('page1.html')
+
+@app.route('/page2')
+def page2():
+	return render_template('page1.html')
+
+>>>>>>> d9468bf2ec45282a0a224d2e1b87f759f55edf4a
 @app.route('/accounts')
 def accounts():
 	db = shelve.get_shelve('c')
