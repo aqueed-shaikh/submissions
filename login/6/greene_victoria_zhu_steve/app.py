@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask, render_template, url_for, redirect, request, session
+from flask import Flask, render_template, url_for, redirect, request, session, flash
 from flask.ext import shelve
 from flask.ext.shelve import get_shelve
 
@@ -16,7 +16,6 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	error = None
 	if request.method == 'POST':
 		username = get_form_value('username')
 		password = get_form_value('password')
@@ -24,31 +23,26 @@ def login():
 		# add session
 		if username in db and db[username] == password:
 			session['username'] = username
-		else:
-			error = 'Incorrect username or password.'
 	if logged_in():
 		return redirect(url_for('page'))
-	return render_template('login.html', title='Login', error=error)
+	return render_template('login.html', title='Login')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-	error = None
 	if request.method == 'POST':
 		username = get_form_value('username')
 		password = get_form_value('password')
 		password_confirm = get_form_value('password-confirm')
 		db = get_shelve('c')
-		if username in db:
-			error = 'An account already exists with that username.'
-		elif password != password_confirm:
-			error = 'The two passwords are not equal.'
+		if password != password_confirm:
+			return 'The two passwords are not equal.'
+		elif username in db:
+			return 'An account already exists with that username'
 		else:
 			db[username] = password
 			session['username'] = username
 			return redirect(url_for('login'))
-	if logged_in():
-		return redirect(url_for('page'))
-	return render_template('register.html', title='Register', error=error)
+	return render_template('register.html', title='Register')
 
 @app.route('/logout')
 def logout():
@@ -58,7 +52,11 @@ def logout():
 @app.route('/page')
 def page():
 	if logged_in():
-		return render_template('page1.html', title='Page')
+		a = random.randint(0,1)
+		if a == 0:
+			return render_template('page1.html', title='Hello there!')
+		else:
+			return render_template('page2.html', title='Want to hear a joke?')
 	return redirect(url_for('login'))
 
 @app.route('/accounts')
