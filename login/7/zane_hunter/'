@@ -16,11 +16,10 @@ def register():
 
 	else: #post
 		button = request.form['button']
-		d = request.form
 		if button == "Register":
-			return render_template("register-success.html", d=d)
+			return render_template("register-success.html")
 		else:
-			return render_template("register-form.html")
+			return render_template("register-form.html", d=d)
 
 
 
