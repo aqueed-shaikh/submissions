@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 from flask import render_template
-from flask import request
+from flask import request, session
 from flask.ext import shelve
 import login
 
@@ -41,6 +41,7 @@ def signin():
 	if request.method == "POST": #post
 		data = request.form
 		if login.checkUser(app,data["uname"],data["passw"]):
+			session['uname'] = data["uname"]
 			return render_template("logged.html")
 		else:
 			return render_template("whoops.html")
