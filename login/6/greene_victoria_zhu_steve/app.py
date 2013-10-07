@@ -16,8 +16,6 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-	if logged_in():
-		return redirect(url_for('page1'))
 	if request.method == 'POST':
 		username = get_form_value('username')
 		password = get_form_value('password')
@@ -25,6 +23,8 @@ def login():
 		# add session
 		if username in db and db[username] == password:
 			session['username'] = username
+	if logged_in():
+		return redirect(url_for('page1'))
 	return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -40,7 +40,8 @@ def register():
 			return 'An account already exists with that username'
 		else:
 			db[username] = password
-			return render_template('page2.html')
+			session['username'] = username
+			return redirect(url_for('login'))
 	return render_template('register.html')
 
 @app.route('/logout')
@@ -69,7 +70,7 @@ def accounts():
 	return acc
 
 def logged_in():
-	return 'username' in session and session['username'] != none
+	return 'username' in session and session['username'] != None
 
 def get_form_value(key):
 	return request.form[key].encode('ascii', 'ignore')
