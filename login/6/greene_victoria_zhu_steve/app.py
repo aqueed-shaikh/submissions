@@ -1,7 +1,9 @@
 #!/usr/bin/python
 
-from flask import Flask, render_template, url_for, redirect, request, session, flash
+from flask import Flask, render_template, url_for, redirect, request, session
 from flask.ext import shelve
+from flask.ext.shelve import get_shelve
+import random
 
 app = Flask(__name__)
 app.secret_key = 'WOW SUPER SECRET KEY!1!!!!!!!!!!!!!one'
@@ -15,52 +17,60 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+	error = None
 	if request.method == 'POST':
 		username = get_form_value('username')
 		password = get_form_value('password')
-		db = shelve.get_shelve('c')
+		db = get_shelve('c')
+		# add session
 		if username in db and db[username] == password:
 			session['username'] = username
-	if 'username' in sesssion and session['username'] != none:
-		return redirect(url_for('page1'))
-	return render_template('login.html')
+		else:
+			error = 'Incorrect username or password.'
+	if logged_in():
+		return redirect(url_for('page'))
+	return render_template('login.html', title='Login', error=error)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+	error = None
 	if request.method == 'POST':
 		username = get_form_value('username')
 		password = get_form_value('password')
 		password_confirm = get_form_value('password-confirm')
-		db = shelve.get_shelve('c')
-		if password != password_confirm:
-			return 'The two passwords are not equal.'
-		elif username in db:
-			return 'An account already exists with that username'
+		db = get_shelve('c')
+		if username in db:
+			error = 'An account already exists with that username.'
+		elif password != password_confirm:
+			error = 'The two passwords are not equal.'
 		else:
 			db[username] = password
-			return render_template('page2.html')
-	return render_template('register.html')
+			session['username'] = username
+	if logged_in():
+		return redirect(url_for('page'))
+	return render_template('register.html', title='Register', error=error)
 
-@app.route('/page1')
-def page1():
-	return render_template('page1.html')
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect('/')
 
-@app.route('/page2')
-def page2():
-	return render_template('page1.html')
+@app.route('/page')
+def page():
+	if logged_in():
+		return render_template('page1.html', title='Page')
+	return redirect(url_for('login'))
 
 @app.route('/accounts')
 def accounts():
 	db = shelve.get_shelve('c')
 	acc = ""
 	for key in db:
-		acc += key + ":" + db[key] + "\n"
+		acc += key + ":" + db[key] + "<br>"
 	return acc
-	
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return redirect('/')
+
+def logged_in():
+	return 'username' in session and session['username'] != None
 
 def get_form_value(key):
 	return request.form[key].encode('ascii', 'ignore')

@@ -54,6 +54,26 @@ def logout():
         session.pop('username', None)
     return redirect("/")
 
+@app.route("/pi")
+def pi():
+    if "username" in session:
+        return """
+<h1>FIRST 3 DIGITS OF PI!!!!!!!!!!!</h1>
+
+3.14
+"""
+    else:
+        return redirect("/login")
+
+@app.route("/windows")
+def windows():
+    if "username" in session:
+        return """
+<h1>REASONS TO BUY WINDOWS 8:<h1>
+
+"""
+    else:
+        return redirect("/login")
 
 if __name__ == "__main__":
     app.debug = True

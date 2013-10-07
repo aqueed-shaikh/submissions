@@ -9,10 +9,10 @@ shelve.init_app(app)
 @app.route("/")
 def home():
     if "username" in session:
-        return render_template("index.html",username=session["username"])
-    else:
-        return redirect(url_for("login"))
-
+        return render_template("index.html", username=session["username"])
+    else: 
+        return redirect(url_for("/login")
+                        
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
@@ -28,7 +28,6 @@ def login():
         session["username"] = username
         return redirect(url_for("home"))
 
-                    
 @app.route("/reset", methods = ['GET', 'POST'])
 def reset():
     session.pop("username", None)
