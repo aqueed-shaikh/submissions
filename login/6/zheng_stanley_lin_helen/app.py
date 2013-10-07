@@ -13,17 +13,7 @@ app.secret_key="my secret key"
 @app.route("/")
 def home():
     if 'user' in session:
-        return redirect("/home")
-    else:
-        #return redirect(url_for('user'))
-        return redirect("/login")
-
-
-#HOME
-@app.route("/home")
-def home():
-    if 'user' in session:
-        return render_template("home.html")
+        return render_template('home.html',username=session["username"])
     else:
         return redirect("/login")
 
@@ -31,46 +21,37 @@ def home():
 #LOGIN PAGE    
 @app.route("/login",methods=['GET','POST'])
 def login():
-    if 'user' in session:
-        return redirect("/home")
-    elif request.method=="GET":
+    logs = shelve.get_shelve()
+    if request.method=="GET":
         return render_template("login.html")
     else:
         button = request.form['button']
         user = request.form['username']
         passer = request.form['password']
-        shelve[user] = passer
-#            if button=="Login" and user=="username":
- #               return redirect(url_for('redo'))
-  #          else:
-   #             return redirect(url_for('user'))
-            
-            
-#LOGIN FAILURE----> TRY AGAIN
-@app.route("/redo",methods=['GET','POST'])
-def redo():
-    if request.method=="GET":
-        return redirect("/login")
-    else:
-        button = request.form['button']
-        user = request.form['username']
-        if button=="Login" and user=="username":
-            return redirect(url_for('redo'))
-        else:
-            return redirect("/home")
+        if button=="Submit":
+            if user in logins and logins[user]['password']==passer:
+                sessions['username']=username
+                return redirect("/")
+            else:
+                return "INVALID USERNAME AND PASSWORD"
     
-
 
 #REGISTER
 @app.route("/register",methods=['GET','POST'])
 def register():
+    logins=shelve.get_shelve()
     if request.method=="GET":
         return render_template("register.html")
     else:
         button = request.form['button']
+        user = request.form['username']
+        passer = request.form['password']
         if button=="Register":
-            session['username']="username"
-            return redirect("/home")
+            if not user in logins:
+                logins[user] = {'password':passer}
+                return "SUCCESS! :D"
+            else:
+                return redirect("/register")
 
 #POP THE USERNAME
 @app.route("/logout")
