@@ -33,9 +33,9 @@ def register():
 			if success:
 				return render_template("register-success.html", d=d)
 			else:
-				return render_template("register-failure.html", d=d)
+				return render_template("register-form.html", d=d, failure=True)
 		else:
-			return render_template("register-form.html")
+			return render_template("register-form.html", d=d, failure=False)
 
 @app.route('/login/',methods=["GET","POST"])
 def signin():
