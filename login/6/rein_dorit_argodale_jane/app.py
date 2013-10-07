@@ -4,7 +4,7 @@ from flask.ext import shelve
 
 app=Flask(__name__)
 app.secret_key="key"
-app.config['SHELVE_FILENAME'] = 'logins'
+app.config['SHELVE_FILENAME'] = 'users.db'
 shelve.init_app(app)
 
 @app.route("/home")
@@ -14,7 +14,7 @@ def home():
     else:
 	return redirect(url_for('login'))
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
         return render_template("register.html")

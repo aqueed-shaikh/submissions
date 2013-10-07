@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Register</title>
+        <style>
+            * { font-family:monospace; }
+        </style>
+    </head>
+    <body>
+        <h1>Register</h1>
+		<form method="post">
+			Username: <input name="username" /><br>
+			Password: <input name="password" type="password" /><br>
+			<input value="Log In" type="submit" />
+        </form>
+        {% if error %}
+            <span style="color:#f00;">Error!</span>
+            {% if error == "empty" %} Username or Password empty.
+            {% elif error == "taken" %} Username already signed up. <a href="/login">Login</a>
+            {% endif %}
+        {% endif %}
+    </body>
+</html>

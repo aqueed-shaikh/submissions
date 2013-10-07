@@ -1,5 +1,9 @@
 <h1> Register </h1>
 
+{% if failure %}
+Sorry, the username {{ d['username'] }} is taken.
+{% endif %}
+
 <form method="POST">
 	Username: <input type="text" name="username"><br>
 	Password: <input type="text" name="password"><br>
