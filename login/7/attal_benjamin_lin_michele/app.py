@@ -20,8 +20,8 @@ def login():
     elif request.method == 'GET':
         return render_template('login.html')
     else:
-        username = request.form['username'].encode('ascii', 'ignore')
-        password = request.form['password'].encode('ascii', 'ignore')
+        username = request.form['username'].encode('utf8')
+        password = request.form['password'].encode('utf8')
         database = shelve.get_shelve()
         if username not in database:
             return redirect(url_for('register', message='Not a valid username. Please register'))
@@ -40,8 +40,8 @@ def register():
           return render_template('register.html', message=request.args['message'])
         return render_template('register.html')
     else:
-        username = request.form['username'].encode('ascii', 'ignore')
-        password = request.form['password'].encode('ascii', 'ignore')
+        username = request.form['username'].encode('utf8')
+        password = request.form['password'].encode('utf8')
         database = shelve.get_shelve()
         if username in database:
             return render_template('register.html', message='Username already in use')
