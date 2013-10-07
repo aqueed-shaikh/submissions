@@ -22,7 +22,12 @@ def register():
 		button = request.form['button']
 		d = request.form
 		if button == "Register":
-			return render_template("register-success.html", d=d)
+			success = login.registerUser(app, d['username'], d['password'])
+
+			#if success:
+			#	return render_template("register-success.html", d=d)
+			#else:
+			return render_template("register-failure.html", d=d)
 		else:
 			return render_template("register-form.html")
 
