@@ -11,7 +11,7 @@ def home():
     if "username" in session:
         return render_template("index.html",username=session["username"])
     else:
-        return redirect(url_for("login"))
+        return redirect("/login")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -27,7 +27,7 @@ def login():
             return redirect(url_for("login"))
         session["username"] = username
         return redirect(url_for("home"))
-
+@app.route("/register", methods=["GET", "POST"])
                     
 @app.route("/reset", methods = ['GET', 'POST'])
 def reset():
