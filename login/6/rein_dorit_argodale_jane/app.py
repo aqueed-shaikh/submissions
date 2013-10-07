@@ -10,9 +10,9 @@ shelve.init_app(app)
 @app.route("/home")
 def home():
     if "username" in session:
-        return "<h1>Hello!</h1>"
+        return render_template("home.html", session=session)
     else:
-	return redirect(url_for('login'))
+	return redirect(url_for("login"))
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -37,11 +37,16 @@ def login():
         password = request.form["password"].encode("ascii","ignore")
         users = shelve.get_shelve()
         if not users.has_key(username):
-            return redirect(url_for("login"))
+            return 'Invalid username! <a href ="/login"> Please try again.</a>'
         elif users[username] != password:
-            return redirect(url_for("login"))
+            return 'Wrong password! <a href ="/login"> Please try again.</a>'
         session["username"] = username
         return redirect(url_for("home"))
+
+@app.route("/logout")
+def logout():
+    session.pop("username", None)
+    return 'See you again! <br> <br> <a href="/login">Come back</a>'
 
 if __name__=="__main__":
     app.debug = True
