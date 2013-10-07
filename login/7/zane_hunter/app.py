@@ -27,10 +27,10 @@ def register():
 		if button == "Register":
 			success = login.registerUser(d['username'], d['password'])
 
-			#if success:
-			#	return render_template("register-success.html", d=d)
-			#else:
-			return render_template("register-failure.html", d=d)
+			if success:
+				return render_template("register-success.html", d=d)
+			else:
+				return render_template("register-failure.html", d=d)
 		else:
 			return render_template("register-form.html")
 

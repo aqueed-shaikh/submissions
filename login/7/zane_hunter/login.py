@@ -5,6 +5,8 @@ secret = "uniquellama"
 shelf = "thea"
 
 def registerUser(usern, passw): 
+	usern = usern.encode('ascii')
+	passw = passw.encode('ascii')
 	db = shelve.get_shelve('c')
 	if not usern in db:
 		hashpass = encrypt(passw)
