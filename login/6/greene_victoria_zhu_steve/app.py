@@ -16,26 +16,21 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	if request.method == 'POST':
-		username = request.form['username'].encode('ascii', 'ignore')
-		password = request.form['password'].encode('ascii', 'ignore')
+		username = get_form_value('username')
+		password = get_form_value('password')
 		db = shelve.get_shelve('c')
 		if username in db and db[username] == password:
 			session['username'] = username
-<<<<<<< HEAD
-			render_template('page1.html')
-=======
-	
-	if session['username'] != none:
-		redirect(url_for('page1'))
->>>>>>> d9468bf2ec45282a0a224d2e1b87f759f55edf4a
+	if 'username' in sesssion and session['username'] != none:
+		return redirect(url_for('page1'))
 	return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
 	if request.method == 'POST':
-		username = request.form['username'].encode('ascii', 'ignore')
-		password = request.form['password'].encode('ascii', 'ignore')
-		password_confirm = request.form['password-confirm'].encode('ascii', 'ignore')
+		username = get_form_value('username')
+		password = get_form_value('password')
+		password_confirm = get_form_value('password-confirm')
 		db = shelve.get_shelve('c')
 		if password != password_confirm:
 			return 'The two passwords are not equal.'
@@ -46,8 +41,6 @@ def register():
 			return render_template('page2.html')
 	return render_template('register.html')
 
-<<<<<<< HEAD
-=======
 @app.route('/page1')
 def page1():
 	return render_template('page1.html')
@@ -56,7 +49,6 @@ def page1():
 def page2():
 	return render_template('page1.html')
 
->>>>>>> d9468bf2ec45282a0a224d2e1b87f759f55edf4a
 @app.route('/accounts')
 def accounts():
 	db = shelve.get_shelve('c')
@@ -64,6 +56,9 @@ def accounts():
 	for key in db:
 		acc += key + ":" + db[key] + "\n"
 	return acc
+
+def get_form_value(key):
+	return request.form[key].encode('ascii', 'ignore')
 
 if __name__ == '__main__':
 	env.line_statement_prefix = '='
