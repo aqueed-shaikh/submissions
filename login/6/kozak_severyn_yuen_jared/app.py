@@ -5,68 +5,65 @@ app.py is a login engine.
 from flask import Flask
 from flask import render_template
 from flask import request, session, redirect, url_for
-import shelve
-import hashlib
+
+from flask.ext import shelve
+from hashlib import sha512
 
 app = Flask(__name__)
 
 #conveniently convert a plaintext key to something convoluted
-app.secret_key = hashlib.sha512("security").hexdigest()
+app.secret_key = sha512("cybersec").hexdigest()
+app.config["SHELVE_FILENAME"] = "userData.db"
+shelve.init_app(app)
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	return render_template("index.html", loggedIn = "loggedIn" in session)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
 	if request.method == "GET":
 		return render_template("login.html")
-	else:
-		Username = request.form["Username"].encode("ascii", "ignore")
-		Password = request.form["Password"].encode("ascii", "ignore")
-		users = shelve.open("userData")
 
-		if Username in users:
-			if Password == users[Username]:
-				session["loggedIn"] = True
-				return redirect(url_for('vault'))
-			else: 
-				return "Wrong credentials."
-		else: 
-			return "No such user."
-		users.close()
+	Username = request.form["Username"].encode("ascii", "ignore")
+	Password = request.form["Password"].encode("ascii", "ignore")
+	users = shelve.get_shelve()
+
+	if Username in users:
+		if sha512(Password).hexdigest() == users[Username]:
+			session["loggedIn"] = True
+			return redirect(url_for("index"))
+		return "Wrong credentials."
+	return "No such user."
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
 	if request.method == "GET":
 		return render_template("register.html")
-	else:
-		users = shelve.open("userData")
 
-		Username = request.form["Username"].encode("ascii", "ignore")
-		Password = request.form["Password"].encode("ascii", "ignore")
-		PasswordRetype = request.form["PasswordRetype"].encode("ascii", "ignore")
+	users = shelve.get_shelve()
+	Username = request.form["Username"].encode("ascii", "ignore")
+	Password = request.form["Password"].encode("ascii", "ignore")
+	PasswordRetype = request.form["PasswordRetype"].encode("ascii", "ignore")
 
-		if Password != PasswordRetype:
-			return "Password mismatch."
+	if Password != PasswordRetype:
+		return "Password mismatch."
 
-		elif Username in users:
-			return "Username already exists!"
+	if Username in users:
+		return "Username already exists!"
 
-		else:
-			users[Username] = Password
-			return "Success."
+	users[Username] = sha512(Password).hexdigest()
+	return "Success."
 
 @app.route("/vault")
 def vault():
-	if session["loggedIn"]:
-		return "42."
-	else:
-		return redirect(url_for('login'))
+	return render_template("vault.html", loggedIn = "loggedIn" in session)
 
 @app.route("/logout")
 def logout():
-	session.pop("loggedIn")
+	if "loggedIn" in session:
+		session.pop("loggedIn")
+	return redirect(url_for("index"))
 
 if __name__ == "__main__":
 	app.run(debug = True)
