@@ -1,0 +1,7 @@
+<h1>Form Results</h1>
+
+<h2>User: {{d.name}}</h2>
+<h2>Rating: {{d.rating}}</h2>
+
+
+<a href="/form">Return to form</a>
