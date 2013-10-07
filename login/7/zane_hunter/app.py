@@ -48,7 +48,10 @@ def signin():
 			return render_template("whoops.html")
 	else:#get
 		return render_template("login.html")
-
+@app.route('/logout/')
+def logout():
+	session.clear()
+	redirect_for("/")
 if __name__ == "__main__":
 	app.debug = True
 	app.run(host='0.0.0.0', port=5000)
