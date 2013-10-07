@@ -58,7 +58,7 @@ def logout():
 @app.route('/page')
 def page():
 	if logged_in():
-		a = random.randint(0,1)
+		a = random.randint(0, 2)
 		if a == 0:
 			return render_template('page1.html', title='Hello there!')
 		else:
