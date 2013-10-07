@@ -21,18 +21,10 @@ def login():
 	if request.method == 'POST':
 		username = get_form_value('username')
 		password = get_form_value('password')
-<<<<<<< HEAD
-		db = shelve.get_shelve('c')
-		if username in db and db[username] == password:
-			session['username'] = username
-	if 'username' in sesssion and session['username'] != none:
-		return redirect(url_for('page1'))
-=======
 		db = get_shelve('c')
 		# add session
 		if username in db and db[username] == password:
 			session['username'] = username
->>>>>>> 81273dc6583cd634c8fcdf4e14b89096e67a1dad
 	return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -41,11 +33,7 @@ def register():
 		username = get_form_value('username')
 		password = get_form_value('password')
 		password_confirm = get_form_value('password-confirm')
-<<<<<<< HEAD
-		db = shelve.get_shelve('c')
-=======
 		db = get_shelve('c')
->>>>>>> 81273dc6583cd634c8fcdf4e14b89096e67a1dad
 		if password != password_confirm:
 			return 'The two passwords are not equal.'
 		elif username in db:
@@ -80,12 +68,9 @@ def accounts():
 		acc += key + ":" + db[key] + "\n"
 	return acc
 
-<<<<<<< HEAD
-=======
 def logged_in():
 	return 'username' in session and session['username'] != none
 
->>>>>>> 81273dc6583cd634c8fcdf4e14b89096e67a1dad
 def get_form_value(key):
 	return request.form[key].encode('ascii', 'ignore')
 
