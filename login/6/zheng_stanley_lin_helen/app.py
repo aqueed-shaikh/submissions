@@ -53,33 +53,6 @@ def register():
             else:
                 return redirect("/register")
 
-
-#@app.route("/count")
-#def count():
-#    logins = shelve.get_shelve('c')
-#    try:
-#        username = session['username']
-#    except:
-#        return "Not logged in"
-#    try:
-#        count = logins[username]['count']
-#    except:
-#        count = 0
-#    count += 1
- #   d = logins[username]
-#    d['count'] = count
-#    logins[username] = d
-#    page="""
-#    <h1>The count is: %d</h1>
-#    <p>  
-#    <a href="/count">
-#    <input type="button" name="button" value="Increment Count">
-#    </a> 
-#    </p>
-#    """
-#    return page%(count)
-
-
 #POP THE USERNAME
 @app.route("/logout")
 def logout():
