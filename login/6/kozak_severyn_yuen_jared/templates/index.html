@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			Register
+		</title>
+	</head>
+	<body>
+		<a href="/" >Home</a><br>
+		<a href="/register" >Register</a><br>
+		{% if loggedIn == True %}
+			<a href="/logout" >Logout</a><br>
+		{% else %}
+			<a href="/login" >Login</a><br>
+		{% endif %}
+			<a href="/vault" >Vault</a><br>
+	</body>
+</html>
