@@ -12,7 +12,8 @@ def home():
     if "username" in session:
         return render_template("home.html",username=session["username"])
     else:
-        return redirect("/login",errormessage="<p>Hello there!</p>")
+        #return redirect("/login",errormessage="<p>Hello there!</p>")
+        return redirect("/login")
 
 @app.route("/login",methods=['GET','POST'])
 def login():
@@ -34,8 +35,8 @@ def register():
     if request.method == "GET":
         return render_template("register.html",error="Hello there!")
     else:
-        Username = request.form["username"].encode("ascii","ignore")
-        Password = request.form["password"].encode("ascii","ignore")
+        username = request.form["username"].encode("ascii","ignore")
+        password = request.form["password"].encode("ascii","ignore")
         users = shelve.get_shelve()
         if users.has_key(username):
             return redirect("/register",error="This username already exists.")
@@ -50,4 +51,4 @@ def logout():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host='0.0.0.0',port=5000)
+    app.run(host='0.0.0.0',port=5001)
