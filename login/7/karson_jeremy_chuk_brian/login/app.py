@@ -12,7 +12,7 @@ app.secret_key="my supersecret key"
 def home():
     #redirects to the login page
     return redirect("/login")
-#breakline~~~~~~~~~~logincode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#breakline~~~~~~~~~~logincode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @app.route("/login", methods=['GET','POST'])
 def login():
     #coding how the login page will look
@@ -35,17 +35,24 @@ def login():
             submitpage = "<h1>submitted fool!</h1>"
             username = request.form['username']
             password = request.form['password']
-            submitpage = submitpage + username + " " + password
-            return submitpage
+            sessions = shelve.open("sessions")
+            if s.has_key(username) and s["%s"%(username)] == password:
+                session["username"] = username
+                s.close()
+                return redirect('/madlib')
+            else:
+                return redirect('/login')
+            #submitpage = submitpage + username + " " + password
         elif button=="reset":
             return redirect ("/login")
         else:
             return redirect ("/register")
-#breakline~~~~~~~~~~logoutcode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#breakline~~~~~~~~~~logoutcode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @app.route("/logout")
 def logout():
-    return "<h1> swag </h1>"
-#breakline~~~~~~~~~~registercode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
+    session.pop('username')
+    return redirect("login")
+#breakline~~~~~~~~~~registercode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
 @app.route("/register", methods=['GET','POST'])
 def register():
     page="""<h1>Signup page's here fool!</h1>
@@ -66,8 +73,12 @@ def register():
             submitpage = "<h1>signed up fool!</h1>"
             username = request.form['username']
             password = request.form['password']
-            submitpage = submitpage + username + " " + password
-            return submitpage
+            _user=username.encode('ascii','ignore')
+            _pass=password.encode('ascii','ignore')
+            s = shelve.open("sessions")
+            s["%s"%(user)]=psswd
+            s.close()
+            return redirect ("/madlib")
         elif button=="reset":
             return redirect ("/register")
         else:
