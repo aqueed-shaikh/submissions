@@ -1,9 +1,7 @@
 from flask import Flask, session, redirect, request, url_for, render_template
-from flask.ext import shelve
+from auth import *
 
 app = Flask(__name__)
-app.config['SHELVE_FILENAME'] = 'shelve.db'
-shelve.init_app(app)
 app.secret_key='A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route('/')
@@ -27,12 +25,9 @@ def login():
     elif request.method == 'GET':
         return render_template('login.html')
     else:
-        username = request.form['username'].encode('utf8')
-        password = request.form['password'].encode('utf8')
-        database = shelve.get_shelve()
-        if username not in database:
-            return redirect(url_for('register', message='Not a valid username. Please register'))
-        elif database[username] == password:
+        username = request.form['username']
+        password = request.form['password']
+        if authenticate(username, password):
             session['username'] = username
             return redirect(url_for('home'))
         else:
@@ -47,14 +42,12 @@ def register():
           return render_template('register.html', message=request.args['message'])
         return render_template('register.html')
     else:
-        username = request.form['username'].encode('utf8')
-        password = request.form['password'].encode('utf8')
-        database = shelve.get_shelve()
-        if username in database:
+        username = request.form['username']
+        password = request.form['password']
+        if exists(username):
             return render_template('register.html', message='Username already in use')
         else:
-            database[username] = password
-            session['username'] = username
+            addUser(username, password)
             return redirect(url_for('home'))
 
         
