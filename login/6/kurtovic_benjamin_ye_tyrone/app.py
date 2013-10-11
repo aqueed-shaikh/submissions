@@ -2,16 +2,10 @@
 
 from flask import Flask
 from flask import Flask, session, request, redirect, render_template
-from flask.ext import shelve
+
+import utils
 
 app = Flask(__name__)
-app.config["SHELVE_FILENAME"] = "login.db"
-app.secret_key = "Ben_Tyrone_L0G!N"
-shelve.init_app(app)
-
-def read_login(request):
-    return (request.form["username"].encode("utf8"),
-            request.form["password"].encode("utf8"))
 
 def fail(template, error):
     return render_template(template + ".html", error=error)
@@ -28,29 +22,23 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     username, password = read_login(request)
-    if not username or not password:
-        return fail("login", "missing")
-    db = shelve.get_shelve()
-    if username.lower() not in db:
-        return fail("login", "no-user")
-    if db[username.lower()] != password:
-        return fail("login", "incorrect")
-    session["username"] = username
-    return redirect("/")
+    error = utils.login(request.form["username"], request.form["password"])
+    if not error:
+        session["username"] = username
+        return redirect("/")
+    else:
+        return fail("login", error)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
         return render_template("register.html")
-    username, password = read_login(request)
-    if not username or not password:
-        return fail("register", "missing")
-    db = shelve.get_shelve()
-    if username.lower() in db:
-        return fail("register", "exists")
-    db[username.lower()] = password
-    session["username"] = username
-    return redirect("/")
+    error = utils.register(request.form["username"], request.form["password"])
+    if not error:
+        session["username"] = username
+        return redirect("/")
+    else:
+        return fail("register", error)
 
 @app.route("/logout")
 def logout():
