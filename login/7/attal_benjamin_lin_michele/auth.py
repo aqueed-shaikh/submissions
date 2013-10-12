@@ -1,44 +1,74 @@
-# Separate out funcitonality in here
-# Use sqlite as database
 import sqlite3
 
+class DatabaseObject(object):
+  def __init__(self, data_file):
+    self.db = sqlite3.connect(data_file, check_same_thread=False)
+    self.data_file = data_file
+
+  def write(self, query, values=None):
+    cursor = self.db.cursor()
+    if values is not None:
+      cursor.execute(query, list(values))
+    else:
+      cursor.execute(query)
+    self.db.commit()
+    return cursor
+
+  def read(self, query, values=None):
+    cursor = self.db.cursor()
+    if values is not None:
+      print query, list(values)
+      cursor.execute(query, list(values))
+    else:
+      cursor.execute(query)
+    return cursor
+
+  def drop_table(self, name):
+    cursor = self.db.cursor()
+    query = 'DROP TABLE %s' % name
+    cursor.execute(query)
+    self.db.commit()
+    cursor.close()
 
 
-def init():
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  command = 'CREATE TABLE IF NOT exists users(username TEXT, password TEXT)'
-  cursor.execute(command)
-  db.commit()
-  db.close()
+class Table(DatabaseObject):
+  def __init__(self, data_file, table_name, values):
+    super(Table, self).__init__(data_file)
+    cursor = self.db.cursor()
+    query = 'CREATE TABLE IF NOT EXISTS %s%s' % (table_name, values)
+    cursor.execute(query)
+    self.db.commit()
+    cursor.close()
+    self.table_name = table_name
 
-def add_user(username, password):
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  cmd = 'INSERT INTO users VALUES(?, ?)'
-  cursor.execute(cmd, [username, password])
-  db.commit()
-  db.close()
+  def clear_entries(self):
+    query = 'DELETE from %s' % self.table_name
+    cursor = self.write(query)
+    cursor.close()
 
-def exists(username):
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  cmd = 'SELECT username FROM users WHERE username=?'
-  results = [line for line in cursor.execute(cmd, [username])]
-  return len(results) > 0
+  def destroy():
+    self.drop_table(self.table_name)
 
-def authenticate(username, password):
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  cmd = 'SELECT password FROM users WHERE username=? and password=?'
-  results = [line for line in cursor.execute(cmd, [username, password])]
-  return len(results) > 0
 
-def drop_table():
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  cmd = 'DROP TABLE users'
-  cursor.execute(cmd)
-  db.commit()
+class User(Table):
+  def __init__(self, data_file):
+    super(User, self).__init__(data_file, 'users', '(username TEXT, password TEXT)')
+    
+  def add_user(self, username, password):
+    query = 'INSERT INTO users VALUES(?, ?)'
+    cursor = self.write(query, [username, password])
+    cursor.close()
 
-init()
+  def exists(self, username):
+    query = 'SELECT username FROM users WHERE username=?'
+    cursor = self.read(query, [username])
+    results = cursor.fetchall()
+    cursor.close()
+    return len(results) > 0
+
+  def authenticate(self, username, password):
+    query = 'SELECT password FROM users WHERE username=? and password=?'
+    cursor = self.read(query, [username, password])
+    results = cursor.fetchall()
+    cursor.close()
+    return len(results) > 0
