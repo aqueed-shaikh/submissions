@@ -46,6 +46,13 @@ class Table(DatabaseObject):
     cursor = self.write(query, list(args))
     cursor.close()
 
+  def delete(self, **kwargs):
+    conds = ' and '.join(['%s=?' % k for k in kwargs])
+    subs = [kwargs[k] for k in kwargs]
+    query = 'DELETE FROM %s where %s' % (self.table_name, conds)
+    cursor = self.write(query, subs)
+    cursor.close()
+
   def delete_all(self):
     query = 'DELETE from %s' % self.table_name
     cursor = self.write(query)
