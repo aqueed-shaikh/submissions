@@ -41,9 +41,9 @@ class Table(DatabaseObject):
     self.table_name = table_name
 
   def insert(self, *args):
-    values = ','.join(['?' for l in list(args)])
+    values = ','.join(['?' for l in args])
     query = 'INSERT INTO %s VALUES(%s)' % (self.table_name, values)
-    cursor = self.write(query, list(args))
+    cursor = self.write(query, args)
     cursor.close()
 
   def delete(self, **kwargs):

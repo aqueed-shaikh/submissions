@@ -10,15 +10,13 @@ user_table = User('login.dat')
 def home():
   if 'username' in session:
     return render_template('home.html')
-  else:
-    return redirect(url_for('login'))
+  return redirect(url_for('login'))
 
 @app.route('/something')
 def something():
   if 'username' in session:
     return render_template('something.html')
-  else:
-    return redirect(url_for('login'))
+  return redirect(url_for('login'))
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -26,14 +24,12 @@ def login():
     return redirect(url_for('home'))
   elif request.method == 'GET':
     return render_template('login.html')
-  else:
-    username = request.form['username']
-    password = request.form['password']
-    if user_table.authenticate(username, password):
-      session['username'] = username
-      return redirect(url_for('home'))
-    else:
-      return render_template('login.html', message='Please check your username and password again')
+  username = request.form['username'].lower()
+  password = request.form['password'].lower()
+  if user_table.authenticate(username, password):
+    session['username'] = username
+    return redirect(url_for('home'))
+  return render_template('login.html', message='Please check your username and password again')
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -43,14 +39,12 @@ def register():
     if 'message' in request.args:
       return render_template('register.html', message=request.args['message'])
     return render_template('register.html')
-  else:
-    username = request.form['username']
-    password = request.form['password']
-    if user_table.exists(username):
-      return render_template('register.html', message='Username already in use')
-    else:
-      user_table.insert(username, password)
-      return redirect(url_for('home'))
+  username = request.form['username'].lower()
+  password = request.form['password'].lower()
+  if user_table.exists(username):
+    return render_template('register.html', message='Username already in use')
+  user_table.insert(username, password)
+  return redirect(url_for('home'))
     
 @app.route('/logout')
 def logout():
