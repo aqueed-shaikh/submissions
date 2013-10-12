@@ -34,7 +34,7 @@ def authenticate(username, password):
   results = [line for line in cursor.execute(cmd, [username, password])]
   return len(results) > 0
 
-def drop_TABLE():
+def drop_table():
   db = sqlite3.connect('login')
   cursor = db.cursor()
   cmd = 'DROP TABLE users'
