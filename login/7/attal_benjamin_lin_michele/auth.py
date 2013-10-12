@@ -17,7 +17,6 @@ class DatabaseObject(object):
   def read(self, query, values=None):
     cursor = self.db.cursor()
     if values is not None:
-      print query, list(values)
       cursor.execute(query, list(values))
     else:
       cursor.execute(query)
@@ -41,23 +40,24 @@ class Table(DatabaseObject):
     cursor.close()
     self.table_name = table_name
 
-  def clear_entries(self):
+  def insert(self, *args):
+    values = ','.join(['?' for l in list(args)])
+    query = 'INSERT INTO %s VALUES(%s)' % (self.table_name, values)
+    cursor = self.write(query, list(args))
+    cursor.close()
+
+  def delete_all(self):
     query = 'DELETE from %s' % self.table_name
     cursor = self.write(query)
     cursor.close()
 
-  def destroy():
+  def drop():
     self.drop_table(self.table_name)
 
 
 class User(Table):
   def __init__(self, data_file):
     super(User, self).__init__(data_file, 'users', '(username TEXT, password TEXT)')
-    
-  def add_user(self, username, password):
-    query = 'INSERT INTO users VALUES(?, ?)'
-    cursor = self.write(query, [username, password])
-    cursor.close()
 
   def exists(self, username):
     query = 'SELECT username FROM users WHERE username=?'

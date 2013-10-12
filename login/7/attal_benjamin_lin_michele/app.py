@@ -49,7 +49,7 @@ def register():
     if user_table.exists(username):
       return render_template('register.html', message='Username already in use')
     else:
-      user_table.add_user(username, password)
+      user_table.insert(username, password)
       return redirect(url_for('home'))
     
 @app.route('/logout')
