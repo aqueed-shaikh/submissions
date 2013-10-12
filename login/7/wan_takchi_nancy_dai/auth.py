@@ -14,13 +14,13 @@ def adduser(user, pw):
     for username in cursor:
         if username == user:
             return False
-    connection.execute("INSERT INTO data VALUES('%s', '%s')"% user, pw)
-    return True
+        else:
+            connection.execute("INSERT INTO data VALUES('%s', '%s')"%(user, pw))
+            return True
 
 def authenticate(user, pw):
     cursor = connection.execute("select password from data where username = ?", user)
-    result = "" + cursor.encode("utf8")
-    if result == pw:
+    if cursor.fetchone()== pw:
         return True
     else:
         return False
