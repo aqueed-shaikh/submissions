@@ -47,7 +47,7 @@ def register():
         if exists(username):
             return render_template('register.html', message='Username already in use')
         else:
-            addUser(username, password)
+            add_user(username, password)
             return redirect(url_for('home'))
 
         
