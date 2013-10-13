@@ -1,14 +1,16 @@
 import sqlite3
 
+
 queries = {
     'SELECT': 'SELECT %s FROM %s WHERE %s',
     'INSERT': 'INSERT INTO %s VALUES(%s)',
     'UPDATE': 'UPDATE %s SET %s WHERE %s',
     'DELETE': 'DELETE FROM %s where %s',
     'DELETE_ALL': 'DELETE from %s',
-    'DROP_TABLE': 'DROP TABLE %s',
-    'CREATE_TABLE': 'CREATE TABLE IF NOT EXISTS %s%s'
+    'CREATE_TABLE': 'CREATE TABLE IF NOT EXISTS %s(%s)',
+    'DROP_TABLE': 'DROP TABLE %s'
 }
+
 
 class DatabaseObject(object):
 
@@ -49,13 +51,13 @@ class DatabaseObject(object):
         query = queries['INSERT'] % (table_name, values)
         return self.write(query, args)
 
-    def update(self, table_name, values, **kwargs):
-        updates = ','.join(['%s=?' % k for k in values])
+    def update(self, table_name, set_args, **kwargs):
+        updates = ','.join(['%s=?' % k for k in set_args])
         conds = ' and '.join(['%s=?' % k for k in kwargs])
-        newvals = [values[k] for k in values]
+        vals = [set_args[k] for k in set_args]
         subs = [kwargs[k] for k in kwargs]
         query = queries['UPDATE'] % (table_name, updates, conds)
-        return self.write(query, newvals + subs)
+        return self.write(query, vals + subs)
 
     def delete(self, table_name, **kwargs):
         conds = ' and '.join(['%s=?' % k for k in kwargs])
@@ -68,7 +70,7 @@ class DatabaseObject(object):
         return self.write(query)
 
     def create_table(self, table_name, values):
-        query = queries['CREATE_TABLE'] % (table_name, values)
+        query = queries['CREATE_TABLE'] % (table_name, ','.join(values))
         self.free(self.write(query))
 
     def drop_table(self, table_name):
@@ -92,8 +94,8 @@ class Table(DatabaseObject):
     def insert(self, *args):
         return super(Table, self).insert(self.table_name, *args)
 
-    def update(self, values, **kwargs):
-        return super(Table, self).update(self.table_name, values, **kwargs)
+    def update(self, set_args, **kwargs):
+        return super(Table, self).update(self.table_name, set_args, **kwargs)
 
     def delete(self, **kwargs):
         return super(Table, self).delete(self.table_name, **kwargs)
@@ -109,7 +111,7 @@ class User(Table):
 
     def __init__(self, data_file):
         super(User, self).__init__(data_file, 'users', 
-                                   '(username TEXT, password TEXT)')
+                                   ['username TEXT', 'password TEXT'])
 
     def select(self, values, **kwargs):
         cursor = super(User, self).select(values, **kwargs)
@@ -120,8 +122,8 @@ class User(Table):
     def insert(self, *args):
         self.free(super(User, self).insert(*args))
 
-    def update(self, values, **kwargs):
-        self.free(super(User, self).update(values, **kwargs))
+    def update(self, set_args, **kwargs):
+        self.free(super(User, self).update(set_args, **kwargs))
 
     def delete(self, **kwargs):
         self.free(super(User, self).delete(**kwargs))
@@ -138,5 +140,5 @@ class User(Table):
 
     def authenticate(self, username, password):
         results = self.select(['username'], username=username, 
-                            password=password)
+                              password=password)
         return len(results) > 0
