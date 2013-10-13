@@ -1,44 +1,142 @@
-# Separate out funcitonality in here
-# Use sqlite as database
 import sqlite3
 
+queries = {
+    'SELECT': 'SELECT %s FROM %s WHERE %s',
+    'INSERT': 'INSERT INTO %s VALUES(%s)',
+    'UPDATE': 'UPDATE %s SET %s WHERE %s',
+    'DELETE': 'DELETE FROM %s where %s',
+    'DELETE_ALL': 'DELETE from %s',
+    'DROP_TABLE': 'DROP TABLE %s',
+    'CREATE_TABLE': 'CREATE TABLE IF NOT EXISTS %s%s'
+}
+
+class DatabaseObject(object):
+
+    def __init__(self, data_file):
+        self.db = sqlite3.connect(data_file, check_same_thread=False)
+        self.data_file = data_file
+
+    def free(self, cursor):
+        cursor.close()
+
+    def write(self, query, values=None):
+        cursor = self.db.cursor()
+        if values is not None:
+            cursor.execute(query, list(values))
+        else:
+            cursor.execute(query)
+        self.db.commit()
+        return cursor
+
+    def read(self, query, values=None):
+        cursor = self.db.cursor()
+        if values is not None:
+            cursor.execute(query, list(values))
+        else:
+            cursor.execute(query)
+        return cursor
+
+    def select(self, values, tables, **kwargs):
+        vals = ','.join(values)
+        locs = ','.join(tables)
+        conds = ' and '.join(['%s=?' % k for k in kwargs])
+        subs = [kwargs[k] for k in kwargs]
+        query = queries['SELECT'] % (vals, locs, conds)
+        return self.read(query, subs)
+
+    def insert(self, table_name, *args):
+        values = ','.join(['?' for l in args])
+        query = queries['INSERT'] % (table_name, values)
+        return self.write(query, args)
+
+    def update(self, table_name, values, **kwargs):
+        updates = ','.join(['%s=?' % k for k in values])
+        conds = ' and '.join(['%s=?' % k for k in kwargs])
+        newvals = [values[k] for k in values]
+        subs = [kwargs[k] for k in kwargs]
+        query = queries['UPDATE'] % (table_name, updates, conds)
+        return self.write(query, newvals + subs)
+
+    def delete(self, table_name, **kwargs):
+        conds = ' and '.join(['%s=?' % k for k in kwargs])
+        subs = [kwargs[k] for k in kwargs]
+        query = queries['DELETE'] % (table_name, conds)
+        return self.write(query, subs)
+
+    def delete_all(self, table_name):
+        query = queries['DELETE_ALL'] % table_name
+        return self.write(query)
+
+    def create_table(self, table_name, values):
+        query = queries['CREATE_TABLE'] % (table_name, values)
+        self.free(self.write(query))
+
+    def drop_table(self, table_name):
+        query = queries['DROP_TABLE'] % table_name
+        self.free(self.write(query))
+
+    def disconnect(self):
+        self.db.close()
 
 
-def init():
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  command = 'CREATE TABLE IF NOT exists users(username TEXT, password TEXT)'
-  cursor.execute(command)
-  db.commit()
-  db.close()
+class Table(DatabaseObject):
 
-def add_user(username, password):
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  cmd = 'INSERT INTO users VALUES(?, ?)'
-  cursor.execute(cmd, [username, password])
-  db.commit()
-  db.close()
+    def __init__(self, data_file, table_name, values):
+        super(Table, self).__init__(data_file)
+        self.create_table(table_name, values)
+        self.table_name = table_name
 
-def exists(username):
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  cmd = 'SELECT username FROM users WHERE username=?'
-  results = [line for line in cursor.execute(cmd, [username])]
-  return len(results) > 0
+    def select(self, values, **kwargs):
+        return super(Table, self).select(values, [self.table_name], **kwargs)
 
-def authenticate(username, password):
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  cmd = 'SELECT password FROM users WHERE username=? and password=?'
-  results = [line for line in cursor.execute(cmd, [username, password])]
-  return len(results) > 0
+    def insert(self, *args):
+        return super(Table, self).insert(self.table_name, *args)
 
-def drop_table():
-  db = sqlite3.connect('login')
-  cursor = db.cursor()
-  cmd = 'DROP TABLE users'
-  cursor.execute(cmd)
-  db.commit()
+    def update(self, values, **kwargs):
+        return super(Table, self).update(self.table_name, values, **kwargs)
 
-init()
+    def delete(self, **kwargs):
+        return super(Table, self).delete(self.table_name, **kwargs)
+
+    def delete_all(self):
+        return super(Table, self).delete_all(self.table_name)
+
+    def drop(self):
+        return super(Table, self).drop_table(self.table_name)
+
+
+class User(Table):
+
+    def __init__(self, data_file):
+        super(User, self).__init__(data_file, 'users', 
+                                   '(username TEXT, password TEXT)')
+
+    def select(self, values, **kwargs):
+        cursor = super(User, self).select(values, **kwargs)
+        results = cursor.fetchall()
+        cursor.close()
+        return results
+
+    def insert(self, *args):
+        self.free(super(User, self).insert(*args))
+
+    def update(self, values, **kwargs):
+        self.free(super(User, self).update(values, **kwargs))
+
+    def delete(self, **kwargs):
+        self.free(super(User, self).delete(**kwargs))
+
+    def delete_all(self):
+        self.free(super(User, self).delete_all())
+
+    def drop(self):
+        self.free(super(User, self).drop())
+
+    def exists(self, username):
+        results = self.select(['username'], username=username)
+        return len(results) > 0
+
+    def authenticate(self, username, password):
+        results = self.select(['username'], username=username, 
+                            password=password)
+        return len(results) > 0
