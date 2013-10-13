@@ -1,7 +1,16 @@
 import sqlite3
 
-class DatabaseObject(object):
+queries = {
+    'SELECT': 'SELECT %s FROM %s WHERE %s',
+    'INSERT': 'INSERT INTO %s VALUES(%s)',
+    'UPDATE': 'UPDATE %s SET %s WHERE %s',
+    'DELETE': 'DELETE FROM %s where %s',
+    'DELETE_ALL': 'DELETE from %s',
+    'DROP_TABLE': 'DROP TABLE %s',
+    'CREATE_TABLE': 'CREATE TABLE IF NOT EXISTS %s%s'
+}
 
+class DatabaseObject(object):
 
     def __init__(self, data_file):
         self.db = sqlite3.connect(data_file, check_same_thread=False)
@@ -29,69 +38,106 @@ class DatabaseObject(object):
         locs = ','.join(tables)
         conds = ' and '.join(['%s=?' % k for k in kwargs])
         subs = [kwargs[k] for k in kwargs]
-        query = 'SELECT %s FROM %s WHERE %s' % (vals, locs, conds)
-        cursor = self.write(query, subs)
-        return cursor
+        query = queries['SELECT'] % (vals, locs, conds)
+        return self.read(query, subs)
 
-    def drop_table(self, name):
-        cursor = self.db.cursor()
-        query = 'DROP TABLE %s' % name
-        cursor.execute(query)
-        self.db.commit()
-        cursor.close()
+    def insert(self, table_name, *args):
+        values = ','.join(['?' for l in args])
+        query = queries['INSERT'] % (table_name, values)
+        return self.write(query, args)
+
+    def update(self, table_name, values, **kwargs):
+        updates = ','.join(['%s=?' % k for k in values])
+        conds = ' and '.join(['%s=?' % k for k in kwargs])
+        newvals = [values[k] for k in values]
+        subs = [kwargs[k] for k in kwargs]
+        query = queries['UPDATE'] % (table_name, updates, conds)
+        return self.write(query, newvals + subs)
+
+    def delete(self, table_name, **kwargs):
+        conds = ' and '.join(['%s=?' % k for k in kwargs])
+        subs = [kwargs[k] for k in kwargs]
+        query = queries['DELETE'] % (table_name, conds)
+        return self.write(query, subs)
+
+    def create_table(self, table_name, values):
+        query = queries['CREATE_TABLE'] % (table_name, values)
+        return self.write(query)
+
+    def delete_all(self, table_name):
+        query = queries['DELETE_ALL'] % table_name
+        return self.write(query)
+
+    def drop_table(self, table_name):
+        query = queries['DROP_TABLE'] % table_name
+        return self.write(query)
+
+    def disconnect(self):
+        self.db.close()
 
 
 class Table(DatabaseObject):
 
-
     def __init__(self, data_file, table_name, values):
         super(Table, self).__init__(data_file)
-        query = 'CREATE TABLE IF NOT EXISTS %s%s' % (table_name, values)
-        cursor = self.write(query)
-        cursor.close()
+        self.create_table(table_name, values)
         self.table_name = table_name
-
-    def insert(self, *args):
-        values = ','.join(['?' for l in args])
-        query = 'INSERT INTO %s VALUES(%s)' % (self.table_name, values)
-        cursor = self.write(query, args)
-        cursor.close()
-
-    def delete(self, **kwargs):
-        conds = ' and '.join(['%s=?' % k for k in kwargs])
-        subs = [kwargs[k] for k in kwargs]
-        query = 'DELETE FROM %s where %s' % (self.table_name, conds)
-        cursor = self.write(query, subs)
-        cursor.close()
-
-    def delete_all(self):
-        query = 'DELETE from %s' % self.table_name
-        cursor = self.write(query)
-        cursor.close()
 
     def select(self, values, **kwargs):
         return super(Table, self).select(values, [self.table_name], **kwargs)
 
-    def drop():
-        self.drop_table(self.table_name)
+    def insert(self, *args):
+        return super(Table, self).insert(self.table_name, *args)
+
+    def update(self, values, **kwargs):
+        return super(Table, self).update(self.table_name, values, **kwargs)
+
+    def delete(self, **kwargs):
+        return super(Table, self).delete(self.table_name, **kwargs)
+
+    def delete_all(self):
+        return super(Table, self).delete_all(self.table_name)
+
+    def drop(self):
+        return super(Table, self).drop_table(self.table_name)
 
 
 class User(Table):
-
 
     def __init__(self, data_file):
         super(User, self).__init__(data_file, 'users', 
                                    '(username TEXT, password TEXT)')
 
-    def exists(self, username):
-        cursor = self.select(['username'], username=username)
+    def select(self, values, **kwargs):
+        cursor = super(User, self).select(values, **kwargs)
         results = cursor.fetchall()
         cursor.close()
+        return results
+
+    def insert(self, *args):
+        cursor = super(User, self).insert(*args)
+        cursor.close()
+
+    def update(self, values, **kwargs):
+        cursor = super(User, self).update(values, **kwargs)
+
+    def delete(self, **kwargs):
+        cursor = super(User, self).delete(**kwargs)
+        cursor.close()
+
+    def delete_all(self):
+        cursor = super(User, self).delete_all()
+        cursor.close()
+
+    def drop(self):
+        cursor = super(User, self).drop()
+        cursor.close()
+
+    def exists(self, username):
+        results = self.select(['username'], username=username)
         return len(results) > 0
 
     def authenticate(self, username, password):
-        cursor = self.select(['username'], username=username, 
+        results = self.select(['username'], username=username, 
                             password=password)
-        results = cursor.fetchall()
-        cursor.close()
         return len(results) > 0

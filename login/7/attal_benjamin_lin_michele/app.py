@@ -2,9 +2,11 @@
 from flask import Flask, session, redirect, request, url_for, render_template
 from auth import User
 
+
 app = Flask(__name__)
 app.secret_key='A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 user_table = User('login.dat')
+
 
 @app.route('/')
 def home():
@@ -12,11 +14,13 @@ def home():
         return render_template('home.html')
     return redirect(url_for('login'))
 
+
 @app.route('/something')
 def something():
     if 'username' in session:
         return render_template('something.html')
     return redirect(url_for('login'))
+
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -32,6 +36,7 @@ def login():
     return render_template(
         'login.html', 
         message='Please check your username and password again')
+
 
 @app.route('/register', methods = ['GET','POST'])
 def register():
@@ -50,10 +55,12 @@ def register():
     user_table.insert(username, password)
     return redirect(url_for('home'))
         
+
 @app.route('/logout')
 def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
     
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
