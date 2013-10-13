@@ -1,10 +1,9 @@
 from flask import Flask
 from flask import request, render_template, redirect, session, url_for
-from flask.ext import shelve
+import sqlite3
+import utils
 
 app = Flask(__name__)
-app.config['SHELVE_FILENAME'] = 'shelve.db'
-shelve.init_app(app)
 app.secret_key = "abcd"
 
 @app.route("/")
@@ -20,17 +19,10 @@ def register():
     if request.method == "GET":
         return render_template("register.html") 
     else:
-        data = shelve.get_shelve()
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        
-        if username in data:
-            return "Username exists in the database!"        
-        else:
-            data[username] = password
-            session["username"] = username
-            return redirect("/login")
-
+        utils.addUser(username, password)
+        return redirect("/login")
         
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
@@ -39,13 +31,10 @@ def login():
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
-        data = shelve.get_shelve()
-        if not username in data:
+        if (utils.checkUser(username, password)):
+            return redirect("/")
+        else:
             return redirect("/register")
-        elif data[username] != password: 
-            return redirect("/register")
-        session["username"] = username
-        return redirect("/")
 
     
 @app.route("/logout")
@@ -59,7 +48,7 @@ def pi():
     if "username" in session:
         return """
 <h1>FIRST 3 DIGITS OF PI!!!!!!!!!!!</h1>
-
+ 
 3.14
 """
     else:
