@@ -24,6 +24,15 @@ class DatabaseObject(object):
             cursor.execute(query)
         return cursor
 
+    def select(self, values, tables, **kwargs):
+        vals = ','.join(values)
+        locs = ','.join(tables)
+        conds = ' and '.join(['%s=?' % k for k in kwargs])
+        subs = [kwargs[k] for k in kwargs]
+        query = 'SELECT %s FROM %s WHERE %s' % (vals, locs, conds)
+        cursor = self.write(query, subs)
+        return cursor
+
     def drop_table(self, name):
         cursor = self.db.cursor()
         query = 'DROP TABLE %s' % name
@@ -37,10 +46,8 @@ class Table(DatabaseObject):
 
     def __init__(self, data_file, table_name, values):
         super(Table, self).__init__(data_file)
-        cursor = self.db.cursor()
         query = 'CREATE TABLE IF NOT EXISTS %s%s' % (table_name, values)
-        cursor.execute(query)
-        self.db.commit()
+        cursor = self.write(query)
         cursor.close()
         self.table_name = table_name
 
@@ -62,6 +69,9 @@ class Table(DatabaseObject):
         cursor = self.write(query)
         cursor.close()
 
+    def select(self, values, **kwargs):
+        return super(Table, self).select(values, [self.table_name], **kwargs)
+
     def drop():
         self.drop_table(self.table_name)
 
@@ -74,16 +84,14 @@ class User(Table):
                                    '(username TEXT, password TEXT)')
 
     def exists(self, username):
-        query = 'SELECT username FROM users WHERE username=?'
-        cursor = self.read(query, [username])
+        cursor = self.select(['username'], username=username)
         results = cursor.fetchall()
         cursor.close()
         return len(results) > 0
 
     def authenticate(self, username, password):
-        query = '''SELECT password FROM users WHERE username=? 
-                and password=?'''
-        cursor = self.read(query, [username, password])
+        cursor = self.select(['username'], username=username, 
+                            password=password)
         results = cursor.fetchall()
         cursor.close()
         return len(results) > 0
