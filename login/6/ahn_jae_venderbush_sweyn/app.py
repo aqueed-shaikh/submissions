@@ -1,13 +1,11 @@
 from flask import Flask
 
 from flask import session,url_for,request,redirect,render_template
-from flask.ext import shelve
+
+import auth
 
 app = Flask(__name__)
 app.secret_key="key"
-app.config['SHELVE_FILENAME'] = 'logins'
-shelve.init_app(app)
-
 
 @app.route("/hidden")
 def hidden():
@@ -19,7 +17,6 @@ def hidden():
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-    logins = shelve.get_shelve('c')
     if request.method=="GET":
         return render_template('login.html')
     else:
@@ -27,7 +24,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         if button == "Submit":
-            if username in logins and logins[username]['password'] == password:
+            if auth.checkLogin(username,password):
                 session['username'] = username
                 return """
                 Success
@@ -38,7 +35,6 @@ def login():
 
 @app.route("/register", methods=['GET','POST'])
 def register():
-    logins = shelve.get_shelve('c')
     if request.method=="GET":
         return render_template('register.html')
     else:
@@ -46,8 +42,8 @@ def register():
         username = request.form['username']
         password = request.form['password']
         if button == "Submit":
-            if not username in logins:
-                logins[username] = {'password':password}
+            if not auth.checkUsername(username):
+                auth.addLogin(username, password)
                 return "Successfully created account"
             else:
                 return """
@@ -58,19 +54,12 @@ def register():
 
 @app.route("/count")
 def count():
-    logins = shelve.get_shelve('c')
     try:
         username = session['username']
     except:
         return "Not logged in"
-    try:
-        count = logins[username]['count']
-    except:
-        count = 0
-    count += 1
-    d = logins[username]
-    d['count'] = count
-    logins[username] = d
+    auth.incrementCount(username)
+    count = auth.getCount(username)
     page="""
     <h1>The count is: %d</h1>
     <p>  
@@ -97,8 +86,8 @@ def home():
     except:
         return redirect(url_for('login'))
 
-
 if __name__=="__main__":
+    auth.setup()
     app.debug=True
     app.run()
     

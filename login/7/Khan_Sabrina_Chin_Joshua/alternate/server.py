@@ -1,3 +1,4 @@
+#!/bin/python
 import os
 from flask import Flask, session, redirect, url_for, escape, request, render_template
 from database import Database

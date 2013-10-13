@@ -1,10 +1,6 @@
 # Will Field-Thompson & Haoxin Luo
 
-# To do:
-# Add a register link to the login page
-# Add other pages
-# Add new homepage
-
+import auth
 from flask import Flask
 import flask.ext.shelve
 from flask.ext.shelve import get_shelve, init_app
@@ -23,9 +19,9 @@ init_app(app)
 # stored under each username is the password
 
 # checks username against password
-def verify_login(u, p):
-    db = get_shelve()
-    return u in db and db[u] == p
+#def auth.authenticate(u, p):
+#    db = get_shelve()
+#    return u in db and db[u] == p
 
 #need a more interesting homepage
 @app.route('/')
@@ -44,7 +40,8 @@ def register():
         if user in db: #checks to make sure the username doesn't already exist
             return "Username already in use. Please pick another." + render_template('register.html')
         else:
-            db[user] = request.form['password'].encode("ascii")
+            #db[user] = request.form['password'].encode("ascii")
+            auth.add_user(user, request.form['password'].encode('ascii'))
             session['username'] = user
             return redirect('/registered')
 
@@ -55,7 +52,7 @@ def login():
         return render_template('login.html')
     elif request.method == 'POST':
         user = request.form['username'].encode("ascii")
-        if verify_login(user, request.form['password'].encode("ascii")):
+        if auth.authenticate(user, request.form['password'].encode("ascii")):
             session['username'] = user
             return redirect('/')
         else:
