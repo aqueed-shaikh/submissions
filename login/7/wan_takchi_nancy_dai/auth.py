@@ -10,13 +10,17 @@ except:
     pass
 
 def adduser(user, pw):
-    cursor = connection.execute("select username from data");
-    for username in cursor:
-        if username == user:
-            return False
-        else:
-            connection.execute("INSERT INTO data VALUES('%s', '%s')"%(user, pw))
-            return True
+    if checkuser(user) ==False:
+        connection.execute("INSERT INTO data (username, password) values (?,?);",user,pw)
+        connection.commit()
+def checkuser(user):
+    ans = False
+    d=connection.execute("SELECT username from data where username = (?)", user)
+    d=d.fetchall()
+    if len(d)!=0:
+        ans=True
+    return ans
+
 
 def authenticate(user, pw):
     cursor = connection.execute("select password from data where username = ?", user)
