@@ -16,6 +16,9 @@ class DatabaseObject(object):
         self.db = sqlite3.connect(data_file, check_same_thread=False)
         self.data_file = data_file
 
+    def free(self, cursor):
+        cursor.close()
+
     def write(self, query, values=None):
         cursor = self.db.cursor()
         if values is not None:
@@ -60,17 +63,17 @@ class DatabaseObject(object):
         query = queries['DELETE'] % (table_name, conds)
         return self.write(query, subs)
 
-    def create_table(self, table_name, values):
-        query = queries['CREATE_TABLE'] % (table_name, values)
-        return self.write(query)
-
     def delete_all(self, table_name):
         query = queries['DELETE_ALL'] % table_name
         return self.write(query)
 
+    def create_table(self, table_name, values):
+        query = queries['CREATE_TABLE'] % (table_name, values)
+        self.free(self.write(query))
+
     def drop_table(self, table_name):
         query = queries['DROP_TABLE'] % table_name
-        return self.write(query)
+        self.free(self.write(query))
 
     def disconnect(self):
         self.db.close()
@@ -115,23 +118,19 @@ class User(Table):
         return results
 
     def insert(self, *args):
-        cursor = super(User, self).insert(*args)
-        cursor.close()
+        self.free(super(User, self).insert(*args))
 
     def update(self, values, **kwargs):
-        cursor = super(User, self).update(values, **kwargs)
+        self.free(super(User, self).update(values, **kwargs))
 
     def delete(self, **kwargs):
-        cursor = super(User, self).delete(**kwargs)
-        cursor.close()
+        self.free(super(User, self).delete(**kwargs))
 
     def delete_all(self):
-        cursor = super(User, self).delete_all()
-        cursor.close()
+        self.free(super(User, self).delete_all())
 
     def drop(self):
-        cursor = super(User, self).drop()
-        cursor.close()
+        self.free(super(User, self).drop())
 
     def exists(self, username):
         results = self.select(['username'], username=username)
