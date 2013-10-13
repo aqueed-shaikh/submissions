@@ -6,7 +6,7 @@ queries = {
     'INSERT': 'INSERT INTO %s VALUES(%s)',
     'UPDATE': 'UPDATE %s SET %s WHERE %s',
     'DELETE': 'DELETE FROM %s where %s',
-    'DELETE_ALL': 'DELETE from %s',
+    'DELETE_ALL': 'DELETE FROM %s',
     'CREATE_TABLE': 'CREATE TABLE IF NOT EXISTS %s(%s)',
     'DROP_TABLE': 'DROP TABLE %s'
 }
