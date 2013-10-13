@@ -2,6 +2,8 @@ from flask import Flask, render_template, session, request, redirect, url_for, s
 from flask.ext import shelve
 import md5
 
+import auth
+
 app = Flask(__name__)
 app.config['SHELVE_FILENAME'] = 'puppies_super_awesome'
 shelve.init_app(app)
@@ -15,13 +17,12 @@ def get_password_encrypted(password):
 
 @app.route('/')
 def home():
-    db = shelve.get_shelve('c')
     logged_in = False
     username = ''
     if 'username' in session:
         logged_in = True
         username = session['username']
-    return render_template('home.html', logged_in=logged_in, username=username, everyone=str(db))
+    return render_template('home.html', logged_in=logged_in, username=username, everyone="")
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
