@@ -1,13 +1,15 @@
 #!/usr/bin/python
-<<<<<<< HEAD
 
 import sqlite3
 
 connection = sqlite3.connect('names.db')
-connection.execute('''
+try:
+    connection.execute('''
 CREATE TABLE user
 (username text, password text, log int)
 ''')
+except:
+    pass
 
 def adduser(username,password):
     connection.execute('''
@@ -29,19 +31,4 @@ SELECT password FROM user WHERE username={0}
         return True
     else:
         return False
-=======
-import sqlite3
 
-connection = sqlite3.connect('names.db')
-cursor = connection.cursor()
-try:
-    cursor.execute("CREATE TABLE user(username text, password text)")
-except:
-    pass
-
-def adduser(username, password):
-    pass
-def authenticate(username, password):
-    pass
-
->>>>>>> eac07cf3a59b183756e7a4b08ed1c6201b18c3cc
