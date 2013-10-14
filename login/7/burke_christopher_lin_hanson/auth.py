@@ -1,11 +1,35 @@
 import sqlite3
 
-connection = sqlite3.connect('test.db')
-
 
 def adduser(username, password):
-    
-    q = "insert into logins values(username,password)"
-    connection.execute(q)
+    connection = sqlite3.connect('test.db')
+    q = "select * from logins where username='%s'"%(username)
+    cursor = connection.execute(q)
+    results = []
+    for line in cursor:
+        results.append(line)
 
-def authenticate:
+    print(results)
+    if len(results) == 0 :
+        q = "insert into logins values ('%s','%s')"%(username,password)
+        print q
+        connection.execute(q)
+
+        return True
+    else :
+        return False
+
+
+def authenticate(username, password):
+    connection = sqlite3.connect('test.db')
+    q = "select password from logins where username='%s'"%(username)
+    cursor = connection.execute(q)
+    results = []
+    for line in cursor:
+        results.append(line)
+
+
+    if len(results) > 0 and results[0][0] == password:
+        return True
+    else:
+        return False
