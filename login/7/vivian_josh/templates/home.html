@@ -1,8 +1,11 @@
 <html>
     <body>
+        {% if logged_in %}
+        <a href="logout">Logout</a> 
+        {% else %}
         <a href="login">Login</a> | 
-        <a href="register">Register</a> | 
-        <a href="logout">Logout</a> | 
+        <a href="register">Register</a> 
+        {% endif %}
         <br>
         <hr>
         {% if logged_in %}

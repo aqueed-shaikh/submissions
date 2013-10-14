@@ -40,8 +40,9 @@ input
 	&:hover
 		background-color: #45C3FF
 
-.outer-container
+.container
 	@include vendor(border-radius, 3px)
+	width: 300px
 	margin: 0 auto
 	padding: 20px
 	border: 1px solid #C0C0C0
@@ -54,8 +55,11 @@ input
 	border-bottom: 1px solid lightgray
 	font-weight: normal
 
+.error
+	color: red
+
 // link to Register/Login page
-a.bottom-link
+a
 	display: inline-block
 	margin-top: 10px
 	border-bottom: 1px dotted $textColor
