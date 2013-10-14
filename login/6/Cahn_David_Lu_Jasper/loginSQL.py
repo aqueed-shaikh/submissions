@@ -1,6 +1,8 @@
 from flask import Flask
 from flask.ext import shelve
 from flask import session,url_for,request,redirect,render_template
+import sqlite3
+import utils 
 
 app = Flask(__name__)
 app.secret_key="mysecretkey"
@@ -34,7 +36,7 @@ def welcome ():
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-    my_users =  shelve.get_shelve('c')
+    SQL_Users = sqlite3.connect ('SQL_Users')
     if request.method=="GET":
 	return render_template("login.html")
     else:
@@ -42,17 +44,19 @@ def login():
 	if button == 'Login':
             username = request.form['username'].encode ('ascii',"ignore")
 	    password = request.form['password'].encode ('ascii',"ignore")
-            if username in my_users and my_users [username]["password"] == password:
+            if utils.authenticate(SQL_Users,username,password) == 1:
                 session['username'] = username
                 return redirect("/success")
             else:
                 return redirect ("/login")
+                print 'login attempt failed. Try again.'
 	else:
 	    return redirect("/register")
         
 @app.route("/register",methods = ["GET","POST"])
 def register():
-    my_users = shelve.get_shelve('c')
+    SQL_Users = sqlite3.connect ('SQL_Users')
+    SQL_Users.execute ('CREATE TABLE if not exists users (username TEXT, password TEXT)')
     if request.method=="GET":
 	return render_template("register.html")
     else:
@@ -60,8 +64,8 @@ def register():
 	if button == "Submit":
 	    username = request.form['username'].encode ('ascii',"ignore")
 	    password = request.form['password'].encode ('ascii',"ignore")
-            if not username in my_users:
-                my_users[username]= {'password': password}
+            if utils.userNameExist (SQL_Users,username) == 0:
+                utils.addUser (SQL_Users, username, password)
                 print "Account Created"
                 return redirect("/login")
             else:
