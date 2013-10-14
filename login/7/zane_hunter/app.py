@@ -3,15 +3,17 @@ from flask import request
 from flask import render_template
 from flask import request, session
 from flask import redirect, url_for
-from flask.ext import shelve
+import sqlite3
 import login
 
 app = Flask(__name__)
+app.secret_key = login.secret_key
 
-app.secret_key = login.secret
-
-app.config['SHELVE_FILENAME'] = "thea"
-shelve.init_app(app)
+#set up table if it doesn't exist
+conn = sqlite3.connect(login.userdata_filename)
+conn.cursor().execute('create table if not exists users (name text, password text)')
+conn.commit()
+conn.close()
 
 @app.route('/')
 def home():
