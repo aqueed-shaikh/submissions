@@ -54,6 +54,17 @@ Password: <input type="password" name="password" value=""><br>
 
 </form>
 
+@app.route('/register', methods=['GET','POST'])
+def register():
+  if request.method == 'POST':
+    #Add to database
+  return render_template('register.html')
+  
+
+@app.route('/logout')
+def logout():
+  session.pop('username', None)
+  return redirect(url_for('home'))
 
 
 if __name__=="__main__":
