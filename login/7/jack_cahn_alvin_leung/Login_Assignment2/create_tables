@@ -1,0 +1,4 @@
+
+    q = "create table logins(username  text, password text);"
+     cursor = connection.execute(q)
+     results = [line for line in cursor]

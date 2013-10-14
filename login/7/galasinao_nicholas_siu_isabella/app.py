@@ -1,12 +1,10 @@
 #!/usr/bin/python
 
 from flask import Flask, session, request, url_for, render_template, redirect
-from flask.ext import shelve
+import auth
 
 app = Flask(__name__)
-app.config['SHELVE_FILENAME']= 'users.db'
 app.secret_key="magic"
-shelve.init_app(app)
 
 @app.route("/")
 def home():
@@ -20,11 +18,10 @@ def register():
     if request.method=="GET":
         return render_template("register.html")
     else:
-        users=shelve.get_shelve()
         username=request.form["username"].encode("ascii", "ignore")
         password=request.form["password"].encode("ascii", "ignore")
         if request.form["button"]=="Submit":
-            users[username]=password
+            auth.adduser(username,password)
             return render_template("success.html",username=username)
         else:
             return render_template("register.html")
@@ -34,11 +31,10 @@ def login():
     if request.method=="GET":
         return render_template("login.html")
     else:
-        users=shelve.get_shelve()
         username=request.form["username"].encode("ascii", "ignore")
         password=request.form["password"].encode("ascii", "ignore")
         if username in users:
-            if password==users[username]:
+            if authenticate(username,password):
                 session["username"]=username
                 return redirect("/")
             else:
