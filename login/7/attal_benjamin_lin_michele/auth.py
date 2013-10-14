@@ -8,8 +8,7 @@ queries = {
     'DELETE': 'DELETE FROM %s where %s',
     'DELETE_ALL': 'DELETE FROM %s',
     'CREATE_TABLE': 'CREATE TABLE IF NOT EXISTS %s(%s)',
-    'DROP_TABLE': 'DROP TABLE %s'
-}
+    'DROP_TABLE': 'DROP TABLE %s'}
 
 
 class DatabaseObject(object):
@@ -38,13 +37,13 @@ class DatabaseObject(object):
             cursor.execute(query)
         return cursor
 
-    def select(self, values, tables, **kwargs):
-        vals = ','.join(values)
+    def select(self, tables, *args, **kwargs):
+        vals = ','.join(['?' for l in args])
         locs = ','.join(tables)
         conds = ' and '.join(['%s=?' % k for k in kwargs])
         subs = [kwargs[k] for k in kwargs]
         query = queries['SELECT'] % (vals, locs, conds)
-        return self.read(query, subs)
+        return self.read(query, list(args) + subs)
 
     def insert(self, table_name, *args):
         values = ','.join(['?' for l in args])
@@ -88,8 +87,8 @@ class Table(DatabaseObject):
         self.create_table(table_name, values)
         self.table_name = table_name
 
-    def select(self, values, **kwargs):
-        return super(Table, self).select(values, [self.table_name], **kwargs)
+    def select(self, *args, **kwargs):
+        return super(Table, self).select([self.table_name], *args, **kwargs)
 
     def insert(self, *args):
         return super(Table, self).insert(self.table_name, *args)
@@ -110,11 +109,11 @@ class Table(DatabaseObject):
 class User(Table):
 
     def __init__(self, data_file):
-        super(User, self).__init__(data_file, 'users', 
+        super(User, self).__init__(data_file, 'users',
                                    ['username TEXT', 'password TEXT'])
 
-    def select(self, values, **kwargs):
-        cursor = super(User, self).select(values, **kwargs)
+    def select(self, *args, **kwargs):
+        cursor = super(User, self).select(*args, **kwargs)
         results = cursor.fetchall()
         cursor.close()
         return results
@@ -135,10 +134,10 @@ class User(Table):
         self.free(super(User, self).drop())
 
     def exists(self, username):
-        results = self.select(['username'], username=username)
+        results = self.select('username', username=username)
         return len(results) > 0
 
     def authenticate(self, username, password):
-        results = self.select(['username'], username=username, 
+        results = self.select('username', username=username,
                               password=password)
         return len(results) > 0
