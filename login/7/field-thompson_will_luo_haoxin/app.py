@@ -36,12 +36,9 @@ def register():
         return render_template('register.html')
     elif request.method == 'POST':
         user = request.form['username'].encode("ascii")
-        db = get_shelve()
-        if user in db: #checks to make sure the username doesn't already exist
+        if auth.add_user(user, request.form['password'].encode('ascii')): 
             return "Username already in use. Please pick another." + render_template('register.html')
         else:
-            #db[user] = request.form['password'].encode("ascii")
-            auth.add_user(user, request.form['password'].encode('ascii'))
             session['username'] = user
             return redirect('/registered')
 
