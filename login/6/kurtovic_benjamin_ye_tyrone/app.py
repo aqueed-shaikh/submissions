@@ -6,6 +6,7 @@ from flask import Flask, session, request, redirect, render_template
 import utils
 
 app = Flask(__name__)
+app.secret_key = "Ben_Tyrone_L0G!N"
 
 def fail(template, error):
     return render_template(template + ".html", error=error)
@@ -21,10 +22,9 @@ def index():
 def login():
     if request.method == "GET":
         return render_template("login.html")
-    username, password = read_login(request)
     error = utils.login(request.form["username"], request.form["password"])
     if not error:
-        session["username"] = username
+        session["username"] = request.form["username"]
         return redirect("/")
     else:
         return fail("login", error)
@@ -35,7 +35,7 @@ def register():
         return render_template("register.html")
     error = utils.register(request.form["username"], request.form["password"])
     if not error:
-        session["username"] = username
+        session["username"] = request.form["username"]
         return redirect("/")
     else:
         return fail("register", error)
