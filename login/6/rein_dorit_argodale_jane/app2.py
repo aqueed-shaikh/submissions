@@ -19,8 +19,7 @@ def home():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     New_users = sqlite3.connect('users.db')    
-    users_SQL = New_users.cursor()
-    users_SQL.execute('''
+    New_users.execute('''
     CREATE TABLE if not exists auth (username TEXT, password TEXT)
     ''')
     if request.method == "GET":
@@ -28,14 +27,10 @@ def register():
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
-        isTaken = users_SQL.execute("SELECT value FROM New_users WHERE value = 'username';").fetchall()
-        if (isTaken != none):
+       if New_users.usedUSername(New_users, username) == 1:
             return render_template("register.html")
         else:
-            user_SQL.execute('''
-            insert into New_users values ('username', 'password');
-            ''')
-
+            New_users.add(New_users, username, password)
             return redirect(url_for("home"))
 
 @app.route("/login", methods = ["GET", "POST"]) 
