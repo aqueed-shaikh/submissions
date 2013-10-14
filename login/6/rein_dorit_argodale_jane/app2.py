@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request, render_template, redirect, url_for, session
 from flask.ext import shelve
 import sqlite3
+import auth
 
 
 app=Flask(__name__)
@@ -18,7 +19,7 @@ def home():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    New_users = sqlite3.connect('users.db')    
+    New_users = sqlite3.connect('SQL_users')    
     New_users.execute('''
     CREATE TABLE if not exists auth (username TEXT, password TEXT)
     ''')
@@ -35,7 +36,7 @@ def register():
 
 @app.route("/login", methods = ["GET", "POST"]) 
 def login():
-    New_users = sqlite3.connect('users.db')    
+    New_users = sqlite3.connect('SQL_users')    
     users_SQL = New_users.cursor()
     if request.method == "GET":
         return render_template("login.html")
