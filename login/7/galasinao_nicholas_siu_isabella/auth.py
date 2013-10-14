@@ -25,7 +25,7 @@ SELECT username FROM user WHERE username={0}
     
     p1=cursor.execute('''
 SELECT password FROM user WHERE username={0}
-'''.format(username)))
+'''.format(username))
     
     if username==u1 and password==p1:
         return True
