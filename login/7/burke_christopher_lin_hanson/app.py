@@ -1,11 +1,10 @@
 from flask import Flask
 from flask import session, url_for, redirect, render_template, request
-import shelve
+from auth import adduser, authenticate
 import sqlite3
 
 app = Flask(__name__)
 app.secret_key='my secret key'
-connection = sqlite3.connect('test.db')
 
 
 @app.route("/")
@@ -29,15 +28,12 @@ def login():
         username = usernameu.encode('ascii','ignore')
         passwordu = request.form['password']
         password = passwordu.encode('ascii','ignore')
-        #s = shelve.open("sessions")
 
-        #if s.has_key(username) and s["%s"%(username)] == password:
-        #    session['username'] = username
-        #    s.close()
-        #    return redirect(url_for('home'))
-        #else:
-        #    s.close()
-        #    return render_template("login.html",invalid="True")
+    if authenticate(username, password):
+        session['username'] = username
+        return redirect(url_for('home'))
+    else:
+        return render_template("login.html",invalid="True")
 
 
 @app.route("/logout")
@@ -56,17 +52,14 @@ def register():
         password = passwordu.encode('ascii','ignore')
         passwordretypeu = request.form['passwordretype']
         passwordretype = passwordretypeu.encode('ascii','ignore')
-        s = shelve.open("sessions")
-        if s.has_key(username):
-            s.close()
-            return render_template("register.html",invalid="False",repeat="True")
-        elif password == passwordretype:
-            s["%s"%(username)] = password
-            s.close()
-            session['username'] = username
-            return redirect(url_for('home'))
+
+        if password == passwordretype:
+            if adduser(username, password):
+                session['username'] = username
+                return redirect(url_for('home'))
+            else:
+                return render_template("register.html",invalid="False",repeat="True")
         else:
-            s.close()
             return render_template("register.html",invalid="True",repeat="False")
 
 
