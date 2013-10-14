@@ -9,12 +9,11 @@ def adduser(username, password):
     for line in cursor:
         results.append(line)
 
-    print(results)
+    
     if len(results) == 0 :
         q = "insert into logins values ('%s','%s')"%(username,password)
-        print q
         connection.execute(q)
-
+        connection.commit()
         return True
     else :
         return False
