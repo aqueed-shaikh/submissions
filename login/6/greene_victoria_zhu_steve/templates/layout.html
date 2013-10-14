@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>
-    	= block title
-    	= endblock
-    </title>
-    <link rel="stylesheet" type="text/css" href="#{ url_for('static', filename='stylesheets/application.css') }">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/application.css') }}">
 </head>
 <body>
-	= block body
-	= endblock
+	<div class="center-outer">
+	    <span>
+	    	<div class="container">
+	    		<h1 class="title">
+		    		= block title
+		    		= endblock
+	    		</h1>
+	    		= if error
+	    			<p class="error">
+	    				{{ error }}
+	    			</p>
+	    		= endif
+				= block body
+				= endblock
+			</div>
+			= block bottomlink
+			= endblock
+		</span>
+	</div>
 </body>
 </html>

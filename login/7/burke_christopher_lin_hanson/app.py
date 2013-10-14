@@ -1,9 +1,11 @@
 from flask import Flask
 from flask import session, url_for, redirect, render_template, request
 import shelve
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key='my secret key'
+connection = sqlite3.connect('test.db')
 
 
 @app.route("/")
@@ -27,15 +29,15 @@ def login():
         username = usernameu.encode('ascii','ignore')
         passwordu = request.form['password']
         password = passwordu.encode('ascii','ignore')
-        s = shelve.open("sessions")
+        #s = shelve.open("sessions")
 
-        if s.has_key(username) and s["%s"%(username)] == password:
-            session['username'] = username
-            s.close()
-            return redirect(url_for('home'))
-        else:
-            s.close()
-            return render_template("login.html",invalid="True")
+        #if s.has_key(username) and s["%s"%(username)] == password:
+        #    session['username'] = username
+        #    s.close()
+        #    return redirect(url_for('home'))
+        #else:
+        #    s.close()
+        #    return render_template("login.html",invalid="True")
 
 
 @app.route("/logout")

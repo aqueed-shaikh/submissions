@@ -6,19 +6,33 @@ app = Flask(__name__)
 app.config['SHELVE_FILENAME'] = 'username.db'
 shelve.init_app(app)
 
-@app.route("/register")
-def register():
-    page="""<h1>Register</h1>
-        <form method="post">
-        <input type="text" name="username">
-        <input type="text" name="password">
-        <input type="submit" name="button" value="register">
-        <input type="submit" name="button" value="cancel">
-        </form>
-        """
-    username = shelve.get_shelve('c')
-    username["username"] = "password"
-    return page
+@app.route("/")
+def home():
+    if "username" in session:
+        return render_template("index.html",username=session["username"])
+    else:
+        return redirect(url_for("login"))
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template("login.html")
+    else:
+        username = request.form["username"].encode("ascii", "ignore")
+        password = request.form["password"].encode("ascii", "ignore")
+        users = shelve.get_shelve()
+        if not users.has_key(username):
+            return redirect(url_for("register"))
+        if users[username] != password:
+            return redirect(url_for("login"))
+        session["username"] = username
+        return redirect(url_for("home"))
+
+                    
+@app.route("/reset", methods = ['GET', 'POST'])
+def reset():
+    session.pop("username", None)
+    return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.debug = True

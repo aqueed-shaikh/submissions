@@ -1,12 +1,9 @@
 from flask import Flask
 from flask import session,url_for, request, redirect, render_template
-from flask.ext import shelve
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key="ijasdb012fbrfasdffb0vbevs"
-app.config['SHELVE_FILENAME'] = 'users.db'
-shelve.init_app(app)
-
 
 @app.route("/")
 def home():
@@ -22,7 +19,14 @@ def login():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        users = shelve.get_shelve()
+        c = sqlite3.connect("users.db").cursor()
+        people = c.execute("SELECT * from users")
+        users = {}
+        for i in people:
+            print(i)
+            users[i[0]] = i[1];
+#          users = convList([ x for x in people])
+        print(users)
         if not users.has_key(username):
             return redirect(url_for("register"))
         if users[username] != password:
@@ -37,10 +41,15 @@ def register():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        users = shelve.get_shelve()
+        c = sqlite3.connect("users.db").cursor()
+        c.execute("create table if not exists users (username TEXT, password TEXT)")
+        users = convList([ x for x in (c.execute("SELECT * from users")) ])
+
         if users.has_key(username):
             return render_template("register.html")
-        users[username] = password
+        
+        execstr = 'INSERT INTO users VALUES("' + username + '","' + password + '");'
+        c.execute(execstr)
         session["username"] = username
         return redirect(url_for("home"))
 
@@ -48,6 +57,12 @@ def register():
 def logout():
     session.pop("username", None)
     return redirect(url_for("home"))
+
+def convList(l):
+    d = {}
+    for i in l:
+        d[i[0]] = i[1]
+    return d
 
 if __name__=="__main__":
     app.debug=True

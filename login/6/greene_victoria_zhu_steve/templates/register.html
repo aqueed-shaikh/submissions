@@ -3,18 +3,13 @@
 	Register
 = endblock
 = block body
-	<div class="center-outer">
-		<span id="register-outer">
-			<div id="register-container">
-				<h1 class="title">Register</h1>
-				<form method="post">
-					<input id="username" type="username" name="username" placeholder="Username">
-					<input id="password" type="password" name="password" placeholder="Password">
-					<input id="password-confirm" type="password" name="password-confirm" placeholder="Confirm Password">
-					<input class="button" type="submit" value="Register">
-				</form>
-			</div>
-			<a class="bottom-link" href="#{ url_for('login') }">Already have an account? Login.</a>
-		</span>
-	</div>
+	<form method="post">
+		<input id="username" type="username" name="username" placeholder="Username">
+		<input id="password" type="password" name="password" placeholder="Password">
+		<input id="password-confirm" type="password" name="password-confirm" placeholder="Confirm Password">
+		<input class="button" type="submit" value="Register">
+	</form>
+= endblock
+= block bottomlink
+	<a class="bottom-link" href="{{ url_for('login') }}">Already have an account? Login.</a>
 = endblock

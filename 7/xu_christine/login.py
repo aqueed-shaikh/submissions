@@ -1,4 +1,4 @@
-#Submitted by Christine Xu and Justin Duda
+#Submitted by Christine  and Glib 
 
 from flask import Flask
 from flask import session,url_for,request,redirect,render_template
@@ -57,6 +57,7 @@ Password: <input type="password" name="password" value=""><br>
 @app.route('/register', methods=['GET','POST'])
 def register():
   if request.method == 'POST':
+<<<<<<< HEAD
     #Add to database
   return render_template('register.html')
   
@@ -66,6 +67,10 @@ def logout():
   session.pop('username', None)
   return redirect(url_for('home'))
 
+=======
+  return render_template('register.html')
+  
+>>>>>>> 9c89bbe51f7ff595964946b741dc6d532bd19aac
 
 if __name__=="__main__":
     app.debug=True
