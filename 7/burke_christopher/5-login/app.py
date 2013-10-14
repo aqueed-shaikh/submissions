@@ -9,7 +9,12 @@ app.secret_key='my secret key'
 @app.route("/")
 def home():
     if 'username' in session:        
-        return "<h1> This is the main page for %s</h1>"%(username)
+        page = """
+        <h1> This is the main page for %s</h1>
+        <a href="/logout">Logout</a>
+        """
+        return page%(session['username'])
+                  
     else:
         return redirect(url_for('login'))
 
@@ -35,27 +40,33 @@ def login():
 
 @app.route("/logout")
 def reset():
-    session.pop('count',None)
-    #return redirect("/count")
+    session.pop('username',None)
     return redirect(url_for('login'))
 
-@app.route("/register")
+@app.route("/register",methods=["GET","POST"])
 def register():
-    return render_template("register.html")
-#@app.route('/count')
-#def count():
-#    if 'count' in session:
-#        c = session['count']
-#    else:
-#        c=0
-#    c=c+1
-#    session['count']=c
-#    page="""
-#    <h1>The count is %d</h1>
-#    <a href="/count">Add One</a>
-#    <a href="/reset">Reset</a>
-#    """
-#    return page%(c)
+    if request.method == "GET":
+        return render_template("register.html",invalid="False",repeat="False")
+    else :
+        usernameu = request.form['username']
+        username = usernameu.encode('ascii','ignore')
+        passwordu = request.form['password']
+        password = passwordu.encode('ascii','ignore')
+        passwordretypeu = request.form['passwordretype']
+        passwordretype = passwordretypeu.encode('ascii','ignore')
+        s = shelve.open("sessions")
+        if s.has_key(username):
+            s.close()
+            return render_template("register.html",invalid="False",repeat="True")
+        elif password == passwordretype:
+            s["%s"%(username)] = password
+            s.close()
+            session['username'] = username
+            return redirect(url_for('home'))
+        else:
+            s.close()
+            return render_template("register.html",invalid="True",repeat="False")
+
 
 if __name__=="__main__":
     app.debug=True
