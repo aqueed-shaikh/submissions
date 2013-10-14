@@ -2,6 +2,7 @@ from flask import Flask, session, redirect, request, url_for, render_template
 import auth
 
 app2 = Flask(__name__)
+app2.secret_key = "secret key"
 
 @app2.route("/")
 @app2.route("/home")
