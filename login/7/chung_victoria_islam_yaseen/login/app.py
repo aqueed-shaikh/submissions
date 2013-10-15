@@ -30,7 +30,7 @@ def home():
 <p>Would you like to <a href="/logout">Logout?</a></p>
 
 """
-        return page%(session['username'])
+        return page
 
     else:
         return redirect(url_for('login'))
@@ -44,8 +44,7 @@ def login():
         username = a.encode('ascii','ignore')
         b = request.form['password']
         password = b.encode('ascii','ignore')
-
-        if authenticate(username,password):
+        if auth.authenticate(username,password):
             session['username'] = username
             return redirect('/')
         else:
@@ -60,12 +59,11 @@ def register():
         user=temp.encode('ascii','ignore')
         temp2=request.form['password']
         psswd=temp2.encode('ascii','ignore')
-
-    if add(username, password):
-        session['username'] = username
-        return redirect('/')
-    else:
-        return render_template("register.html", incorrect="False")
+        if auth.add(user, psswd):
+            session['username'] = user
+            return redirect('/')
+        else:
+            return render_template("register.html", incorrect="False")
             
 
 @app.route("/logout")
