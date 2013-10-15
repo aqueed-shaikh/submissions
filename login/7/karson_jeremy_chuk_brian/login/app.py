@@ -56,9 +56,11 @@ and users.password = ?
             if len(results) == 0:
                 return redirect(url_for('login'))
 ##            #if s.has_key(username) and s["%s"%(username)] == password:
+            else:
                 session["username"] = username
                 #               s.close()
                 connection1.close()
+
                 return redirect('/madlib')
             else:
                 return redirect('/login')
