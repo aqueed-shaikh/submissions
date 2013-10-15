@@ -15,8 +15,8 @@ except:
 def adduser(username,password):
     database = sqlite3.connect('names.db')
     database.execute('''
-INSERT INTO user VALUES({},{})
-'''.format(username,password))
+    INSERT INTO user(username,password) VALUES(?,?)
+''',[username,password])
     
     database.commit()
 
@@ -24,18 +24,17 @@ def exists(username):
     ans = False
     database = sqlite3.connect('names.db')
     u1 = database.execute('''
-SELECT * FROM user WHERE username={}
-'''.format(username))
-    
-    database.commit()
+SELECT username FROM user WHERE username=?
+''',[username])
+
     if len(u1.fetchall()) != 0:
         ans = True
     return ans
 
 def authenticate(username,password):
     u1=database.execute('''
-SELECT username FROM user WHERE username={}
-'''.format(username))
+SELECT username FROM user WHERE username=? and password=?
+    ''',[username,password])
     
     if len(u1.fetchall()) != 0:
         return True
