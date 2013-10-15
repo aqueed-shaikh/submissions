@@ -62,8 +62,8 @@ and users.password = ?
                 connection1.close()
 
                 return redirect('/madlib')
-            else:
-                return redirect('/login')
+#            else:
+ #               return redirect('/login')
             #submitpage = submitpage + username + " " + password
         elif button=="reset":
             return redirect ("/login")
