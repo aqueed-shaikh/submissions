@@ -1,11 +1,10 @@
 from flask import Flask
 from flask import session, url_for, request, redirect, render_template
-from flask.ext import shelve
+import sqlite3
+import utils
 
 app = Flask(__name__)
 app.secret_key="marlyandme"
-app.config['SHELVE_FILENAME'] = 'users.db'
-shelve.init_app(app)
 
 @app.route("/")
 def home():
@@ -16,32 +15,29 @@ def home():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    auth.setup()
     if request.method == "GET":
         return render_template("login.html")
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        users = shelve.get_shelve()
-        if not users.has_key(username):
-            return redirect(url_for("register"))
-        if users[username] != password:
-            return redirect(url_for("login"))
-        session["username"] = username
-    return redirect("/home")
+        if (auth.checkuser(username, password)):
+            return redirect("/home")
+        else:
+            return redirect("/home")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    auth.setup()
     if request.method == "GET":
         return render_template("register.html")
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        users = shelve.get_shelve()
-        if not username in users:
-            return render_template("register.html")
+        auth.adduser(username, password)
         users[username] = password
         session['username'] = username
-    return redirect("/")
+        return redirect("/")
 
 @app.route("/reset", methods = ['GET', 'POST'])
 def reset():

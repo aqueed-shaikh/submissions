@@ -1,0 +1,1 @@
+create table account(user TEXT, pass TEXT);
