@@ -23,9 +23,11 @@ def login():
         return redirect("/")
     else:
         if auth.log(str(request.form["username"]),str(request.form["password"])):
-            Username=request.form["Username"].encode("ascii","ignore")
-            Password=request.form["Password"].encode("ascii","ignore")
+            session["username"]=request.form["username"]
+            session["password"]=request.form["password"]
             return redirect("/")
+        else:
+            return render_template("login.html",error=True)
 
 @app.route("/register",methods=["GET","POST"])
 def register():
@@ -34,16 +36,18 @@ def register():
     elif (request.form['button']=="Cancel"):
         return redirect("/")
     else:
+        
         if (request.form["username"]==""):
-            return redirect("/register",error="nouser")
+            return render_template("register.html",error="nouser")
         elif (request.form["password"]==""):
-            return redirect("/register",error="nopass")
+            return render_template("register.html",error="nopass")
         elif (request.form["cpassword"]==""):
-            return redirect("/register",error="badc")
-        #elif (request.form["username"]==request.form["password"]):
-         #   return redirect("/register",error="lazy")
+            return render_template("register.html",error="badc")
+        elif (request.form["username"]==request.form["password"]):
+            return render_template("register.html",error="lazy")
         elif request.form["password"]!=request.form["cpassword"]:
-            return redirect("/register",error="badc")
+            return render_template("register.html",error="badc")
+        
         elif request.form["password"]==request.form["cpassword"]:
             if auth.addUser(str(request.form["username"]),str(request.form["password"]) ):
                 return redirect("/")
