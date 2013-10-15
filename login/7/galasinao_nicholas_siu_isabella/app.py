@@ -54,7 +54,8 @@ def login():
 #<<<<<<< HEAD
 @app.route("/logout")
 def logout():
-    session.pop("username")
+    if "username" in session:
+        session.pop("username")
     return redirect("/login")
 
 @app.route("/secret")
