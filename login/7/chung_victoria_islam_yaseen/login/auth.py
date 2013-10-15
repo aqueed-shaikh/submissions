@@ -24,18 +24,17 @@ select * from login where username='%s'
 def authenticate(username,password):
     connection = sqlite3.connect('daterbase.db')
     connection.cursor().execute('create table if not exists login (username text, password text)')
-    connection.commit()
-    connection.close()
-    connection = sqlite3.connect('daterbase.db')
+    #connection.commit()
+    #connection.close()
+    #connection = sqlite3.connect('daterbase.db')
     q = """
 select password from login where username='%s'
 """%(username)
     cursor = connection.execute(q)
     results = [line for line in cursor]
-    if results[0] == password:
+   
+    if len(results) > 0 and results[0][0] == password:
         return True
     else:
         return False
-        
-
         
