@@ -56,7 +56,7 @@ def login(): #this is where people will log in
 select users.username, users.password from users where users.username = ?
 and users.password = ?
 """
-            cursor = connection1.execute(q, (username), (password)) 
+            cursor = connection1.execute(q, (username,password)) 
             results = cursor.fetchall()
             if len(results) == 0:
                 return redirect(url_for('login'))
@@ -110,7 +110,7 @@ def register(): #the register page
 #           s["%s"%(user)]=psswd
             #s.close()
             q = "INSERT INTO users VALUES(?, ?)"
-            connection1.execute(q,(_user)),(_pass))
+            connection1.execute(q,(_user,_pass))
             connection1.close()
             return redirect ("/madlib")
         elif button=="reset":
