@@ -1,7 +1,8 @@
 from flask import Flask
-from flask import request
-from flask import url_for, render_template, redirect, session
-import shelve,random
+from flask import request, session
+from flask import url_for, render_template, redirect
+import sqlite3
+import auth
 
 app = Flask(__name__)
 app.secret_key = 'my secret key'
@@ -21,15 +22,16 @@ template="""
 @app.route("/")
 def home():
     if 'username' in session:
-        return """
+        page = """
 <h1><b><i><u>WELCOME USER</b></i></u></h1>
 <br>
 <p>OMG what is <a href="/madlibs">this</a>??????</p>
 <br><hr>
 <p>Would you like to <a href="/logout">Logout?</a></p>
 
-
 """
+        return page%(session['username'])
+
     else:
         return redirect(url_for('login'))
 
@@ -42,13 +44,11 @@ def login():
         username = a.encode('ascii','ignore')
         b = request.form['password']
         password = b.encode('ascii','ignore')
-        s = shelve.open("sessions")
-        if s.has_key(username) and s["%s"%(username)] == password:
+
+        if authenticate(username,password):
             session['username'] = username
-            s.close()
             return redirect('/')
         else:
-            s.close()
             return render_template("login.html", incorrect="True")
 
 @app.route("/register",methods=['GET','POST'])
@@ -60,10 +60,13 @@ def register():
         user=temp.encode('ascii','ignore')
         temp2=request.form['password']
         psswd=temp2.encode('ascii','ignore')
-        s = shelve.open("sessions")
-        s["%s"%(user)]=psswd
-        s.close()
-        return redirect("/")
+
+    if add(username, password):
+        session['username'] = username
+        return redirect('/')
+    else:
+        return render_template("register.html", incorrect="False")
+            
 
 @app.route("/logout")
 def logout():
