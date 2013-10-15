@@ -3,13 +3,13 @@
 import sqlite3
 
 connection = sqlite3.connect('names.db')
-try:
-    connection.execute('''
+
+connection.execute('''
 CREATE TABLE user
 (username text, password text, log int)
 ''')
-except:
-    pass
+
+connection.commit()
 
 def adduser(username,password):
     connection.execute('''
@@ -23,7 +23,7 @@ def authenticate(username,password):
 SELECT username FROM user WHERE username={0}
 '''.format(username))
     
-    p1=cursor.execute('''
+    p1=connection.execute('''
 SELECT password FROM user WHERE username={0}
 '''.format(username))
     
