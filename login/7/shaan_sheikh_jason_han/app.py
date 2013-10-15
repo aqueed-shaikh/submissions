@@ -1,78 +1,80 @@
 from flask import Flask
-from flask import session, request, render_template, url_for, redirect
+from flask import request, render_template, url_for, redirect, session, flash
 import cgi
 import shelve
 
-app=Flask(__name__)
-
-loggedin = False
-s = shelve.open("sessions")
+app = Flask(__name__)
+app.secret_key ='my secret key'
 
 @app.route("/")
 def home():
-    if loggedin == True:
-        return "<h1>This is the home page</h1>"
+    if "username" in session:
+        return redirect(url_for('loggedin'))
     else:
         return redirect(url_for('login'))
 
-@app.route("/login",methods = ["GET","POST"])
+@app.route("/login", methods = ["GET","POST"])
 def login():
-    if request.method == "GET":
-        return render_template("login.html")
-    else:
-        form = cgi.FieldStorage()
-        if "login" in form:
-            idu = request.form['id']
-            id = idu.encode('ascii','ignore')
+    if request.method == "POST":
+       # if valid_login(request.form["id"],
+                      # request.form["pw"]):
+        #form = cgi.FieldStorage()
+        #if "Button1" in form:
+        ID = request.form['id'].encode('ascii','ignore')
+        PW = request.form['pw'].encode('ascii','ignore')
+        s = shelve.open("sessions")
             
-            
-            if s.has_key(id):
-                #s.close()
-                global loggedin
-                loggedin = True
-                return redirect(url_for('session'))
+        if s.has_key(ID):
+            if s[ID] == PW:
+                session["username"] = ID
+                return redirect(url_for('loggedin'))
             else:
-
-                return redirect(url_for('register'))
-                #s.close()
-                
-        else:
-            return redirect(url_for('register'))
-
-@app.route("/register",methods = ["GET","POST"])
-def register():
-    if request.method == "GET":
-        return render_template("register.html")
-    else:
-        idu = request.form['id']
-        id = idu.encode('ascii','ignore')
-
-        
-        if s.has_key(id):
-
-            return redirect(url_for('register')) #too lazy to post an "id already taken" message
-            #s.close()
-        else:
-            s[id] = 0
-        #s.close()
-        return redirect(url_for('login'))
-
-@app.route("/session",methods = ["GET","POST"])
-def session():
-    if loggedin:
-        if request.method == "GET":
-            return render_template("session.html")
-        else:
-            form = cgi.FieldStorage()
-            if "Logout" in form:
-                global loggedin
-                loggedin = False
+                flash("Username and Password do not match.")
                 return redirect(url_for('login'))
+        else:
+            
+            flash("Username is not registered in database. Redirecting to Register Page")
+            return redirect(url_for('register'))
+        #elif "Button2" in form:
+        #   return redirect(url_for('register'))
+    #else:
+       # flash("Invalid Login")
+       # return redirect(url_for('login'))
     else:
-        return redirect(url_for('login'))
+        return render_template("login.html")
+
+
+@app.route("/register", methods = ["GET","POST"])
+def register():
+    if request.method == "POST":
+        ID = request.form['id'].encode('ascii','ignore')
+        PW = request.form['pw'].encode('ascii','ignore')
+        s = shelve.open("sessions")
+
+        if s.has_key(ID):
+            s.close()
+            return redirect(url_for('register'))
+        else:
+            s[ID] = PW
+            session["username"] = ID
+            return redirect(url_for('loggedin'))
+    return render_template("register.html")
+
+
+@app.route("/loggedin", methods = ["GET","POST"])
+def loggedin():
+    if "username" in session:
+        if request.method == "POST":
+            return redirect(url_for('logout'))
+    return render_template("loggedin.html")
+
+
+@app.route("/logout")
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
         
-
-
-if __name__ =="__main__":
-    app.debug = True
-    app.run(host = "0.0.0.0",port = 5000)
+    
+if __name__ == "__main__":
+    app.debug=True
+    app.run(host="0.0.0.0",port=5000)
