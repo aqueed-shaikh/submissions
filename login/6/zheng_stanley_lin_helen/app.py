@@ -4,12 +4,14 @@ import sqlite3
 import auths
 
 app = Flask(__name__)
-app.config['SHELVE_FILENAME'] = 'logins.db'
 app.secret_key="my secret key"
 
 
-
 #DEFAULT
+@app.route("/")
+def default():
+    redirect("/home")
+
 @app.route("/home")
 def home():
     if 'user' in session:
@@ -22,15 +24,13 @@ def home():
 #LOGIN PAGE    
 @app.route("/login",methods = ['GET','POST'])
 def login():
-    user_info = sqlite3.connect('SQL_usernames')
-    userSQL = user_info.cursor()
     if request.method == "GET":
         return render_template("login.html")
     else:
         username = request.form["username"]
         password = request.form["password"]
-        if auths.check(user_info, username, password):
-            session["username"] = username
+        if auths.check(username, password):
+            session["user"] = username
             return redirect(url_for("login"))
         else:
             return redirect(url_for("home"))
@@ -40,19 +40,15 @@ def login():
 #REGISTER
 @app.route("/register",methods = ['GET','POST'])
 def register():
-    users_info = sqlite3.connect('SQL_usernames')
-    users_info.execute('''
-    CREATE TABLE if not exists auths (username TEXT, password TEXT)
-    ''')
     if request.method == "GET":
         return render_template("register.html", message = "Type in desired username and password")
     else:
        username = request.form["username"]
        password = request.form["password"]
-       if auths.usernameExists(users_info, username):
-           return render_template("register.html")
+       if auths.usernameExists(username):
+           return render_template("register.html", message = "Username exists already")
        else:
-           auths.add(users_info, username, password)
+           auths.add(username, password)
            return redirect(url_for("home"))
 
 
@@ -67,4 +63,5 @@ def logout():
 
 if __name__=="__main__":
     app.debug=True
+    auths.start()
     app.run(host='0.0.0.0', port=5000)

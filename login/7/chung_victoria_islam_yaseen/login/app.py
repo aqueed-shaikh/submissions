@@ -3,6 +3,7 @@ from flask import request, session
 from flask import url_for, render_template, redirect
 import sqlite3
 import auth
+import random
 
 app = Flask(__name__)
 app.secret_key = 'my secret key'
