@@ -2,9 +2,12 @@
 
 from flask import Flask
 from flask import session,url_for,request,redirect,render_template
+from flask.ext import shelve
+import sqlite3, utils
 
 app = Flask(__name__)
-
+app.secret_key= 'my secret key'
+shelve.init_app(login)
 
 @app.route("/")
 def home():
@@ -38,6 +41,21 @@ def home():
     <a href="/login">Go to my link location</a>
 </div>
 
+//not really sure how this work help me 
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if (request.method == "GET"):
+        return render_template("register.html")
+    username, password = (request.form["username"].encode("utf8"), request.form["password"].encode("utf8"))
+    if (!username or !password):
+        return render_template("register.html", error="empty")
+    SQL_Users = sqlite3.connect('SQL_Users')
+    if (utils.userNameExist(SQL_Users,username)):
+        return render_template("register.html", error="taken")
+    db[username.lower()] = password
+    session["username"] = username
+    return redirect("/")
 
 
 @app.route("/login")
@@ -57,7 +75,7 @@ Password: <input type="password" name="password" value=""><br>
 @app.route('/register', methods=['GET','POST'])
 def register():
   if request.method == 'POST':
-<<<<<<< HEAD
+  
     #Add to database
   return render_template('register.html')
   
@@ -70,7 +88,6 @@ def logout():
 =======
   return render_template('register.html')
   
->>>>>>> 9c89bbe51f7ff595964946b741dc6d532bd19aac
 
 if __name__=="__main__":
     app.debug=True

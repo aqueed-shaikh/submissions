@@ -1,11 +1,12 @@
 #Made by Simon Chen and Derek Tang
 from flask import Flask
 from flask import session, url_for, request, redirect, render_template
-import sqlite3
-import auth
+from flask.ext import shelve
 
 app = Flask(__name__)
+app.config['SHELVE_FILENAME'] = 'accounts.db'
 app.secret_key = "as124fa6s3426joijtoq124wm10525e"
+shelve.init_app(app)
 
 
 @app.route("/")
@@ -20,8 +21,11 @@ def login():
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii", "ignore")
         button = request.form['button']
+        accounts = shelve.get_shelve()
         if button == "Login":
-            if auth.authenticate(username,password):
+            if username not in accounts:
+                return redirect("/members")
+            elif accounts[username] == password:
                 session["username"] = username
                 return redirect("/members")
             else:
@@ -38,14 +42,16 @@ def register():
         username = request.form['username'].encode("ascii","ignore")
         password = request.form['password'].encode("ascii","ignore")
         confirmpassword = request.form['confirmpassword'].encode("ascii","ignore")
+        accounts = shelve.get_shelve()
         button = request.form['button']
         if button == "Submit":
-            #if accounts.has_key(username):
-               # return render_template("register.html", message = "There is already an account under your name.")
-            if password != confirmpassword:
+            if accounts.has_key(username):
+                return render_template("register.html", message = "There is already an account under your name.")
+            elif password != confirmpassword:
                 return render_template("register.html", message = "Please correctly confirm your passwords.")
             else:
-                auth.register(username,password)
+                accounts[username] = password
+                session['username'] = username
                 return redirect("/")
         elif button == "Cancel":
             return render_template("register.html")

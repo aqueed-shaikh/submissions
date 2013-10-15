@@ -35,13 +35,10 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
     elif request.method == 'POST':
-        user = request.form['username'].encode("ascii")
-        db = get_shelve()
-        if user in db: #checks to make sure the username doesn't already exist
+        user = request.form['username']
+        if not auth.add_user(user, request.form['password']): 
             return "Username already in use. Please pick another." + render_template('register.html')
         else:
-            #db[user] = request.form['password'].encode("ascii")
-            auth.add_user(user, request.form['password'].encode('ascii'))
             session['username'] = user
             return redirect('/registered')
 
@@ -51,8 +48,8 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
-        user = request.form['username'].encode("ascii")
-        if auth.authenticate(user, request.form['password'].encode("ascii")):
+        user = request.form['username']
+        if auth.authenticate(user, request.form['password']):
             session['username'] = user
             return redirect('/')
         else:
