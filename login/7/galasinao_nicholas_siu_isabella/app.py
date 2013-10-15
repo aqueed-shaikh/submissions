@@ -27,7 +27,7 @@ def register():
         password=request.form["password"].encode("ascii","ignore")
         if request.form["button"]=="Submit":
             if auth.exists(username):
-                return render_template("sucess.html",username=username)
+                return render_template("success.html",username=username)
             else:
                 auth.adduser(username,password)
                 return render_template("register.html")
