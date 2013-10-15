@@ -21,36 +21,30 @@ def hidden():
 
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
-	data = conn.cursor()
-    if request.method=="GET":
+	if request.method=="GET":
 		return render_template("login.html", message = "")
-    else:
+	else:
 		name = request.form['username']
 		pw = request.form['password']
-		for data.execute('select * from account'):
-			if user == name && pass = pw:
+		if other.verify(name,pw):
 			session['username'] = name
 			redirect(url_for('hidden.html'))
 		else:
 			return render_template("login.html", message = "Invalid Username or Password")
-	data.close()
+
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
-	data = conn.cursor()
 	if request.method=="GET":
 		return render_template("register.html")
 	else:
 		name = request.form['username']
-		pw = request.form['password']
-		for user in data.execute('select * from account'):
-			if user is None:
-				data.execute('INSERT INTO account VALUES (name,pw)')
-				data.commit()
-				return redirect(url_for('about'))
-			else:
-				return render_template("register.html", message = "Username Taken")
-	data.close()
+		pw = request.form['password']	
+		if other.checkcopy(name):
+			other.add(name,pw)
+			return redirect(url_for('about'))
+		else:
+			return render_template("register.html", message = "Username Taken")
 
 @app.route("/logout")
 def logout():
