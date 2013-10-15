@@ -4,10 +4,13 @@ import sqlite3
 
 connection = sqlite3.connect('names.db')
 
-connection.execute('''
-CREATE TABLE user
+try:
+    connection.execute('''
+    CREATE TABLE user
 (username text, password text, log int)
 ''')
+except:
+    pass
 
 connection.commit()
 
