@@ -18,14 +18,18 @@ app = Flask(__name__)
 app.secret_key="my supersecret key"
 #breakline~~~~~~~~~~homecode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @app.route("/")
-def home():
-    #redirects to the login page
+def home():# this page doesn't do anything it just redirects to the login page
     return redirect("/login")
 #breakline~~~~~~~~~~logincode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @app.route("/login", methods=['GET','POST'])
+<<<<<<< HEAD
 def login():
     connection1 = sqlite3.connect('users.db')
     #coding how the login page will look
+=======
+def login(): #this is where people will log in
+    #how it looks
+>>>>>>> cf419e2c4b435e8ffe99274bf1f22800444a9c62
     page ="""<h1>It's the Login Page FOOL!</h1>
         <form method="post">
         Username: <input type="text" name="username"><br>
@@ -37,8 +41,10 @@ def login():
         <br><br><br><br><br><br><br><br>
         <h6>Website by Mr T</h6>
         </form>"""
+    #if someone goes to this website, the page will be shown
     if request.method == "GET":
         return page
+    #if someone sends a POST message, that means info is sent in those text boxes. That data is recorded here
     else:
         button = request.form['button']
         if button=="login":
@@ -69,13 +75,17 @@ and users.password = ?
             return redirect ("/register")
 #breakline~~~~~~~~~~logoutcode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @app.route("/logout")
-def logout():
+def logout(): #This page just pops you from the session
     session.pop('username')
     return redirect("login")
 #breakline~~~~~~~~~~registercode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
 @app.route("/register", methods=['GET','POST'])
+<<<<<<< HEAD
 def register():
     connection1 = sqlite3.connect('users.db')
+=======
+def register(): #the register page
+>>>>>>> cf419e2c4b435e8ffe99274bf1f22800444a9c62
     page="""<h1>Signup page's here fool!</h1>
         <form method="post">
         Username: <input type="text" name="username"><br>

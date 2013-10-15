@@ -27,10 +27,10 @@ def register():
         password=request.form["password"].encode("ascii","ignore")
         if request.form["button"]=="Submit":
             if auth.exists(username):
-                return render_template("register.html")
+                return render_template("success.html",username=username)
             else:
                 auth.adduser(username,password)
-                return render_template("success.html",username=username)
+                return render_template("register.html")
         else:
             return render_template("register.html")
             
@@ -42,16 +42,20 @@ def login():
     else:
         username=request.form["username"].encode("ascii","ignore")
         password=request.form["password"].encode("ascii","ignore")
-        if auth.authenticate(username,password):
-            session["username"]=username
-            return redirect("/")
+        if auth.exists(username):
+            if auth.authenticate(username,password):
+                session["username"]=username
+                return redirect("/")
+            else:
+                return redirect("/login")
         else:
-            return redirect("/login")
+            return redirect("/register")
             
 #<<<<<<< HEAD
 @app.route("/logout")
 def logout():
-    session.pop("username")
+    if "username" in session:
+        session.pop("username")
     return redirect("/login")
 
 @app.route("/secret")
