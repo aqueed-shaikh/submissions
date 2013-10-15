@@ -28,10 +28,10 @@ def register():
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
-       if New_users.usedUSername(New_users, username) == 1:
+        if auth.usedUsername(New_users, username):
             return render_template("register.html")
         else:
-            New_users.add(New_users, username, password)
+            auth.add(New_users, username, password)
             return redirect(url_for("home"))
 
 @app.route("/login", methods = ["GET", "POST"]) 
@@ -43,11 +43,11 @@ def login():
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
-        if auth.authenticate(New_users, username, password) == 1:
+        if auth.check(New_users, username, password):
             session["username"] = username
-            return redirect(url_for("home"))
-        else:
             return redirect(url_for("login"))
+        else:
+            return redirect(url_for("home"))
 
 
 @app.route("/logout")
