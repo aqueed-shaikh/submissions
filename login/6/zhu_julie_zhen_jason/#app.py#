@@ -40,8 +40,8 @@ def register():
             return redirect("/register",error="nopass")
         elif (request.form["cpassword"]==""):
             return redirect("/register",error="badc")
-        #elif (request.form["username"]==request.form["password"]):
-         #   return redirect("/register",error="lazy")
+        elif (request.form["username"]==request.form["password"]):
+            return redirect("/register",error="lazy")
         elif request.form["password"]!=request.form["cpassword"]:
             return redirect("/register",error="badc")
         elif request.form["password"]==request.form["cpassword"]:
