@@ -14,6 +14,24 @@ def reset():
     cur.execute("DROP TABLE IF EXISTS Users")
     cur.execute("CREATE TABLE Users(Username TEXT, Password TEXT)")
 
+def authUser(username):
+    ans = False;
+    cur = sql.connect('userdata.db')
+    data = cur.execute("SELECT rowid FROM users WHERE username = ?", (username,))
+    data=data.fetchall()
+    if len(data) != 0:
+        ans = True
+    return ans
+
+def authLogin(username, password):
+    ans = False
+    if authUser(username):
+        cur = sql.connect('userdata.db')
+        data = cur.execute("SELECT password FROM users WHERE username = ? and password = ?", (username,password))
+        if len(data.fetchall()) != 0:
+            ans = True
+    return ans
+
 def register(username, password):
     #sanitize inputs here
     with connect:

@@ -7,7 +7,7 @@ def usernameExists(sql_database,username):
     checklogins = logins.execute('select * FROM users WHERE username = ?', (username,))
     if len(checklogins.fetchall()) != 0:
         ans = True
-        return ans
+    return ans
 
 def check(sql_database,username,password):
     ans = False

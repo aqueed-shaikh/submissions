@@ -2,32 +2,33 @@
 
 import sqlite3
 
-connection = sqlite3.connect('names.db')
-
-try:
-    connection.execute('''
-    CREATE TABLE user
-(username text, password text, log int)
-''')
-except:
-    pass
-
-connection.commit()
-
 def adduser(username,password):
-    connection.execute('''
-INSERT INTO user VALUES({0},{1})
+    database = sqlite3.connect('names.db')
+    database.execute('''
+INSERT INTO user VALUES({},{})
 '''.format(username,password))
     
-    connection.commit()
+    database.commit()
 
-def authenticate(username,password):
-    u1=connection.execute('''
-SELECT username FROM user WHERE username={0}
+def exists(username):
+    ans = False
+    database = sqlite3.connect('names.db')
+    u1 = database.execute('''
+SELECT * FROM user WHERE username={}
 '''.format(username))
     
-    p1=connection.execute('''
-SELECT password FROM user WHERE username={0}
+    if len(u1.fetchall()) != 0:
+        ans = True
+    return ans
+
+def authenticate(username,password):
+    database = sqlite3.connect('names.db')
+    u1=database.execute('''
+SELECT username FROM user WHERE username={}
+'''.format(username))
+    
+    p1=database.execute('''
+SELECT password FROM user WHERE username={}
 '''.format(username))
     
     if username==u1 and password==p1:
