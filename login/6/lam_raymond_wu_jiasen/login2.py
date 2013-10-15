@@ -1,11 +1,8 @@
 from flask import Flask, request, render_template, redirect, session, url_for
-from flask.ext import shelve
+import sqlite3
 
 app = Flask(__name__)
-app.config['SHELVE_FILENAME'] = 'users.db'
-app.secret_key='my secret key'
-shelve.init_app(app)
-
+conn = sqlite3.connect('data.db')
 
 @app.route("/")
 def home():
@@ -24,36 +21,30 @@ def hidden():
 
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
-    if request.method=="GET":
+	if request.method=="GET":
 		return render_template("login.html", message = "")
-    else:
-		db = shelve.get_shelve()
-		name1 = request.form['username']
-		pw1 = request.form['password']
-		name2 = name1.encode('ascii','ignore')
-		pw2 = pw1.encode('ascii','ignore')
-		if (db.has_key(name2) and db[name2]==pw2):
-			session['username'] = name2
+	else:
+		name = request.form['username']
+		pw = request.form['password']
+		if other.verify(name,pw):
+			session['username'] = name
 			redirect(url_for('hidden.html'))
 		else:
 			return render_template("login.html", message = "Invalid Username or Password")
+
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
 	if request.method=="GET":
 		return render_template("register.html")
 	else:
-		db = shelve.get_shelve()
-		name1 = request.form['username']
-		pw1 = request.form['password']
-		pw2 = pw1.encode('ascii','ignore')
-		name2 = name1.encode('ascii','ignore')
-		if (name1 in 'people'):
-			return render_template("register.html", message = "Username Taken")
-		else:
-			db[name2] = pw2
-			session['username'] = name2
+		name = request.form['username']
+		pw = request.form['password']	
+		if other.checkcopy(name):
+			other.add(name,pw)
 			return redirect(url_for('about'))
+		else:
+			return render_template("register.html", message = "Username Taken")
 
 @app.route("/logout")
 def logout():

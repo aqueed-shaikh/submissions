@@ -1,12 +1,11 @@
 #!/usr/bin/python
 
 from flask import Flask, session, request, url_for, render_template, redirect
-from flask.ext import shelve
+import auth
+import sqlite3
 
 app = Flask(__name__)
-app.config['SHELVE_FILENAME']= 'users.db'
 app.secret_key="magic"
-shelve.init_app(app)
 
 @app.route("/")
 def home():
@@ -17,39 +16,46 @@ def home():
 
 @app.route("/register", methods=["POST","GET"])
 def register():
+    database = sqlite3.connect('names.db')
+    database.execute('''
+    CREATE TABLE if not exists user(username text, password text)
+''')
     if request.method=="GET":
         return render_template("register.html")
     else:
-        users=shelve.get_shelve()
-        username=request.form["username"].encode("ascii", "ignore")
-        password=request.form["password"].encode("ascii", "ignore")
+        username=request.form["username"].encode("ascii","ignore")
+        password=request.form["password"].encode("ascii","ignore")
         if request.form["button"]=="Submit":
-            users[username]=password
-            return render_template("success.html",username=username)
+            if auth.exists(username):
+                return render_template("success.html",username=username)
+            else:
+                auth.adduser(username,password)
+                return render_template("register.html")
         else:
             return render_template("register.html")
             
 @app.route("/login", methods=["POST","GET"])
 def login():
+    database = sqlite3.connect('names.db')
     if request.method=="GET":
         return render_template("login.html")
     else:
-        users=shelve.get_shelve()
-        username=request.form["username"].encode("ascii", "ignore")
-        password=request.form["password"].encode("ascii", "ignore")
-        if username in users:
-            if password==users[username]:
+        username=request.form["username"].encode("ascii","ignore")
+        password=request.form["password"].encode("ascii","ignore")
+        if auth.exists(username):
+            if auth.authenticate(username,password):
                 session["username"]=username
                 return redirect("/")
             else:
                 return redirect("/login")
         else:
             return redirect("/register")
-
+            
 #<<<<<<< HEAD
 @app.route("/logout")
 def logout():
-    session.pop("username")
+    if "username" in session:
+        session.pop("username")
     return redirect("/login")
 
 @app.route("/secret")

@@ -100,12 +100,13 @@ input {
   .button:hover, input[type=submit]:hover {
     background-color: #45c3ff; }
 
-.outer-container, #login-container, #register-container {
+.container {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
+  width: 300px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid silver;
@@ -118,6 +119,9 @@ input {
   border-bottom: 1px solid lightgrey;
   font-weight: normal; }
 
+.error {
+  color: red; }
+
 a {
   display: inline-block;
   margin-top: 10px;
@@ -127,9 +131,3 @@ a {
   text-decoration: none; }
   a:hover {
     border-bottom-style: solid; }
-
-#login-container {
-  width: 300px; }
-
-#register-container {
-  width: 500px; }

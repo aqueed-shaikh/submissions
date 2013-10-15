@@ -1,9 +1,12 @@
 = extends "layout.html"
-=  block title
-		Hello there!
+= block title
+	Hello there!
 = endblock
 = block body
-		<h1><br><br>"Did you know that the bikini was invented in ancient Rome?"</h1>
-		<br>
-		<a href="{{ url_for('login') }}">Logout</a>
+	<h2>Did you know that the bikini was invented in ancient Rome?</h2>
+= endblock
+= block bottomlink
+	<a href="{{ url_for('page') }}">Reload the page</a>
+	<br>
+	<a href="{{ url_for('logout') }}">Logout</a>
 = endblock
