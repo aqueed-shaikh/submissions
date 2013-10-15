@@ -22,14 +22,9 @@ def home():# this page doesn't do anything it just redirects to the login page
     return redirect("/login")
 #breakline~~~~~~~~~~logincode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @app.route("/login", methods=['GET','POST'])
-<<<<<<< HEAD
 def login():
     connection1 = sqlite3.connect('users.db')
     #coding how the login page will look
-=======
-def login(): #this is where people will log in
-    #how it looks
->>>>>>> cf419e2c4b435e8ffe99274bf1f22800444a9c62
     page ="""<h1>It's the Login Page FOOL!</h1>
         <form method="post">
         Username: <input type="text" name="username"><br>
@@ -60,7 +55,6 @@ and users.password = ?
             results = cursor.fetchall()
             if len(results) == 0:
                 return redirect(url_for('login'))
-            else:
 ##            #if s.has_key(username) and s["%s"%(username)] == password:
                 session["username"] = username
                 #               s.close()
@@ -80,12 +74,8 @@ def logout(): #This page just pops you from the session
     return redirect("login")
 #breakline~~~~~~~~~~registercode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
 @app.route("/register", methods=['GET','POST'])
-<<<<<<< HEAD
 def register():
     connection1 = sqlite3.connect('users.db')
-=======
-def register(): #the register page
->>>>>>> cf419e2c4b435e8ffe99274bf1f22800444a9c62
     page="""<h1>Signup page's here fool!</h1>
         <form method="post">
         Username: <input type="text" name="username"><br>
@@ -110,7 +100,7 @@ def register(): #the register page
 #           s["%s"%(user)]=psswd
             #s.close()
             q = "INSERT INTO users VALUES(?, ?)"
-            connection1.execute(q,(_user)),(_pass))
+            connection1.execute(q,(_user),(_pass))
             connection1.close()
             return redirect ("/madlib")
         elif button=="reset":
