@@ -42,11 +42,14 @@ def login():
     else:
         username=request.form["username"].encode("ascii","ignore")
         password=request.form["password"].encode("ascii","ignore")
-        if auth.authenticate(username,password):
-            session["username"]=username
-            return redirect("/")
+        if auth.exists(username):
+            if auth.authenticate(username,password):
+                session["username"]=username
+                return redirect("/")
+            else:
+                return redirect("/login")
         else:
-            return redirect("/login")
+            return redirect("/register")
             
 #<<<<<<< HEAD
 @app.route("/logout")
