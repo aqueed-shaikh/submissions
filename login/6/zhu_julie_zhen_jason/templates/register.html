@@ -3,16 +3,27 @@
     <title>Registration</title>
   </head>
   <body>
+    <a href="/login">Already have a account? Sign in here!</a><br><br>
     <form method="POST">
-
       Username: <input type="text" name="username">
       <br>
       Password: <input type="text" name="password">
+      <br>
+      Confirm Password: <input type="text" name="cpassword">
       <br>
 
       <input type="submit" name="button" value="Submit">
       <input type="submit" name="button" value="Cancel">
 
     </form>
+
+
+    
+    {% if error=="nouser" %}Username field cannot be left blank. 
+    {% elif error=="nopass" %}Password field cannot be left blank.
+    {% elif error=="badc" %}Please confirm your Password.
+    {% elif error=="lazy" %}Username and Password cannot be the same.
+    {% endif %}
+    
   </body>
 </html>

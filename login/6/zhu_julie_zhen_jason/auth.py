@@ -1,26 +1,25 @@
 import sqlite3
 
-def init():
-    c=sqlite3.connect("auth.db")
-    c.execute("create table if not ecists users(username TEXT, password TEXT);")
-    c.commit()
+c=sqlite3.connect("auth.db",check_same_thread=False)
+c.execute("create table if not exists users(username TEXT, password TEXT);")
+c.commit()
     
 def validUsername(username):
-    ret=True;
-    q="SELECT * FROM users WHERE 'username' = "+username
+    ret=True
+    q="SELECT * FROM users WHERE 'username' = '"+username+"'"
     r=c.execute(q)
     for line in r:
         ret=False
     return ret
 
 def addUser(username,password):
+    ret=False
     if validUsername(username):
-        q="insert into users values(%s, %s)"%(username,password)
+        q="INSERT INTO users VALUES(%s, %s)"%(username,password)
         c.execute(q)
         c.commit()
-        return True
-    else:
-        return False
+        ret=True
+    return ret
 
 def log(username,password):
     ret=False
