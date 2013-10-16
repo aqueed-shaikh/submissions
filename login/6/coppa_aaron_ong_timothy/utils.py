@@ -23,5 +23,6 @@ def regisauth(username, password):
     r = c.execute("SELECT username FROM users WHERE username = ?", [username])
     if len(r.fetchall()) == 0:
         c.execute("INSERT INTO users VALUES (?, ?)", [username, password])
+        c.commit()
         return True
     return False
