@@ -1,21 +1,23 @@
 import sqlite3
 
-connect = sqlite3.connect('data.db')
+def work():
+    acc = sqlite3.connect('accounts.db')
+    try:
+        acc.execute("create table accounts(username text, password text)")
+    except:
+        pass
+    return acc
 
-try:
-    connect.execute("create table accounts(username text, password text)")
-except:
-    pass
 
 def register(username,password):
-    connect.execute('insert into accounts (username, password) values(?,?)', [username,password]) 
-    connect.commit()
+    acc = work()
+    acc.execute("insert into accounts values(?,?)", [username,password]) 
+    acc.commit()
 
 def authenticate(username,password):
-    user = connect.execute('select username from accounts where username = ?', [username])
-    
-    passw = cursor.execute('select password from accounts where username = ?', [username])
-    
+    acc = work()
+    user = acc.execute("select username from accounts where username = ?", [username])
+    passw = acc.execute("select password from accounts where username = ?", [username])
     if username == user and password == passw:
         return True
     else:
