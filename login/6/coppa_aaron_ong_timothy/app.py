@@ -19,8 +19,11 @@ def login():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        c = sqlite3.connect("users.db")
-        c.execute("create table if not exists users (username TEXT, password TEXT)")
+
+
+
+
+
         if (utils.loginauth(username,password)):
             session["username"] = username
             return redirect(url_for("home"))
@@ -34,8 +37,11 @@ def register():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        c = sqlite3.connect("users.db")
-        c.execute("create table if not exists users (username TEXT, password TEXT)")
+
+
+
+
+
         if (utils.regisauth(username,password)):
 
         #users = convList([ x for x in (c.execute("SELECT * from users")) ])

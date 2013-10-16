@@ -3,7 +3,11 @@ import sqlite3
 def loginauth(username, password):
     c = sqlite3.connect('users.db')
     try:
-        r = c.execute("SELECT password FROM users WHERE username = ? and password = ?", (username,password))
+            c.execute("SELECT * from users")
+    except:
+            return False
+    try:
+        r = c.execute("SELECT password FROM users WHERE username = ? and password = ?", [username,password])
         if len(r.fetchall()) == 0:
             return False
         return True
@@ -12,9 +16,12 @@ def loginauth(username, password):
 
 def regisauth(username, password):
     c = sqlite3.connect('users.db')
-    r = c.execute("SELECT username FROM login WHERE username = ?", (username))
+    try:
+            c.execute("SELECT * from users")
+    except:
+            c.execute("CREATE TABLE users(username TEXT, password TEXT)")
+    r = c.execute("SELECT username FROM users WHERE username = ?", [username])
     if len(r.fetchall()) == 0:
-        c.execute("INSERT INTO login VALUES (?, ?)", (username, password))
+        c.execute("INSERT INTO users VALUES (?, ?)", [username, password])
         return True
-    else:
-        return False
+    return False
