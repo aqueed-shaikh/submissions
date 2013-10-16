@@ -25,7 +25,7 @@ def login():
                 session["name"] = username
                 return redirect("/members")
             else:
-                 return render_template("login.html")
+                 return redirect("/unknown")
         elif button == "Cancel":
             return render_template("login.html")
         
@@ -45,9 +45,11 @@ def register():
             if password != confirmpassword:
                 return render_template("register.html", message = "Please enter the same passwords.")
             else:
-                session["name"] = username    
-                auth.register(username,password)
-                return redirect("/members")
+                if(auth.register(username,password)):
+                    session["name"] = username    
+                    return redirect("/members")
+                else:
+                    return render_template("register.html", message = "There is already an account under your name.")
         elif button == "Cancel":
             return render_template("register.html")
 

@@ -13,15 +13,21 @@ def work():
 
 def register(username,password):
     acc = work()
-    acc.execute("insert into accounts(username, password) values(?,?)", [username,password]) 
-    acc.commit()
-    return render_template("register.html", message = "There is already an account under your name.")
+    chk = acc.execute("select username from accounts where username = ?", [username] )
+    chk =  len(chk.fetchall())
+    print chk
+    if(chk == 0):
+        acc.execute("insert into accounts(username, password) values(?,?)", [username,password]) 
+        acc.commit()
+        return True
+    else:
+        return False
+   
 
 def authenticate(username,password):
     acc = work()
-    try:
-        user = acc.execute("select username from accounts where username = ?", [username] )
-    except:
+    user = acc.execute("select username from accounts where username = ?", [username] )
+    if(len(user.fetchall()) == 0):
         return False
     user = acc.execute("select username from accounts where username = ?", [username] )
     user =  user.fetchone()[0]
