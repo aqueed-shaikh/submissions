@@ -3,9 +3,9 @@ import sqlite3
 def loginauth(username, password):
     c = sqlite3.connect('users.db')
     try:
-            c.execute("SELECT * from users")
+        c.execute("SELECT * from users")
     except:
-            return False
+        return False
     try:
         r = c.execute("SELECT password FROM users WHERE username = ? and password = ?", [username,password])
         if len(r.fetchall()) == 0:
@@ -17,9 +17,9 @@ def loginauth(username, password):
 def regisauth(username, password):
     c = sqlite3.connect('users.db')
     try:
-            c.execute("SELECT * from users")
+        c.execute("SELECT * from users")
     except:
-            c.execute("CREATE TABLE users(username TEXT, password TEXT)")
+        c.execute("CREATE TABLE IF NOT EXISTS users(username TEXT, password TEXT)")
     r = c.execute("SELECT username FROM users WHERE username = ?", [username])
     if len(r.fetchall()) == 0:
         c.execute("INSERT INTO users VALUES (?, ?)", [username, password])

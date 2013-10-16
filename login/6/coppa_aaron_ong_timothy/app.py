@@ -17,13 +17,8 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        username = request.form["username"].encode("ascii", "ignore")
-        password = request.form["password"].encode("ascii", "ignore")
-
-
-
-
-
+        username = request.form["username"]
+        password = request.form["password"]
         if (utils.loginauth(username,password)):
             session["username"] = username
             return redirect(url_for("home"))
@@ -35,22 +30,9 @@ def register():
     if request.method == "GET":
         return render_template("register.html")
     else:
-        username = request.form["username"].encode("ascii", "ignore")
-        password = request.form["password"].encode("ascii", "ignore")
-
-
-
-
-
+        username = request.form["username"]
+        password = request.form["password"]
         if (utils.regisauth(username,password)):
-
-        #users = convList([ x for x in (c.execute("SELECT * from users")) ])
-
-        #if users.has_key(username):
-         #   return render_template("register.html")
-        
-        #execstr = 'INSERT INTO users VALUES("' + username + '","' + password + '");'
-            #c.execute(execstr)
             session["username"] = username
             return redirect(url_for("home"))
         else:
