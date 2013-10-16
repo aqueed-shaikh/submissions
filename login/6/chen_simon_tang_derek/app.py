@@ -22,7 +22,7 @@ def login():
         button = request.form['button']
         if button == "Login":
             if auth.authenticate(username,password):
-                session["username"] = username
+                session["name"] = username
                 return redirect("/members")
             else:
                  return render_template("login.html")
@@ -45,15 +45,15 @@ def register():
             if password != confirmpassword:
                 return render_template("register.html", message = "Please enter the same passwords.")
             else:
+                session["name"] = username    
                 auth.register(username,password)
-                session["username"] = username
                 return redirect("/members")
         elif button == "Cancel":
             return render_template("register.html")
 
 @app.route("/members")
 def members():
-    if 'username' in session:
+    if 'name' in session:
         return render_template("members.html", d = session)
         return page
     else:
