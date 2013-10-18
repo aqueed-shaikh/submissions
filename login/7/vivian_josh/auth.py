@@ -1,7 +1,7 @@
 import sqlite3
 
-conn = sqlite3.connect('puppies.db')
-c = conn.cursor()
+c = sqlite3.connect('puppies.db',check_same_thread = False)
+#c = conn.cursor()
 
 try: 
     c.execute(""" CREATE TABLE users (username text, password text) """)
@@ -10,17 +10,18 @@ except:
     pass
 
 def adduser(username, password):
-    try:
-        c.execute(""" INSERT INTO users VALUES (?,?) """, (username, password))
+    x = c.execute (""" SELECT username FROM users WHERE username=? """,[username])
+    if len(x.fetchall()) == 0:
+        c.execute(""" INSERT INTO users(username,password) VALUES (?,?) """, [username, password])
         c.commit()
         return True
-    except:
+    else:
         return False
 
 
 def autheticate(username, password):
-    try:
-        c.execute(""" SELECT username FROM users WHERE username=? AND password=? """, (username,password))
-        print c.fetchone()
-    except:
-        pass
+    x = c.execute(""" SELECT username FROM users WHERE username=? AND password=? """, [username,password])
+    if len(x.fetchall()) != 0:
+        return True
+    else:
+        return False
