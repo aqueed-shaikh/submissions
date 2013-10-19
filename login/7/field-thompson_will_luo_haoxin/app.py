@@ -69,6 +69,18 @@ def registered():
         return render_template('registered.html', user=session['username'])
     return redirect("/")
 
+@app.route('/setpass', methods=['POST', 'GET'])
+def setpass():
+    if 'username' in session:
+        if request.method == 'GET':
+            return render_template('setpass.html', user=session['username'])
+        elif request.method == 'POST':
+            auth.setpass(session['username'], request.form['password'])
+    else:
+        return redirect('/')
+    
+
+#content
 
 @app.route('/procrastination')
 def procrastination():
@@ -87,6 +99,7 @@ def future():
     if 'username' in session:
         return render_template('future.html', user=session['username'])
     return redirect("/")
+
 
 if __name__ == "__main__":
     app.debug = True
