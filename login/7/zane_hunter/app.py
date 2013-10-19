@@ -11,9 +11,11 @@ app.secret_key = login.secret_key
 
 #set up table if it doesn't exist
 conn = sqlite3.connect(login.userdata_filename)
-conn.cursor().execute('create table if not exists users (name text, password text)')
+command = 'create table if not exists users (name text, password text)'
+conn.cursor().execute(command)
 conn.commit()
 conn.close()
+
 
 @app.route('/')
 def home():
@@ -22,12 +24,14 @@ def home():
 	else:
 		return render_template("index.html")
 
+
 @app.route('/wittle')
 def wittle():
 	if 'uname' in session:
 		return render_template('wittle.html')
 	else:
 		redirect(url_for('home'))
+
 
 @app.route('/register', methods=["POST", "GET"])
 def register():
@@ -38,16 +42,20 @@ def register():
 		button = request.form['button']
 		d = request.form
 		if button == "Register":
-			success = login.registerUser(d['username'], d['password']) and d['password'] == d['passconfirm']
+			success = login.registerUser(d['username'], d['password']) \
+					  and d['password'] == d['passconfirm']
 
 			if success:
 				return render_template("register-success.html", d=d)
 			else:
-				return render_template("register-form.html", d=d, failure=True)
+				return render_template("register-form.html", d=d,
+									   failure=True)
 		else:
-			return render_template("register-form.html", d=d, failure=False)
+			return render_template("register-form.html", d=d,
+								   failure=False)
 
-@app.route('/login/',methods=["GET","POST"])
+
+@app.route('/login',methods=["GET","POST"])
 def signin():
 	if request.method == "POST": #post
 		data = request.form
@@ -59,7 +67,19 @@ def signin():
 	else:#get
 		return render_template("login.html")
 
-@app.route('/logout/')
+
+@app.route('/change-password', methods=["GET", "POST"])
+def changePassword():
+	if request.method == "GET":
+		return render_template('change-password-form.html')
+
+	#POST
+	form = request.form
+
+	return render_template('change-password-success.html')
+
+
+@app.route('/logout')
 def logout():
 	session.clear()
 	return redirect(url_for('home'))
