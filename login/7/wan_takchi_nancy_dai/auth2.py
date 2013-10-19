@@ -10,8 +10,11 @@ def register(user, pw):
         return True
     
 def checkuser(user):
-    ans = False
-    db.login.
+    try
+        db.login.find({'user':user, 'pass':pw})
+        return True
+    except: 
+        return False
 
 def changePass(user, pw, npw):
 
