@@ -60,15 +60,16 @@ def register():
 
 @app.route('/login',methods=["GET","POST"])
 def signIn():
-	if request.method == "POST": #post
-		data = request.form
-		if login.checkUser(app,data["uname"],data["passw"]):
-			session['uname'] = data["uname"]
-			return redirect(url_for('home'))
-		else:
-			return render_template("whoops.html")
-	else:#get
-		return render_template("login.html")
+	if request.method == "GET":
+		return render_template("login-form.html")
+
+	#post
+	form = request.form
+	if not login.checkUser(form["uname"], form["passw"]):
+		return render_template("login-failure.html")
+
+	session['uname'] = form["uname"]
+	return redirect(url_for('home'))
 
 
 @app.route('/change-password', methods=["GET", "POST"])

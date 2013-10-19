@@ -23,7 +23,7 @@ def registerUser(usern, passw):
 
 	return True
 
-def checkUser(app,usern,passw):
+def checkUser(usern,passw):
 	passw = passw.encode('ascii')
 
 	#get userlist
