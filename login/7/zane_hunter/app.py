@@ -38,21 +38,25 @@ def register():
 	if request.method == "GET":
 		return render_template("register-form.html")
 
-	else: #post
-		button = request.form['button']
-		d = request.form
-		if button == "Register":
-			success = login.registerUser(d['username'], d['password']) \
-					  and d['password'] == d['passconfirm']
+	#post
+	form = request.form
+	if not form['button']:
+		return render_template("register-form.html", d=form,
+							   failure=False)
 
-			if success:
-				return render_template("register-success.html", d=d)
-			else:
-				return render_template("register-form.html", d=d,
-									   failure=True)
-		else:
-			return render_template("register-form.html", d=d,
-								   failure=False)
+	#register
+	passWorks = form['password'] == form['passconfirm']
+	registered = False
+	if passWorks:
+		registered = login.registerUser(form['username'], form['password'])
+
+	#registration success
+	if passWorks and registered:
+		return render_template("register-success.html", d=form)
+
+	#registration failure
+	return render_template("register-form.html", d=form,
+						   failure=True)
 
 
 @app.route('/login',methods=["GET","POST"])
