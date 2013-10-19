@@ -55,12 +55,11 @@ def register():
 		return render_template("register-success.html", d=form)
 
 	#registration failure
-	return render_template("register-form.html", d=form,
-						   failure=True)
+	return render_template("register-form.html", d=form, failure=True)
 
 
 @app.route('/login',methods=["GET","POST"])
-def signin():
+def signIn():
 	if request.method == "POST": #post
 		data = request.form
 		if login.checkUser(app,data["uname"],data["passw"]):
