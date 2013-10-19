@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import session,url_for, request, redirect, render_template
-import sqlite3,utils
+import utils
 
 app = Flask(__name__)
 app.secret_key="ijasdb012fbrfasdffb0vbevs"
@@ -17,8 +17,8 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form["username"].encode("ascii", "ignore")
+        password = request.form["password"].encode("ascii", "ignore")
         if (utils.loginauth(username,password)):
             session["username"] = username
             return redirect(url_for("home"))
@@ -30,8 +30,8 @@ def register():
     if request.method == "GET":
         return render_template("register.html")
     else:
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form["username"].encode("ascii", "ignore")
+        password = request.form["password"].encode("ascii", "ignore")
         if (utils.regisauth(username,password)):
             session["username"] = username
             return redirect(url_for("home"))
