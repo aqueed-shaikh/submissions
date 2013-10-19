@@ -1,30 +1,24 @@
-import sqlite3
+from pymongo import MongoClient
 
 def connect():
-    conn = sqlite3.connect("login.db")
-    try:
-        conn.execute("SELECT 1 FROM login")
-    except:
-        conn.execute("CREATE TABLE login (username TEXT, password TEXT)")
+    conn = MongoClient()
     return conn
 
 def login(username, password):
     if not username or not password:
         return "missing"
-    conn = connect()
-    r = conn.execute("SELECT username, password FROM login WHERE username = ?", [username])
-    results = r.fetchall()
-    if not results:
-        return "no-user"
-    if password != results[0][1]:
-        return "incorrect"
+    with connect() as conn:
+        r = conn.login.login.findone({"username": username}, fields={"_id": False})
+        if not r:
+            return "no-user"
+        if password != r["password"]:
+            return "incorrect"
 
-def register(username, passwordd):
+def register(username, password):
     if not username or not password:
         return "missing"
-    conn = connect()
-    r = conn.execute("SELECT username FROM login WHERE username = ?", [username])
-    results = r.fetchall()
-    if results:
-        return "exists"
-    conn.execute("INSERT INTO login VALUES (?, ?)", [username, password])
+    with connect() as conn:
+        r = conn.login.login.findone({"username": username}, fields={"_id": False})
+        if r:
+            return "exists"
+        conn.login.login.insert({"username": username, "password": password})

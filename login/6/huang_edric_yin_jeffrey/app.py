@@ -1,12 +1,12 @@
 from flask import Flask
 from flask import render_template, url_for, redirect, session, request
-from flask.ext import shelve
-
+#SQL Changes
 import urllib
+import utils
 app = Flask(__name__)
 app.secret_key="mysecretkey"
-app.config['SHELVE_FILENAME'] = 'shelve.db'
-shelve.init_app(app)
+#app.config['SHELVE_FILENAME'] = 'shelve.db'
+#shelve.init_app(app)
 
 @app.route("/")
 def home(): 
@@ -34,10 +34,10 @@ def login():
     else:
         Username = request.form["username"].encode("ascii","ignore")
         Password = request.form["password"].encode("ascii","ignore")
-        users = shelve.get_shelve()
-        if not users.has_key(Username):
+        x = utils.authenticate(Username,Password)
+        if x== 1:
             return redirect("/login?error="+"1")
-        elif users[Username] != Password:
+        elif x==2:
             try:
                 c = session['loginattempts']
             except:
@@ -58,16 +58,13 @@ def register():
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
-        users = shelve.get_shelve()
-        if users.has_key(username):
-            return render_template("register.html",error="This username already exists.")
-        if len(username) < 4:
+        x = utils.register(username, password)
+        if x == 0:
             return render_template("register.html",error="Username must be at least 4 characters.")
-        if len(password) < 6:
+        if x == 1:
             return render_template("register.html",error="Password must be at least 6 characters.")
-
-            
-        users[username] = password
+        if x == 2:
+            return render_template("register.html",error="This username already exists.")
         session["username"] = username
         return redirect("/")
 
@@ -79,3 +76,4 @@ def logout():
 if __name__ == "__main__":
     app.debug = True
     app.run(host='0.0.0.0',port=5000)
+
