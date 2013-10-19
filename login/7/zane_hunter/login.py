@@ -15,6 +15,7 @@ def registerUser(usern, passw):
 		if user[0] == usern:
 			conn.close()
 
+			#the user already exists
 			return False
 
 	c.execute("insert into users values(?,?)", (usern, encrypt(passw)))
@@ -44,5 +45,7 @@ def checkUser(usern,passw):
 def encrypt(passw):
 	encrypter = sha.new(passw)
 	encrypter.update(secret_key)
+
 	hashpass = encrypter.digest()
+
 	return unicode(hashpass, errors='ignore') 
