@@ -19,4 +19,4 @@ def username_exists(username):
 	pass
 
 def validate_user(username, password):
-	pass
+	
