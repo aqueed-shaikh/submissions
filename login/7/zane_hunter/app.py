@@ -21,16 +21,16 @@ conn.close()
 def home():
 	if 'uname' in session: 
 		return render_template("ferns.html",name=session['uname'])
-	else:
-		return render_template("index.html")
+
+	return render_template("index.html")
 
 
 @app.route('/wittle')
 def wittle():
 	if 'uname' in session:
 		return render_template('wittle.html')
-	else:
-		redirect(url_for('home'))
+
+	redirect(url_for('home'))
 
 
 @app.route('/register', methods=["POST", "GET"])
