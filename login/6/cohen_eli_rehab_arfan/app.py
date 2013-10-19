@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import request, render_template, redirect, session, url_for
-import sqlite3
 import utils
 
 app = Flask(__name__)
@@ -21,8 +20,11 @@ def register():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        utils.addUser(username, password)
-        return redirect("/login")
+        if (utils.addUser(username, password)):
+            session["username"] = username
+            return redirect("/login")
+        else:
+            return redirect("/register")
         
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
@@ -54,15 +56,6 @@ def pi():
     else:
         return redirect("/login")
 
-@app.route("/windows")
-def windows():
-    if "username" in session:
-        return """
-<h1>REASONS TO BUY WINDOWS 8:<h1>
-
-"""
-    else:
-        return redirect("/login")
 
 if __name__ == "__main__":
     app.debug = True
