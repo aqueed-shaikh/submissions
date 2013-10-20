@@ -17,7 +17,8 @@ def checkuser(user):
         return False
 
 def changePass(user, pw, npw):
-    #db.login.update({'user':user, {$set: {'pass':npw}}})
+    if login(user,pw):
+        db.login.update({'user':user}, {$set: {'pass':npw}})
     
 def login(user, pw):
     try
