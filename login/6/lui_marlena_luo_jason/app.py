@@ -7,7 +7,7 @@ app.secret_key="marlyandme"
 app.config['SHELVE_FILENAME'] = 'username.db'
 shelve.init_app(app)
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
     if "username" in session:
         return render_template("index.html",username=session["username"])
@@ -37,11 +37,11 @@ def register():
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
         users = shelve.get_shelve()
-        if not username in users:
+        if users.has_key(username):
             return render_template("register.html")
         users[username] = password
         session["username"] = username
-        return redirect("/home")
+        return redirect(url_for("home"))
                     
 @app.route("/reset", methods = ['GET', 'POST'])
 def reset():
