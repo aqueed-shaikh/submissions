@@ -1,13 +1,11 @@
 # Roger Li and Joshua Wakefield
 
 from flask import Flask
-from flask import Flask, session, request, redirect, render_template
-from flask.ext import shelve
+from flask import Flask, session, url_for, request, redirect, render_template
+import utils 
 
 app = Flask(__name__)
-app.config["SHELVE_FILENAME"] = "login.db"
 app.secret_key = "password"
-shelve.init_app(app)
 
 @app.route("/")
 def index():
@@ -23,10 +21,10 @@ def login():
     username, password = (request.form["username"].encode("utf8"), request.form["password"].encode("utf8"))
     if (!username || !password):
         return render_template("login.html", error="empty")
-    db = shelve.get_shelve()
-    if (username.lower() not in db):
+	error = utils.login(request.form["username"], request.form["password"]);
+    if (error == "notfound"):
         return render_template("login.html", error="usernotfound")
-    if (db[username.lower()] != password):
+    if (error == "incorrect"):
         return render_template("login.html", error="incorrect")
     session["username"] = username
     return redirect("/")
@@ -38,8 +36,8 @@ def register():
     username, password = (request.form["username"].encode("utf8"), request.form["password"].encode("utf8"))
     if (!username or !password):
         return render_template("register.html", error="empty")
-    db = shelve.get_shelve()
-    if (username.lower() in db):
+    error = utils.register(request.form["username"], request.form["password"])
+    if (error == "exists"):
         return render_template("register.html", error="taken")
     db[username.lower()] = password
     session["username"] = username
