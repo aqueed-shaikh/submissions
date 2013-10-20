@@ -19,7 +19,7 @@ def authenticate(username, password):
 
 def changepass(username, old, new):
 	if authenticate(username, old):
-		db.puppies.update({'username':username}, {$set:{'password':new}})
+		db.puppies.update({'username':username}, {'$set':{'password':new}})
 		return True
 	else:
 		return False

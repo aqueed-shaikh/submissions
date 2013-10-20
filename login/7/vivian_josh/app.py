@@ -35,7 +35,7 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
-        if auth2.autheticate(request.form['username'],request.form['password']):
+        if auth2.authenticate(request.form['username'],request.form['password']):
             session['username'] = request.form['username']
             return redirect(url_for('home'))
         else:
