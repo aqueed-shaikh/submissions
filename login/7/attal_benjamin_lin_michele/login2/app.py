@@ -1,11 +1,10 @@
 #!/usr/local/bin/python
 from flask import Flask, session, redirect, request, url_for, render_template
-from auth import authenticate, exists, insert
+import auth
 
 
 app = Flask(__name__)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-
 
 
 @app.route('/')
