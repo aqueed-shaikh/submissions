@@ -8,7 +8,7 @@ app.secret_key="key"
 app.config['SHELVE_FILENAME'] = 'users.db'
 shelve.init_app(app)
 
-@app.route("")
+@app.route("/")
 def homepage():
     return redirect(url_for("home"))
 
