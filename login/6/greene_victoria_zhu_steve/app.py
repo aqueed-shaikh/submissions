@@ -56,7 +56,7 @@ def register():
 		return redirect(url_for('page'))
 	return render_template('register.html', title='Register', error=error)
 
-@app.route('/settings')
+@app.route('/settings', methods=['GET', 'POST'])
 def settings():
 	if not logged_in():
 		return redirect(url_for('login'))
