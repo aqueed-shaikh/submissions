@@ -4,7 +4,7 @@ import auth
 from flask import Flask
 from flask import render_template, session, request, redirect
 
-app = flask.Flask(__name__)
+app = Flask(__name__)
 
 @app.route('/')
 def home():
