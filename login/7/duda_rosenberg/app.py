@@ -27,8 +27,8 @@ def login():
         pwd = str(request.form["psswrd"])
         #db = shelve.get_shelve("c")
         #info = connection.execute("select usernames.username, usernames.password from usernames where usernames.username == %s", usr);
-        usrn = connection.execute("select usernames.username from usernames where usernames.username = '%s'", user);
-        pswd = connection.execute("select usernames.password from usernames where usernames.username = '%s'", user);
+        usrn = connection.execute(("select usernames.username from usernames where usernames.username = '%s'" %(user)));
+        pswd = connection.execute(("select usernames.password from usernames where usernames.username = '%s'" %(user)));
         #if db.has_key(user) and db[user] == pwd:
         if usrn == None:
             return  render_template("login.html", error="username or password not recognized")
@@ -51,7 +51,7 @@ def register():
         usr = str(request.form['usr'])
         pwd = str(request.form['pwd'])
         #db = shelve.get_shelve("c")
-        info = connection.execute("select usernames.username, usernames.password from usernames where usernames.username = '%s'", usr);
+        info = connection.execute(("select usernames.username, usernames.password from usernames where usernames.username = '%s'" %(usr)));
         
         if info != None:
             return render_template('register.html',
