@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, request, redirect, url_for, session
 import md5
-import auth
+import auth2
 
 app = Flask(__name__)
 
@@ -24,7 +24,7 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
     elif request.method == 'POST':
-        if auth.adduser(request.form['username'],request.form['password']):
+        if auth2.adduser(request.form['username'],request.form['password']):
             return redirect(url_for('home'))
         else:
             message = "That username is taken!"
@@ -35,7 +35,7 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == 'POST':
-        if auth.autheticate(request.form['username'],request.form['password']):
+        if auth2.autheticate(request.form['username'],request.form['password']):
             session['username'] = request.form['username']
             return redirect(url_for('home'))
         else:
