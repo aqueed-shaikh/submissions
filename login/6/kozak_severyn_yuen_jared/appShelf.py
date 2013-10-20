@@ -1,5 +1,10 @@
 """
-app.py is a login engine.
+
+		appShelf.py is a login framework with python-shelf 
+	integration which facilitates login, registration, and user 
+	recognition (e.g. dynamically updating pages to reflect a 
+	user's having successfully logged in).
+
 """
 
 from flask import Flask
@@ -11,13 +16,14 @@ from hashlib import sha512
 
 app = Flask(__name__)
 
-#conveniently convert a plaintext key to something convoluted
-app.secret_key = sha512("cybersec").hexdigest()
+app.secret_key = sha512("cybersec").hexdigest() 	#conveniently convert a plaintext key to something convoluted
 app.config["SHELVE_FILENAME"] = "userData.db"
 shelve.init_app(app)
 
-@app.route("/")
+@app.route("/", methods = ["GET", "POST"])
 def index():
+	if request.method == "POST":
+		session.pop("loggedIn")
 	return render_template("index.html", loggedIn = "loggedIn" in session)
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -58,12 +64,6 @@ def register():
 @app.route("/vault")
 def vault():
 	return render_template("vault.html", loggedIn = "loggedIn" in session)
-
-@app.route("/logout")
-def logout():
-	if "loggedIn" in session:
-		session.pop("loggedIn")
-	return redirect(url_for("index"))
 
 if __name__ == "__main__":
 	app.run(debug = True)
