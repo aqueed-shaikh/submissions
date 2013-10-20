@@ -1,21 +1,24 @@
 from flask import Flask
-from flask import session,url_for,request,redirect,render_template
-from flask.ext import shelve
+from flask import request, render_template, redirect, url_for, session
+import sqlite3
+import auths
 
 app = Flask(__name__)
-app.config['SHELVE_FILENAME'] = 'logins.db'
-shelve.init_app(app)
 app.secret_key="my secret key"
-
 
 
 #DEFAULT
 @app.route("/")
+def default():
+    redirect("/home")
+
+@app.route("/home")
 def home():
     if 'user' in session:
         return render_template('home.html')
     else:
         return redirect("/login")
+
 
 
 #LOGIN PAGE    
@@ -24,18 +27,15 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        logins = shelve.get_shelve()
-        button = request.form['button']
-        user = request.form['username']
-        passer = request.form['password']
-        if button == "Login":
-            if not user in logins:
-                return redirect("/login")
-            elif logins[user] != passer:
-                return redirect("/login")
-            session['user'] = user
-            return redirect("/")
+        username = request.form["username"]
+        password = request.form["password"]
+        if auths.check(username, password):
+            session["user"] = username
+            return redirect(url_for("login"))
+        else:
+            return redirect(url_for("home"))
     
+
 
 #REGISTER
 @app.route("/register",methods = ['GET','POST'])
@@ -43,19 +43,14 @@ def register():
     if request.method == "GET":
         return render_template("register.html", message = "Type in desired username and password")
     else:
-        logins = shelve.get_shelve()
-        user = request.form['username'].encode("ascii","ignore")
-        passer = request.form['password'].encode("ascii","ignore")
-        button = request.form['button']
-        if button == "Submit":
-            if logins.has_key(user):
-                return render_template("register.html", message = "Username is taken")
-            else:
-                logins[user] = passer
-                session['user'] = user
-                return redirect("/login")
-        elif button == "Back":
-            return redirect("/login")
+       username = request.form["username"]
+       password = request.form["password"]
+       if auths.usernameExists(username):
+           return render_template("register.html", message = "Username exists already")
+       else:
+           auths.add(username, password)
+           return redirect(url_for("home"))
+
 
 
 #POP THE USERNAME
@@ -63,16 +58,10 @@ def register():
 def logout():
     if 'user' in session:
         session.pop('user',None)
-    return redirect("/")
+    return redirect("/home")
+
 
 if __name__=="__main__":
     app.debug=True
+    auths.start()
     app.run(host='0.0.0.0', port=5000)
-    
-
- 
- 
-
-
- 
-   

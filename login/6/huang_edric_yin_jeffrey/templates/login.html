@@ -2,12 +2,12 @@
 
   <h1> Login </h1>
 
-  {{errormessage}}
-  <p> Please login to your account. Otherwise, please <a href="/register"> Register </a> 
+  <font color = "red">{{errormessage}}</font>
+  <p>Please log in to your account. Otherwise, please <a href="/register"> Register </a> </p>
 
   <form method="POST">
-    Username: <input type="text" name="username"> </input>
-    Password: <input type="password" name="password"> </input>
+    Username: <input type="text" name="username"> </input><br>
+    Password: <input type="password" name="password"> </input><br>
     <input type="submit" name="button" value="submit"> </input>
   </form>
 

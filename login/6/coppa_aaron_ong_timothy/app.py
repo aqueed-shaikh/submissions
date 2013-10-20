@@ -1,12 +1,9 @@
 from flask import Flask
 from flask import session,url_for, request, redirect, render_template
-from flask.ext import shelve
+import utils
 
 app = Flask(__name__)
 app.secret_key="ijasdb012fbrfasdffb0vbevs"
-app.config['SHELVE_FILENAME'] = 'users.db'
-shelve.init_app(app)
-
 
 @app.route("/")
 def home():
@@ -22,13 +19,11 @@ def login():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        users = shelve.get_shelve()
-        if not users.has_key(username):
+        if (utils.loginauth(username,password)):
+            session["username"] = username
+            return redirect(url_for("home"))
+        else:
             return redirect(url_for("register"))
-        if users[username] != password:
-            return redirect(url_for("login"))
-        session["username"] = username
-        return redirect(url_for("home"))
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -37,17 +32,22 @@ def register():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        users = shelve.get_shelve()
-        if users.has_key(username):
-            return render_template("register.html")
-        users[username] = password
-        session["username"] = username
-        return redirect(url_for("home"))
+        if (utils.regisauth(username,password)):
+            session["username"] = username
+            return redirect(url_for("home"))
+        else:
+            return redirect(url_for("register"))
 
 @app.route("/logout")
 def logout():
     session.pop("username", None)
     return redirect(url_for("home"))
+
+def convList(l):
+    d = {}
+    for i in l:
+        d[i[0]] = i[1]
+    return d
 
 if __name__=="__main__":
     app.debug=True

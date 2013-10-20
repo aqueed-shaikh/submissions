@@ -1,35 +1,51 @@
 import sha
-from flask.ext import shelve
+import sqlite3
 
-secret = "uniquellama"
+userdata_filename = "keys.dat"
+secret_key = "uniquellama"
 shelf = "thea"
 
 def registerUser(usern, passw): 
-	usern = usern.encode('ascii')
-	passw = passw.encode('ascii')
-	db = shelve.get_shelve('c')
-	if not usern in db:
-		hashpass = encrypt(passw)
-		db[usern] = hashpass
-		db.close()
-		return True
-	else:
-		db.close()
-		return False
+	conn = sqlite3.connect(userdata_filename)
 
-def checkUser(app,usern,passw):
-	usern = usern.encode('ascii')
+	c = conn.cursor()
+	result = c.execute("select * from users")
+
+	for user in result:
+		if user[0] == usern:
+			conn.close()
+
+			#the user already exists
+			return False
+
+	c.execute("insert into users values(?,?)", (usern, encrypt(passw)))
+	conn.commit()
+	conn.close()
+
+	return True
+
+def checkUser(usern,passw):
 	passw = passw.encode('ascii')
-	db = shelve.get_shelve('c')
-	if not usern in db:
-		return False
-	hashpass = encrypt(passw)
-	ans = db[usern] == hashpass
-	db.close()
-	return ans
+
+	#get userlist
+	conn = sqlite3.connect('keys.dat')
+	c = conn.cursor()
+
+	c.execute("select * from users")
+	for user in c:
+		if user[0] == usern:
+			ans = user[1] == encrypt(passw)
+			conn.close()
+
+			return ans
+
+	return False
+
 
 def encrypt(passw):
 	encrypter = sha.new(passw)
-	encrypter.update(secret)
+	encrypter.update(secret_key)
+
 	hashpass = encrypter.digest()
-	return hashpass
+
+	return unicode(hashpass, errors='ignore') 

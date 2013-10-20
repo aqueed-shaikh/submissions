@@ -1,0 +1,12 @@
+= extends "layout.html"
+= block title
+	{{ title }}
+= endblock
+= block body
+	<h2>{{ answer }}</h2>
+= endblock
+= block bottomlink
+	<a href="{{ url_for('page') }}">Reload the page</a>
+	<br>
+	<a href="{{ url_for('logout') }}">Logout</a>
+= endblock

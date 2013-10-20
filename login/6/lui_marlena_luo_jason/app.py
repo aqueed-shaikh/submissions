@@ -1,11 +1,10 @@
 from flask import Flask
 from flask import session, url_for, request, redirect, render_template
-from flask.ext import shelve
+import sqlite3
+import auth
 
 app = Flask(__name__)
-app.secret_key="marlyandme"
-app.config['SHELVE_FILENAME'] = 'username.db'
-shelve.init_app(app)
+app.secret_key="marleyandme"
 
 @app.route("/", methods=["GET", "POST"])
 def home():
@@ -21,13 +20,10 @@ def login():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        users = shelve.get_shelve()
-        if not users.has_key(username):
-            return redirect(url_for("register"))
-        if users[username] != password:
-            return redirect(url_for("login"))
-        session["username"] = username
-        return redirect("/home")
+        if (auth.checkuser(username, password)):
+            return "Success!"
+        else:
+            return "Please register!"
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -36,6 +32,7 @@ def register():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
+<<<<<<< HEAD
         users = shelve.get_shelve()
         if users.has_key(username):
             return render_template("register.html")
@@ -43,6 +40,14 @@ def register():
         session["username"] = username
         return redirect(url_for("home"))
                     
+=======
+        if (not auth.checkuser(username, password)):
+            auth.adduser(username, password)
+            return "You have created an account"
+        else:
+            return "User already exists"
+
+>>>>>>> 8742283e320300db62b5c976d1efef98362649af
 @app.route("/reset", methods = ['GET', 'POST'])
 def reset():
     session.pop("username", None)
