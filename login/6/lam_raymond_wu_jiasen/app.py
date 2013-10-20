@@ -56,11 +56,14 @@ def changepw():
 		opw = request.form["oldpw"].encode("ascii", "ignore")
 		npw = request.form["newpw"].encode("ascii" ,"ignore")
 		cpw = request.form["cpw"].encode("adcii", "ignore")
-		if npw == cpw:
-			return redirect(url_for('about'))
-		else:
+		if npw != cpw:
 			return render_template("changepass.html", message = "New PW and Confirm PW don't match.")
-
+		elif verify.checkpw(opw):
+			return render_template("changepass.html", message = "Wrong old PW")
+		else:
+			verify.changepw(npw)
+			return redirect(url_for('about'))
+			
 @app.route("/logout")
 def logout():
         session.pop('count', None)
