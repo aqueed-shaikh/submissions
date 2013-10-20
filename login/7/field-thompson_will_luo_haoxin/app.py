@@ -57,7 +57,10 @@ def setpass():
         if request.method == 'GET':
             return render_template('setpass.html', user=session['username'])
         elif request.method == 'POST':
-            auth.set_pass(session['username'], request.form['password'])
+            if auth.authenticate(request.form['username'],request.form['password']):
+                auth.set_pass(session['username'], request.form['npassword'])
+            else:
+                return "<h2> incorrect password </h2>"
     else:
         return redirect('/')
     
