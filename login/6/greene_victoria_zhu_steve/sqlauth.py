@@ -40,8 +40,6 @@ def validate_user(username, password):
 	p = cur.fetchone()
 	return p != None and p[0] == password
 
-
-
 def print_tables():
 	cur = sqlite3.connect('sqldata.db').cursor()
 	cur.execute('SELECT name FROM sqlite_master WHERE type="table"')
