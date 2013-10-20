@@ -61,7 +61,7 @@ def changepw():
 		elif verify.checkpw(opw):
 			return render_template("changepass.html", message = "Wrong old PW")
 		else:
-			verify.changepw(npw)
+			verify.changepw(opw, npw)
 			return redirect(url_for('about'))
 			
 @app.route("/logout")
