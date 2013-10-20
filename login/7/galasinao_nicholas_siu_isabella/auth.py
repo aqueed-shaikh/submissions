@@ -1,42 +1,36 @@
 #!/usr/bin/python
 
-import sqlite3
+import pymongo
 
-database = sqlite3.connect('names.db', check_same_thread = False)
-
-try:
-    database.execute('''
-    CREATE TABLE if not exists user(username text, password text)
-''')
-    database.commit()
-except:
-    pass
+client = pymongo.MongoClient()
 
 def adduser(username,password):
-    database = sqlite3.connect('names.db')
-    database.execute('''
-    INSERT INTO user(username,password) VALUES(?,?)
-''',[username,password])
-    
-    database.commit()
+    database = client.userdb
+    collection = database.usercol
+    user = {name:username, pw:password}
+    collection.insert(user)
 
 def exists(username):
     ans = False
-    database = sqlite3.connect('names.db')
-    u1 = database.execute('''
-SELECT username FROM user WHERE username=?
-''',[username])
+    database = client.userdb
+    collection = database.usercol
+    cursor = collection.find({name:username})
 
-    if len(u1.fetchall()) != 0:
+    if cursor.count() > 0:
         ans = True
     return ans
 
+def changePw(oldPw, newPw):
+    database = client.userdb
+    collection = database.usercol
+    collection.update({pw:oldPw}, {$set: {pw:newPw}})
+
 def authenticate(username,password):
-    u1=database.execute('''
-SELECT username FROM user WHERE username=? and password=?
-    ''',[username,password])
+    database = client.userdb
+    collection = database.usercol
+    cursor = collection.find({name:username,pw:password})
     
-    if len(u1.fetchall()) != 0:
+    if cursor.count() > 0:
         return True
     else:
         return False
