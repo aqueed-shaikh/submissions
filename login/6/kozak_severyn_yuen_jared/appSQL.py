@@ -1,13 +1,27 @@
+"""
+
+		appSQL.py is a login framework with sqlite3 integration, 
+	which facilitates login, registration, and user recognition
+	(e.g. dynamically updating pages to reflect a user's having 
+	successfully logged in).
+
+"""
+
 from flask import Flask
 from flask import render_template, url_for, redirect
 from flask import request, session
+
 import sqlite3
+from hashlib import sha512
 
 app = Flask(__name__)
-app.secret_key = "trillest"
+app.secret_key = sha512("cybersec").hexdigest() 	#conveniently convert a plaintext key to something convoluted
+app.db = "userDataSQL"
 
-@app.route("/")
+@app.route("/", methods = ["GET", "POST"])
 def index():
+	if request.method == "POST":
+		session.pop("loggedIn")
 	return render_template("index.html", loggedIn = "loggedIn" in session)
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -15,21 +29,17 @@ def login():
 	if request.method == "GET":
 		return render_template("login.html")
 
-	username = request.form["username"].encode("ascii", "ignore")
-	password = request.form["password"].encode("ascii", "ignore")
-	conn = sqlite3.connect("userData.sql")
-	realPasswd = conn.cursor().execute("SELECT password FROM users WHERE username = ?", (username,)).fetchone()[0]
-
-	if password == realPasswd:
-		session["loggedIn"] = True
-		return redirect(url_for("index"))
 	else:
-		return "Login failed."
+		username = request.form["username"]
+		password = request.form["password"]
+		conn = sqlite3.connect(app.db)
+		queryResult = conn.execute("SELECT password FROM users WHERE username = ?", (username,)).fetchone()
 
-@app.route("/logout")
-def logout():
-	session.pop("loggedIn")
-	return redirect(url_for("index"))
+		if queryResult is not None and password == queryResult[0]:
+			session["loggedIn"] = True
+			return redirect(url_for("index"))
+		else:
+			return "Login failed."
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
@@ -37,12 +47,17 @@ def register():
 		return render_template("register.html")
 
 	username = request.form["username"]
-	password = request.form["username"]
+	password = request.form["password"]
 	passwordRetype = request.form["passwordRetype"]
 
-	conn = sqlite3.connect("userData.sql")
-	if password == passwordRetype:
-		conn.cursor().execute("INSERT INTO users values('Trill', 'Son', ?, ?)", (username, password,))
+	conn = sqlite3.connect(app.db)
+	queryResult = conn.execute("SELECT * FROM users WHERE username = ?", (username,) ).fetchone()
+
+	if queryResult is not None:
+		return "Username taken."
+	elif password == passwordRetype:
+		conn = sqlite3.connect(app.db)
+		conn.execute("INSERT INTO users values(?, ?)", (username, password,))
 		conn.commit()
 		return redirect(url_for("index"))
 	else:
