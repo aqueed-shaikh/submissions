@@ -18,4 +18,3 @@ def regisauth(username, password):
     except:
         db.users.insert({'username':username, 'password':password})
         return True
-
