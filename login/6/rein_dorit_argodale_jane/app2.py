@@ -50,13 +50,10 @@ def login():
 
 @app.route("/logout")
 def logout():
-<<<<<<< HEAD
-    session.pop('username')
+    if "username" in session:
+        session.pop('username')
     return redirect(url_for("login"))
-=======
-    session.pop("username", None)
-    return 'See you again! <br> <br> <a href="/login">Come back</a>'
->>>>>>> 2c16f23f0b0b27295f63b383f303067d94b435ef
+
 
 if __name__=="__main__":
     app.debug = True
