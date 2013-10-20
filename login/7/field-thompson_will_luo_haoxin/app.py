@@ -2,28 +2,10 @@
 
 import auth
 from flask import Flask
-import flask.ext.shelve
-from flask.ext.shelve import get_shelve, init_app
 from flask import render_template, session, request, redirect
 
 app = flask.Flask(__name__)
-# Configuring shelve:
-app.config['SHELVE_FILENAME'] = 'users.dat'
-app.config['SHELVE_WRITEBACK'] = True
-app.secret_key = 'HEREISAVERYSECRETKEY'
 
-init_app(app)
-
-# How logins are stored (currently):
-# shelve database has usernames for keys
-# stored under each username is the password
-
-# checks username against password
-#def auth.authenticate(u, p):
-#    db = get_shelve()
-#    return u in db and db[u] == p
-
-#need a more interesting homepage
 @app.route('/')
 def home():
     if 'username' in session:
@@ -75,7 +57,7 @@ def setpass():
         if request.method == 'GET':
             return render_template('setpass.html', user=session['username'])
         elif request.method == 'POST':
-            auth.setpass(session['username'], request.form['password'])
+            auth.set_pass(session['username'], request.form['password'])
     else:
         return redirect('/')
     
