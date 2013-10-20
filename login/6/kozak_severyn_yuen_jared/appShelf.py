@@ -25,12 +25,12 @@ def login():
 	if request.method == "GET":
 		return render_template("login.html")
 
-	Username = request.form["Username"].encode("ascii", "ignore")
-	Password = request.form["Password"].encode("ascii", "ignore")
+	username = request.form["username"].encode("ascii", "ignore")
+	password = request.form["password"].encode("ascii", "ignore")
 	users = shelve.get_shelve()
 
-	if Username in users:
-		if sha512(Password).hexdigest() == users[Username]:
+	if username in users:
+		if sha512(password).hexdigest() == users[username]:
 			session["loggedIn"] = True
 			return redirect(url_for("index"))
 		return "Wrong credentials."
@@ -42,17 +42,17 @@ def register():
 		return render_template("register.html")
 
 	users = shelve.get_shelve()
-	Username = request.form["Username"].encode("ascii", "ignore")
-	Password = request.form["Password"].encode("ascii", "ignore")
-	PasswordRetype = request.form["PasswordRetype"].encode("ascii", "ignore")
+	username = request.form["username"].encode("ascii", "ignore")
+	password = request.form["password"].encode("ascii", "ignore")
+	passwordRetype = request.form["passwordRetype"].encode("ascii", "ignore")
 
-	if Password != PasswordRetype:
-		return "Password mismatch."
+	if password != passwordRetype:
+		return "password mismatch."
 
-	if Username in users:
-		return "Username already exists!"
+	if username in users:
+		return "username already exists!"
 
-	users[Username] = sha512(Password).hexdigest()
+	users[username] = sha512(password).hexdigest()
 	return "Success."
 
 @app.route("/vault")

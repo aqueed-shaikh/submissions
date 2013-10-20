@@ -5,19 +5,19 @@ import sqlite3
 def work():
     acc = sqlite3.connect('accounts.db')
     try:
-        acc.execute("create table accounts(username text, password text)")
+        acc.execute("create table accounts(username text, password text, security text, answer text)")
     except:
         pass
     return acc
 
 
-def register(username,password):
+def register(username,password,security,answer):
     acc = work()
     chk = acc.execute("select username from accounts where username = ?", [username] )
     chk =  len(chk.fetchall())
     print chk
     if(chk == 0):
-        acc.execute("insert into accounts(username, password) values(?,?)", [username,password]) 
+        acc.execute("insert into accounts(username, password,security,answer) values(?,?,?,?)", [username,password,security,answer]) 
         acc.commit()
         return True
     else:

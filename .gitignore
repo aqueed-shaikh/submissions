@@ -1,4 +1,5 @@
+# vim swp files
+*.swp
+
+# compiled python
 *.pyc
-.DS_Store
-*.yml
-*.egg

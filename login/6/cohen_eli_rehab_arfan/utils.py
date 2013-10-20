@@ -1,35 +1,19 @@
-from flask import Flask
-from flask import request, render_template, redirect, session, url_for
-import sqlite3
+from pymongo import MongoClient
 
-def addUser(user, pword):
-    data = sqlite3.connect('users.db')
-    ul = data.execute("SELECT * FROM users WHERE username = '%s'" % user)
-    result = []
-    for line in ul:
-        result.append(line)
-    if result:
-        return """Username exists in the database!"""        
-    else:
-        data.execute("INSERT INTO users VALUES ('%s','%s')" % (user, pword))
-        session["username"] = user
-    data.commit()
+connection = MongoClient()
+db = connection['users']
 
-def checkUser(user, pword):
-    data = sqlite3.connect('users.db')
-    ul = data.execute("SELECT username FROM users")
-    ulist = []
-    for line in ul:
-        ulist.append(line)
-    pl = data.execute("SELECT password FROM users")
-    plist = []
-    for line in pl:
-        plist.append(line)
-    print (ulist)
-    if ulist.count(user) == 0:
-        return False
-    elif plist[ulist.index(user)] != pword: 
-        return False
+def addUser(username, password):
+    if (db.users.find_one({"username": username}, fields = {"_id": False})):
+        return "Username and password already exists. Please try again."
     else:
-        session["username"] = user
+        db.users.insert({"username":username, "password":password})
+
+
+def checkUser(username, password):
+    if (db.users.find({'username':username}, {'password':password})):
         return True
+    else:
+        return False
+    
+        

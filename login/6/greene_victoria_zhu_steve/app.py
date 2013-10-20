@@ -1,42 +1,11 @@
 #!/usr/bin/python
 
 from flask import Flask, render_template, url_for, redirect, request, session
-import sqlite3, random
+from random import randint
+from sqlauth import *
 
 app = Flask(__name__)
 app.secret_key = 'WOW SUPER SECRET KEY!!!!!!!!!!!!!!'
-env = app.jinja_env
-
-con = sqlite3.connect('sqldata.db')
-with con:
-	con.cursor().execute('CREATE TABLE IF NOT EXISTS Users(id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, password TEXT NOT NULL)')
-
-def print_tables():
-	cur = sqlite3.connect('sqldata.db').cursor()
-	cur.execute('SELECT name FROM sqlite_master WHERE type="table"')
-	print cur.fetchall()
-
-def get_users():
-	cur = sqlite3.connect('sqldata.db').cursor()
-	cur.execute('SELECT * FROM Users')
-	return cur.fetchall()
-
-def create_user(username, password):
-	con = sqlite3.connect('sqldata.db')
-	with con:
-		cur = con.cursor()
-		cur.execute('INSERT INTO Users(username, password) VALUES("%s", "%s")' % (username, password))
-
-def username_exists(username):
-	cur = sqlite3.connect('sqldata.db').cursor()
-	cur.execute('SELECT password FROM Users WHERE username = "%s" LIMIT 1' % username)
-	return cur.fetchone() != None
-
-def validate_user(username, password):
-	cur = sqlite3.connect('sqldata.db').cursor()
-	cur.execute('SELECT password FROM Users WHERE username = "%s" LIMIT 1' % username)
-	p = cur.fetchone()
-	return p != None and p[0] == password
 
 def logged_in():
 	return 'username' in session and session['username'] != None
@@ -65,7 +34,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('username', None)
-    return redirect('/')
+    return redirect(url_for('home'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -87,23 +56,30 @@ def register():
 
 @app.route('/page')
 def page():
+	if not 'username' in session or not username_exists(session['username']):
+		redirect(url_for('logout'))
 	if logged_in():
-		a = random.randint(0, 2)
+		a = randint(0, 2)
 		if a == 0:
-			return render_template('page1.html', title='Hello there!')
+			title='Hello there!'
+			answer='Did you know that the bikini was invented in ancient Rome?'
 		else:
-			return render_template('page2.html', title='Want to hear a joke?')
+			title='Why did the football coach go to the bank?'
+			answer='To get his quarterback!!!'
+		return render_template('page.html', title=title, answer=answer)
 	return redirect(url_for('login'))
 
 @app.route('/accounts')
 def accounts():
-	users = get_users()
+	users = get_users_as_list()
 	a = ""
 	for user in users:
-		a += '|'.join(str(i) for i in user) + "<br>"
+		a += user + "<br>"
 	return a
 
 if __name__ == '__main__':
-	env.line_statement_prefix = '='
+	init_auth(app)
+	
+	app.jinja_env.line_statement_prefix = '='
 	app.debug = True
 	app.run(host='0.0.0.0')
