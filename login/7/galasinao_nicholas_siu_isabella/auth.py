@@ -23,7 +23,7 @@ def exists(username):
 def changePw(oldPw, newPw):
     database = client.userdb
     collection = database.usercol
-    collection.update({pw:oldPw}, {pw:newPw})
+    collection.update({pw:oldPw}, {$set: {pw:newPw}})
 
 def authenticate(username,password):
     database = client.userdb
