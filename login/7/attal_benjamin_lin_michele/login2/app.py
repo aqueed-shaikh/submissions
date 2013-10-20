@@ -28,7 +28,7 @@ def login():
     elif request.method == 'GET':
         return render_template('login.html')
     username = request.form['username'].lower()
-    password = request.form['password'].lower()
+    password = request.form['password']
     if auth.authenticate(username, password):
         session['username'] = username
         return redirect(url_for('home'))
@@ -47,7 +47,7 @@ def register():
                                     message=request.args['message'])
         return render_template('register.html')
     username = request.form['username'].lower()
-    password = request.form['password'].lower()
+    password = request.form['password']
     if auth.exists(username):
         return render_template('register.html',
                                 message='Username already in use')
