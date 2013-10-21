@@ -20,8 +20,10 @@ def checkLogin(username, password):
         if ((c.info.find({'username': username} , {"password" : password}))):
             ans = True;
             return ans;
-        else:
+        else: 
             return ans;
+    else:
+        return ans;
 
 def addLogin(username, password): 
     if checkUsername(username) == False:
