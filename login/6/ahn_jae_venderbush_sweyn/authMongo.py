@@ -1,17 +1,16 @@
 import pymongo
 from pymongo import MongoClient
 client = MongoClient('db.stuycs.org')
-db=connection.admin
+db=client.admin
 db.authenticate('softdev','softdev')
-c = client
-c.createcollection("info")
+db.createcollection("info")
 #collection = db.collection_names()
 
 def checkUsername(username):
     ans = False; 
-    if ((c.info.find_one({'username':username}), fields = {"_id": False}))
+    if ((c.info.find_one({'username':username}), fields == {"_id": False})):
         return ans;
-    else 
+    else: 
         ans = true;
         return ans;
 
