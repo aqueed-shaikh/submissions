@@ -37,6 +37,17 @@ def login():
         message='Please check your username and password again')
 
 
+@app.route('/change', methods=['GET', 'POST'])
+def change():
+    if request.method == 'GET':
+        return render_template('change.html')
+    username = request.form['username']
+    password = request.form['password']
+    newpass = request.form['newpass']
+    if auth.authenticate(username, password):
+        auth.change(username, newpass);
+                      
+        
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if 'username' in session:
