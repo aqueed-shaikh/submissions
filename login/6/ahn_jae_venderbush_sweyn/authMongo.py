@@ -3,7 +3,7 @@ from pymongo import MongoClient
 client = MongoClient('db.stuycs.org')
 db=client.admin
 db.authenticate('softdev','softdev')
-db.createcollection("info")
+#db.createcollection("info")
 #collection = db.collection_names()
 
 def checkUsername(username):
