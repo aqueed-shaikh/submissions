@@ -1,24 +1,19 @@
 from pymongo import MongoClient
 
-def connect():
-    connection = MongoClient()
-    return connection
+connection = MongoClient()
+db = connection['users']
 
 def checkuser(username, password):
-    ans = 0;
-    a = login.find_one({"username": username}, fields ={"_id": False})
-    if not a:
-        ans = 1
-
-    if password != a["password"]:
-        ans = 2
-
-    return ans
+    if (db.users.find_one({"username": username}, fields ={"_id": False})):
+        return 0
+    else:
+        return 1
+        
+    
 
 def adduser(username, password):
-    ans = True
-    a = login.find_one({"username": username}, fields ={"_id": False})
-    if a:
-       ans = False
-    login.insert({"username": username, "password": password})
-    return ans
+    if not (db.users.find_one({"username": username}, fields ={"_id": False})):
+        db.users.insert({'username': username, 'password' : password})
+        return 0
+    else:
+        return 1
