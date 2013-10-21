@@ -2,14 +2,18 @@
 
 from flask import Flask
 from flask import session, redirect, url_for, render_template, request
-from flask.ext import shelve
-import auth
-import sqlite3
+from pymongo import MongoClient
+
+
 
 app = Flask(__name__)
 #app.config['SHELVE_FILENAME'] = 'users.db'
 #shelve.init_app(app)
 
+
+client = MongoClient()
+db = client.db
+users = db.users
 
 
 @app.route("/")
@@ -18,7 +22,6 @@ def index():
 
 @app.route("/login", methods=['POST','GET'])
 def login():
-    connection = sqlite3.connect("users.db")
 
     if request.method == 'GET':
         return render_template('login.html')
@@ -27,8 +30,9 @@ def login():
         pwd = str(request.form["psswrd"])
         #db = shelve.get_shelve("c")
         #info = connection.execute("select usernames.username, usernames.password from usernames where usernames.username == %s", usr);
-        usrn = connection.execute(("select usernames.username from usernames where usernames.username = '%s'" %(user)));
-        pswd = connection.execute(("select usernames.password from usernames where usernames.username = '%s'" %(user)));
+        dbEntry = users.find({'username':user})
+        usrn = dbEntry['username']
+        pswd = dbEntry['password']
         #if db.has_key(user) and db[user] == pwd:
         if usrn == None:
             return  render_template("login.html", error="username or password not recognized")
@@ -44,16 +48,13 @@ def login():
 
 @app.route('/register', methods = ['POST','GET'])
 def register():
-    connection = sqlite3.connect("users.db")
     if request.method == 'GET':
         return render_template('register.html')
     else:
         usr = str(request.form['usr'])
         pwd = str(request.form['pwd'])
-        #db = shelve.get_shelve("c")
-        info = connection.execute(("select usernames.username, usernames.password from usernames where usernames.username = '%s'" %(usr)));
         
-        if info != None:
+        if users.find({'username':usr}).count() != 0:
             return render_template('register.html',
                                    error = 'Username already exists')
         else:
@@ -67,4 +68,4 @@ def register():
 
 if (__name__ == "__main__"):
     app.debug = True
-    app.run(host = "0.0.0.0", port = 5005)
+    app.run(host = "0.0.0.0")
