@@ -1,8 +1,0 @@
-def addUser(user, pword):
-    data = shelve.get_shelve()    
-    if user in data:
-        return """Username exists in the database!"""        
-    else:
-        data[user] = pword
-        session["username"] = username
-        return redirect("/login")

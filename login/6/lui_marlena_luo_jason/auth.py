@@ -5,7 +5,7 @@ def setup():
     c.execute('create table if not exists users(username TEXT, password TEXT)')
     c.commit;
 
-def checkuser(username):
+def checkuser(username, password):
     ans = False;
     c = sqlite3.connect('users.db')
     data = c.execute("Select * from users WHERE username = ?", (username,))
@@ -17,7 +17,7 @@ def checkuser(username):
 def adduser(username, password):
     if checkeruser (username) == False:
         c = sqlite3.connect('users.db')
-        c.execute ('insert into users (username,password) values (?, ?)', (username password))
+        c.execute('insert into users(username, password) values(?, ?);', (username, password))
         c.commit()
         
 

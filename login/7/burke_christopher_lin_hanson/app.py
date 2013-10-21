@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import session, url_for, redirect, render_template, request
 from auth import adduser, authenticate
-import sqlite3
+
 
 app = Flask(__name__)
 app.secret_key='my secret key'
