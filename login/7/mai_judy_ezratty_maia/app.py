@@ -27,8 +27,8 @@ def register():
         return render_template("register.html", message = "")
     else: 
         userlist = shelve.get_shelve()
-        user = request.form["user"]
-        pw = request.form["pass"]
+        user = request.form["user"].encode("utf8")
+        pw = request.form["pass"].encode("utf8")
         if user in userlist:
             return render_template("register.html", message = "Username already taken.")
         else:
@@ -69,4 +69,4 @@ def logout():
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5004)

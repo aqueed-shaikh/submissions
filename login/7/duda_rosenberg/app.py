@@ -2,14 +2,20 @@
 
 from flask import Flask
 from flask import session, redirect, url_for, render_template, request
-from flask.ext import shelve
+from pymongo import MongoClient
+
 import auth
-import sqlite3
+
+
 
 app = Flask(__name__)
 #app.config['SHELVE_FILENAME'] = 'users.db'
 #shelve.init_app(app)
 
+
+client = MongoClient()
+db = client.db
+users = db.users
 
 
 @app.route("/")
@@ -18,7 +24,6 @@ def index():
 
 @app.route("/login", methods=['POST','GET'])
 def login():
-    connection = sqlite3.connect("users.db")
 
     if request.method == 'GET':
         return render_template('login.html')
@@ -27,8 +32,9 @@ def login():
         pwd = str(request.form["psswrd"])
         #db = shelve.get_shelve("c")
         #info = connection.execute("select usernames.username, usernames.password from usernames where usernames.username == %s", usr);
-        usrn = connection.execute("select usernames.username from usernames where usernames.username = '%s'", user);
-        pswd = connection.execute("select usernames.password from usernames where usernames.username = '%s'", user);
+        dbEntry = users.find_one({'username':user})
+        usrn = dbEntry['username']
+        pswd = dbEntry['password']
         #if db.has_key(user) and db[user] == pwd:
         if usrn == None:
             return  render_template("login.html", error="username or password not recognized")
@@ -44,16 +50,13 @@ def login():
 
 @app.route('/register', methods = ['POST','GET'])
 def register():
-    connection = sqlite3.connect("users.db")
     if request.method == 'GET':
         return render_template('register.html')
     else:
         usr = str(request.form['usr'])
         pwd = str(request.form['pwd'])
-        #db = shelve.get_shelve("c")
-        info = connection.execute("select usernames.username, usernames.password from usernames where usernames.username = '%s'", usr);
         
-        if info != None:
+        if users.find({'username':usr}).count() != 0:
             return render_template('register.html',
                                    error = 'Username already exists')
         else:
@@ -63,8 +66,21 @@ def register():
             return render_template("welcome.html",username=usr)
 
             
+@app.route('/reset',methods = ['POST','GET'])
+def reset():
+    if request.method == 'GET':
+        return render_template('reset.html')
+    else:
+        pwd = str(request.form['pwd'])
+        oldpwd = str(request.form['oldpwd'])
+        usr = str(request.form['usr'])
+        dbEntry = users.find_one({'username':usr})
+        if(dbEntry['password'] == pwd):
+            users.update({'username':usr},{'$set':{'password':pwd}})
+            return redirect('/welcome')
+        else: return render_template('reset.html')
 
 
 if (__name__ == "__main__"):
     app.debug = True
-    app.run(host = "0.0.0.0", port = 5005)
+    app.run(host = "0.0.0.0", port = 5001)

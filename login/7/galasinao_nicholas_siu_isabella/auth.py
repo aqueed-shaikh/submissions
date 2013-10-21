@@ -1,42 +1,27 @@
 #!/usr/bin/python
 
-import sqlite3
+from pymongo import MongoClient
 
-database = sqlite3.connect('names.db', check_same_thread = False)
-
-try:
-    database.execute('''
-    CREATE TABLE if not exists user(username text, password text)
-''')
-    database.commit()
-except:
-    pass
+client = MongoClient()
+db = client[logins]
 
 def adduser(username,password):
-    database = sqlite3.connect('names.db')
-    database.execute('''
-    INSERT INTO user(username,password) VALUES(?,?)
-''',[username,password])
-    
-    database.commit()
+    user = {'name':username, 'pw':password}
+    db.logins.insert(user)
 
 def exists(username):
     ans = False
-    database = sqlite3.connect('names.db')
-    u1 = database.execute('''
-SELECT username FROM user WHERE username=?
-''',[username])
-
-    if len(u1.fetchall()) != 0:
+    cursor = db.logins.find({'name':username})
+    if cursor.count() > 0:
         ans = True
     return ans
 
+def changePw(username, oldPw, newPw):
+    db.logins.update({'name':username}, {$set: {'pw':newPw}})
+
 def authenticate(username,password):
-    u1=database.execute('''
-SELECT username FROM user WHERE username=? and password=?
-    ''',[username,password])
-    
-    if len(u1.fetchall()) != 0:
+    cursor = db.logins.find({'name':username,'pw':password})
+    if cursor.count() > 0:
         return True
     else:
         return False

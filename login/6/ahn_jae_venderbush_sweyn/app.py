@@ -2,6 +2,7 @@ from flask import Flask
 
 from flask import session,url_for,request,redirect,render_template
 
+import authMongo
 import auth
 
 app = Flask(__name__)
