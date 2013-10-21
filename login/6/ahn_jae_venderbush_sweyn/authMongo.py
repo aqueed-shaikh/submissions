@@ -1,7 +1,5 @@
 import pymongo
 from pymongo import MongoClient
-#db.createcollection("info")
-#collection = db.collection_names()
 
 def checkUsername(username):
     client = MongoClient('db.stuycs.org')
@@ -33,7 +31,16 @@ def addLogin(username, password):
     db=client.admin
     db.authenticate('softdev','softdev')
     if not checkUsername(username) and not checkLogin(username, password):
-        db.info.insert ({'username':username}, {'password':password})
+        db.info.insert ({'username':username}, {'password':password}, {'count': 0})
+
     
         
         
+def increment(username):
+    if checkUsername(username):
+        c.info.find_one({'username':username}).update(count: count + 1);
+    else:
+        pass
+    
+        
+    
