@@ -10,7 +10,7 @@ app.secret_key="my secret key"
 #DEFAULT
 @app.route("/")
 def default():
-    redirect("/home")
+    return redirect("/home")
 
 @app.route("/home")
 def home():
