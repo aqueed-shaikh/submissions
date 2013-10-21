@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, url_for, redirect, request, session
 from random import randint
-from sqlauth import *
+from mongoauth import *
 
 app = Flask(__name__)
 app.secret_key = 'WOW SUPER SECRET KEY!!!!!!!!!!!!!!'

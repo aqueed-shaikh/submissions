@@ -1,33 +1,36 @@
-import sqlite3
+from pymongo import MongoClient
 
 def start():
-    c = sqlite3.connect("logins.db")
-    c.execute("create table if not exists users(username TEXT, password TEXT);")
-    c.commit()
+    c = MongoClient()
+    db = c["userlogin"]
+    logins = db["logins"]
 
 def usernameExists(user):
     ans = False
-    c = sqlite3.connect("logins.db")
-    q = "select * FROM users WHERE username = " + user
-    r = c.execute(q)
-    for line in r:
+    c = MongoClient()
+    db = c["logins"]
+    users = db["users"]
+    if db.logins.find({'user': user}, fields = {'_id': False}).count() > 0:
         ans = True
     return ans
 
 def check(username,password):
     ans = False
-    c = sqlite3.connect("logins.db")
-    q = "select * FROM users WHERE username = %s and password = %s"%(username,password)
-    r = c.execute(q)
-    for line in r:
+    c = MongoClient()
+    db = c["logins"]
+    users = db["users"]
+    if db.logins.find({'user': username, 'password': password}).count() > 0:
         ans = True
     return ans
 
+def changePass(username,password,newpassword):
+    if check(username,password):
+        db.logins.update({'user':username} {password = newpassword})
+
 def add(username,password):
-    c = sqlite3.connect("logins.db")
-    q = "insert into users values(%s,%s)"%(username,password)
-    c.execute(q)
-    c.commit()
+    c = MongoClient()
+    db = c["logins"]
+    db.logins.insert('user' : username,'password' : password)
 
 
 
