@@ -27,7 +27,7 @@ def register():
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
         users = shelve.get_shelve()
-        if users.has_key(username):
+        if (auth.usedUsername(users, username))
             return render_template("register.html")
         users[username] = password
         session["username"] = username
@@ -41,9 +41,9 @@ def login():
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
         users = shelve.get_shelve()
-        if not users.has_key(username):
+        if not auth.usedUsername(users, username):
             return 'Invalid username! <a href ="/login"> Please try again.</a>'
-        elif users[username] != password:
+        elif auth.check(users, username, password) :
             return 'Wrong password! <a href ="/login"> Please try again.</a>'
         session["username"] = username
         return redirect(url_for("home"))
