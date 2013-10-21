@@ -15,6 +15,22 @@ def home():
     else:
         return redirect("/login?errormessage="+"0")
 
+@app.route("/changepassword",methods=['GET','POST'])
+def changePassword():
+    if request.method == "GET":
+        return render_template("changepassword.html")
+    elif request.form['button'] == "Cancel":
+        return redirect(url_for('login'))
+    else:
+        username = request.form["username"].encode("ascii","ignore")
+        old = request.form["old"].encode("ascii","ignore")
+        new = request.form["new"].encode("ascii","ignore")
+        x=utils.changePassword(username,old,new)
+        if x == 1:
+            return render_template("register.html",error="Password must be at least 6 characters.")
+        session["username"] = username
+        return redirect("/")
+        
 @app.route("/login",methods=['GET','POST'])
 def login():
     if request.method == "GET":
