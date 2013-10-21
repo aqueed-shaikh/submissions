@@ -4,6 +4,8 @@ from flask import Flask
 from flask import session, redirect, url_for, render_template, request
 from pymongo import MongoClient
 
+import auth
+
 
 
 app = Flask(__name__)
@@ -30,7 +32,7 @@ def login():
         pwd = str(request.form["psswrd"])
         #db = shelve.get_shelve("c")
         #info = connection.execute("select usernames.username, usernames.password from usernames where usernames.username == %s", usr);
-        dbEntry = users.find({'username':user})
+        dbEntry = users.find_one({'username':user})
         usrn = dbEntry['username']
         pswd = dbEntry['password']
         #if db.has_key(user) and db[user] == pwd:
@@ -64,8 +66,21 @@ def register():
             return render_template("welcome.html",username=usr)
 
             
+@app.route('/reset',methods = ['POST','GET'])
+def reset():
+    if request.method == 'GET':
+        return render_template('reset.html')
+    else:
+        pwd = str(request.form['pwd'])
+        oldpwd = str(request.form['oldpwd'])
+        usr = str(request.form['usr'])
+        dbEntry = users.find_one({'username':usr})
+        if(dbEntry['password'] == pwd):
+            users.update({'username':usr},{'$set':{'password':pwd}})
+            return redirect('/welcome')
+        else: return render_template('reset.html')
 
 
 if (__name__ == "__main__"):
     app.debug = True
-    app.run(host = "0.0.0.0")
+    app.run(host = "0.0.0.0", port = 5001)
