@@ -11,11 +11,16 @@ from flask import render_template
 #from flask.ext import shelve
 import auth
 #import sqlite3
+from pymongo import MongoClient
 
 app = Flask(__name__)
 #app.config["SHELVE_FILENAME"] = "shelve.db"
 #shelve.init_app(app)
 app.secret_key = "key"
+
+client = MongoClient()
+db = client.db
+users = db.users
 
 @app.route("/")
 def Home():
@@ -26,22 +31,16 @@ def Home():
 
 @app.route("/Login",methods = ["POST", "GET"])
 def Login():
-     print request.method
      if "Username" in session:
           return redirect(url_for("Home"))
      elif request.method == "GET":
-          print "I got a GET"
           return render_template("Login.html")
      elif request.method == 'POST':
-          print  "I found a POST"
           User = request.form['Username']
-          print "I'm still at a POST"
           if auth.authenticate(User, request.form['Password']):
                session['Username'] = User
-               print "I authenticated a POST"
                return render_template("Home.html")
           else:
-               print "I am an invalid POST"
                return render_template("Login.html") 
           #Username = request.form["Username"].encode("ascii","ignore")
           #Password = request.form["Password"].encode("ascii","ignore")
