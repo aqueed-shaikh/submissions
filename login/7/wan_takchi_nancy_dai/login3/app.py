@@ -52,7 +52,7 @@ def login():
 
 @app.route("/account", methods = ['GET', 'POST'])
 def account():
-    if not 'user' in session:
+    if 'user' not in session:
         return redirect(url_for('login'))
     elif request.method == "GET":
         return render_template("account.html", message = "")
