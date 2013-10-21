@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import request, render_template, redirect, url_for, session
+from pymongo import MongoClient
+connection = MongoClient()
 import sqlite3
 import auths
 
@@ -51,6 +53,23 @@ def register():
            auths.add(username, password)
            return redirect(url_for("home"))
 
+
+#CHANGE PASSWORD
+@app.route("/change",methods = ['GET','POST'])
+def change():
+    if request.method == "GET":
+        return render_template("changepass.html", message = "Type in username, current password, and new password")
+    else:
+        username = request.form["username"]
+        password = request.form["currentPassword"]
+        newPassword1 = request.form["newPassword1"]
+        newPassword2 = request.form["newPassword2"]
+        if auths.check(username, password):
+            if newPassword1==newPassword2:
+                auths.changePass(username, password, newPassword1)
+                return redirect("/home")
+        else:
+            return redirect("/change", message = "username and password do not match or new password does not match")
 
 
 #POP THE USERNAME
