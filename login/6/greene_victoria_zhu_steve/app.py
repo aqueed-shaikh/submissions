@@ -8,6 +8,8 @@ app = Flask(__name__)
 app.secret_key = 'WOW SUPER SECRET KEY!!!!!!!!!!!!!!'
 
 def logged_in():
+	if not username_exists(session['username']):
+		session.pop('username', None)
 	return 'username' in session and session['username'] != None
 
 def get_form_value(key):
@@ -54,20 +56,34 @@ def register():
 		return redirect(url_for('page'))
 	return render_template('register.html', title='Register', error=error)
 
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+	if not logged_in():
+		return redirect(url_for('login'))
+
+	error = None
+	if request.method == 'POST':
+		password = get_form_value('password')
+		password_confirm = get_form_value('password-confirm')
+		if password != password_confirm:
+			error = 'The two passwords are not equal.'
+		else:
+			update_user(username, password)
+	return render_template('settings.html', title='Settings', error=error)
+
 @app.route('/page')
 def page():
-	if not 'username' in session or not username_exists(session['username']):
-		redirect(url_for('logout'))
-	if logged_in():
-		a = randint(0, 2)
-		if a == 0:
-			title='Hello there!'
-			answer='Did you know that the bikini was invented in ancient Rome?'
-		else:
-			title='Why did the football coach go to the bank?'
-			answer='To get his quarterback!!!'
-		return render_template('page.html', title=title, answer=answer)
-	return redirect(url_for('login'))
+	if not logged_in():
+		return redirect(url_for('login'))
+
+	a = randint(0, 2)
+	if a == 0:
+		title='Hello there!'
+		answer='Did you know that the bikini was invented in ancient Rome?'
+	else:
+		title='Why did the football coach go to the bank?'
+		answer='To get his quarterback!!!'
+	return render_template('page.html', title=title, answer=answer)
 
 @app.route('/accounts')
 def accounts():

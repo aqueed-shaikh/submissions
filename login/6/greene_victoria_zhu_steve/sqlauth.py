@@ -23,6 +23,12 @@ def create_user(username, password):
 		cur = con.cursor()
 		cur.execute('INSERT INTO Users(username, password) VALUES("%s", "%s")' % (username, password))
 
+def update_user(username, password):
+	con = sqlite3.connect('sqldata.db')
+	with con:
+		cur = con.cursor()
+		cur.execute('UPDATE Users SET password="%s" WHERE username="%s"'%(password, username))
+
 def username_exists(username):
 	cur = sqlite3.connect('sqldata.db').cursor()
 	cur.execute('SELECT password FROM Users WHERE username = "%s" LIMIT 1' % username)
@@ -33,8 +39,6 @@ def validate_user(username, password):
 	cur.execute('SELECT password FROM Users WHERE username = "%s" LIMIT 1' % username)
 	p = cur.fetchone()
 	return p != None and p[0] == password
-
-
 
 def print_tables():
 	cur = sqlite3.connect('sqldata.db').cursor()

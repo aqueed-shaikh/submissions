@@ -18,6 +18,10 @@ def get_users_as_list():
 def create_user(username, password):
 	get_shelve('c')[username] = password
 
+def update_user(username, password):
+	if username_exists(username):
+		create_user(username, password)
+
 def username_exists(username):
 	return username in get_shelve('c')
 

@@ -6,7 +6,7 @@ import auth
 app = Flask(__name__)
 app.secret_key="marleyandme"
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
     if "username" in session:
         return render_template("index.html",username=session["username"])
@@ -32,12 +32,22 @@ def register():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
+<<<<<<< HEAD
+        users = shelve.get_shelve()
+        if users.has_key(username):
+            return render_template("register.html")
+        users[username] = password
+        session["username"] = username
+        return redirect(url_for("home"))
+                    
+=======
         if (not auth.checkuser(username, password)):
             auth.adduser(username, password)
             return "You have created an account"
         else:
             return "User already exists"
 
+>>>>>>> 8742283e320300db62b5c976d1efef98362649af
 @app.route("/reset", methods = ['GET', 'POST'])
 def reset():
     session.pop("username", None)

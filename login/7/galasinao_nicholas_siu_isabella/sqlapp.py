@@ -2,11 +2,10 @@
 
 from flask import Flask, session, request, url_for, render_template, redirect
 import auth
-import pymongo
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key="magic"
-client = pymongo.MongoClient()
 
 @app.route("/")
 def home():
@@ -17,8 +16,10 @@ def home():
 
 @app.route("/register", methods=["POST","GET"])
 def register():
-    database = client.userdb
-    collection = database.usercol
+    database = sqlite3.connect('names.db')
+    database.execute('''
+    CREATE TABLE if not exists user(username text, password text)
+''')
     if request.method=="GET":
         return render_template("register.html")
     else:
@@ -35,8 +36,7 @@ def register():
             
 @app.route("/login", methods=["POST","GET"])
 def login():
-    database = client.userdb
-    collection = database.usercol
+    database = sqlite3.connect('names.db')
     if request.method=="GET":
         return render_template("login.html")
     else:
