@@ -8,7 +8,7 @@ db.authenticate('softdev','softdev')
 
 def checkUsername(username):
     ans = False; 
-    if ((c.info.find_one({'username':username}), fields == {"_id": False})):
+    if ((c.login_info.find_one({'username':username}), fields == {"_id": False})):
         return ans;
     else: 
         ans = true;
@@ -27,9 +27,17 @@ def checkLogin(username, password):
 
 def addLogin(username, password): 
     if checkUsername(username) == False:
-        c.info.insert ({'username':username}, {'password':password})
+        c.info.insert ({'username':username}, {'password':password}, {'count': 0})
     else: 
         print 'try another username'
     
         
         
+def increment(username):
+    if checkUsername(username):
+        c.login_info.find_one({'username':username}).update(count: count + 1);
+    else:
+        pass
+    
+        
+    
