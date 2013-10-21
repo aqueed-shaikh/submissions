@@ -1,9 +1,11 @@
 import pymongo
 from pymongo import MongoClient
 client = MongoClient('db.stuycs.org')
+db=connection.admin
+db.authenticate('softdev','softdev')
 c = client
 c.createcollection("info")
-#collection = logins.db 
+#collection = db.collection_names()
 
 def checkUsername(username):
     ans = False; 
