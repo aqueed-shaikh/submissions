@@ -1,14 +1,16 @@
 
-import sqlite3
-
-connection = sqlite3.connect("users.db")
+from pymongo import MongoClient
+client = MongoClient()
+users = client.db.users
 
 def addUser(usrn, pswd):
-    connection.execute("insert into usernames VALUES('%s','%s')", usrn, pswd)
+    users.insert{'username':usrn,'password':pswd}
 
 def authenticate(usrn, pswd):
-    u = ("select usernames.username from usernames where usernames.username = '%s'",usrn)
-    p = ("select usernames.password from usernames where usernames.username = '%s'",usrn)
+    if users.find({'username':usrn}).count() == 0: return False
+    dbEntry = users.find({'username':usrn})
+    u = dbEntry['username']
+    p = dbEntry['password']
     if u == None or p == None:
         return False
     elif p == pswd:
