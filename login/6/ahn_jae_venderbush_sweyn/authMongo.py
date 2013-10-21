@@ -36,11 +36,23 @@ def addLogin(username, password):
     
         
         
-def increment(username):
+def incrementCount(username):
+    client = MongoClient('db.stuycs.org')
+    db=client.admin
+    db.authenticate('softdev','softdev')
     if checkUsername(username):
-        c.info.find_one({'username':username}).update(count: count + 1);
-    else:
-        pass
+        account = db.info.find_one({'username':username})
+        account['count'] = account['count'] + 1
+        db.info.save(account)
+
+def getCount(username):
+    client = MongoClient('db.stuycs.org')
+    db=client.admin
+    db.authenticate('softdev','softdev')
+    if checkUsername(username):
+        account = db.info.find_one({'username':username})
+        return account['count']
+        
     
         
     
