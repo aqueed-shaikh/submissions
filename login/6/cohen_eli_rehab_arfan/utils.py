@@ -20,5 +20,16 @@ def checkUser(username, password):
         return True
     else:
         return False
-    
-        
+
+def changePwd(username, password, password2):
+    if (password.__len__() < 4):
+        return "short"
+    elif (password != password2):
+        return "match"
+    else:
+        db.users.update(
+            { 'username': username},
+            { '$set': { 'password': password} },
+            #{ multi: true }
+            )
+        return "good"  
