@@ -32,7 +32,17 @@ def register(username, password):
     else: 
         print "Success!"
         db.Users.insert({'Username' : username, 'Password' : password})
-        
+
+def changePassword(username,old,new):
+    client = MongoClient()    
+    db = client['userdata']
+    if authenticate(username,old) == 3:
+        print "kk"
+        if len(new)<6:
+            return 1
+        db.Users.update({'Username':username},{'$set': {'Password':new}})
 if __name__ == "__main__":
     register("jyin", "password")
     authenticate("jyin", "password")
+    changePassword("jyin","password","lalalala")
+    authenticate("jyin", "lalalala")
