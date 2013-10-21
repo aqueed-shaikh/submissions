@@ -46,7 +46,6 @@ def change():
     cpass = request.form['cpass']
     if auth.authenticate(username, oldpass):
         if newpass == cpass:
-            print username
             auth.change(username, newpass)
             return redirect(url_for('home'))
         return render_template('change.html',
