@@ -5,7 +5,10 @@ db = connection['users']
 
 def checkuser(username, password):
     if (db.users.find_one({"username": username}, fields ={"_id": False})):
-        return 0
+        if (db.users.find_one({"password": password}, fields ={"_id": False})):
+            return 0
+        else:
+            return 1
     else:
         return 1
         
