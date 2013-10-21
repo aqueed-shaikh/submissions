@@ -3,12 +3,21 @@
 		<h1>Register</h1>
 	</head>
 
+
 	<body>
-		<form method="POST">
+	  {% if error=="copy" %}Username already exists
+	  {% elif error=="short" %}Password must be at least 4 characters
+	  {% elif error=="match" %}Passwords do not match
+	  {% endif %}
+
+	        <form method="POST">
 	        Username: <input type="text" name="username"> </input>
   		Password: <input type="password" name="password"> </input>
+		Retype Password: <input type="password" name="password2"> </input>
   		<input type="submit" name="button" value="Submit"> </input>
- 		<input type="submit" name="button" value="cancel"> </input>
                 </form>
+
+	<a href="/login">Go back to login</a>
 	</body>
+
 </html>
