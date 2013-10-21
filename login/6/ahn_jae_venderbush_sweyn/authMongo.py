@@ -3,12 +3,12 @@ from pymongo import MongoClient
 client = MongoClient('db.stuycs.org')
 db=client.admin
 db.authenticate('softdev','softdev')
-#db.createcollection("info")
+db.createcollection("info")
 #collection = db.collection_names()
 
 def checkUsername(username):
     ans = False; 
-    if ((c.login_info.find_one({'username':username}), fields == {"_id": False})):
+    if ((c.info.find_one({'username':username}), fields == {"_id": False})):
         return ans;
     else: 
         ans = true;
@@ -35,7 +35,7 @@ def addLogin(username, password):
         
 def increment(username):
     if checkUsername(username):
-        c.login_info.find_one({'username':username}).update(count: count + 1);
+        c.info.find_one({'username':username}).update(count: count + 1);
     else:
         pass
     
