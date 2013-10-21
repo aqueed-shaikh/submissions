@@ -41,11 +41,12 @@ def login():
 def change():
     if request.method == 'GET':
         return render_template('change.html')
-    username = request.form['username']
-    password = request.form['password']
-    newpass = request.form['newpass']
-    if auth.authenticate(username, password):
-        auth.change(username, newpass);
+    elif request.method == 'POST':
+        username = request.form['username'].lower()
+        password = request.form['password']
+        newpass = request.form['newpass']
+        if auth.authenticate(username, password):
+            auth.change(username, newpass);
                       
         
 @app.route('/register', methods=['GET', 'POST'])
