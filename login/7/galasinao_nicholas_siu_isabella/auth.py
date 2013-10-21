@@ -1,35 +1,26 @@
 #!/usr/bin/python
 
-import pymongo
+from pymongo import MongoClient
 
-client = pymongo.MongoClient()
+client = MongoClient()
+db = client[logins]
 
 def adduser(username,password):
-    database = client.userdb
-    collection = database.usercol
-    user = {name:username, pw:password}
-    collection.insert(user)
+    user = {'name':username, 'pw':password}
+    db.logins.insert(user)
 
 def exists(username):
     ans = False
-    database = client.userdb
-    collection = database.usercol
-    cursor = collection.find({name:username})
-
+    cursor = db.logins.find({'name':username})
     if cursor.count() > 0:
         ans = True
     return ans
 
-def changePw(oldPw, newPw):
-    database = client.userdb
-    collection = database.usercol
-    collection.update({pw:oldPw}, {$set: {pw:newPw}})
+def changePw(username, oldPw, newPw):
+    db.logins.update({'name':username}, {$set: {'pw':newPw}})
 
 def authenticate(username,password):
-    database = client.userdb
-    collection = database.usercol
-    cursor = collection.find({name:username,pw:password})
-    
+    cursor = db.logins.find({'name':username,'pw':password})
     if cursor.count() > 0:
         return True
     else:

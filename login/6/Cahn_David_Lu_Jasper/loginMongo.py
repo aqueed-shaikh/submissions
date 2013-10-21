@@ -1,6 +1,15 @@
+#david
+
 from flask import Flask
 from flask.ext import shelve
 from flask import session,url_for,request,redirect,render_template
+
+from pymongo import MongoClient
+connection = MongoClient('db.stuycs.org')
+SQL_Users=connection.admin
+SQL_Users.authenticate('softdev','softdev')
+print (connection.database_names())
+import utilsMONGO
 
 app = Flask(__name__)
 app.secret_key="mysecretkey"
@@ -34,7 +43,6 @@ def welcome ():
 
 @app.route("/login",methods=['GET','POST'])
 def login():
-    my_users =  shelve.get_shelve('c')
     if request.method=="GET":
 	return render_template("login.html")
     else:
@@ -42,17 +50,17 @@ def login():
 	if button == 'Login':
             username = request.form['username'].encode ('ascii',"ignore")
 	    password = request.form['password'].encode ('ascii',"ignore")
-            if username in my_users and my_users [username]["password"] == password:
+            if utilsMONGO.authenticate(username,password) == 1:
                 session['username'] = username
                 return redirect("/success")
             else:
                 return redirect ("/login")
+                print 'login attempt failed. Try again.'
 	else:
 	    return redirect("/register")
         
 @app.route("/register",methods = ["GET","POST"])
 def register():
-    my_users = shelve.get_shelve('c')
     if request.method=="GET":
 	return render_template("register.html")
     else:
@@ -60,8 +68,8 @@ def register():
 	if button == "Submit":
 	    username = request.form['username'].encode ('ascii',"ignore")
 	    password = request.form['password'].encode ('ascii',"ignore")
-            if not username in my_users:
-                my_users[username]= {'password': password}
+            if utilsMONGO.userNameExist (username) == 0:
+                utilsMONGO.addUser (username, password)
                 print "Account Created"
                 return redirect("/login")
             else:

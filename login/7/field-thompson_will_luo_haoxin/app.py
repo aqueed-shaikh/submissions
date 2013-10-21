@@ -5,6 +5,7 @@ from flask import Flask
 from flask import render_template, session, request, redirect
 
 app = Flask(__name__)
+app.secret_key = "SECRET KEY"
 
 @app.route('/')
 def home():
@@ -35,7 +36,7 @@ def login():
             session['username'] = user
             return redirect('/')
         else:
-            return "<h2>Password/Login mismatch</h2>"
+            return "<h2>Password/Login mismatch</h2>" + render_template("login.html")
 
 
 @app.route('/logout')
@@ -57,10 +58,14 @@ def setpass():
         if request.method == 'GET':
             return render_template('setpass.html', user=session['username'])
         elif request.method == 'POST':
-            if auth.authenticate(request.form['username'],request.form['password']):
-                auth.set_pass(session['username'], request.form['npassword'])
+            if auth.authenticate(session['username'],request.form['password']):
+                if request.form['npassword'] == request.form['vpassword']:
+                    auth.set_pass(session['username'], request.form['npassword'])
+                    return redirect('/')
+                else:
+                    return "<h2>Passwords don't match</h2>" + render_template('setpass.html', user=session['username'])
             else:
-                return "<h2> incorrect password </h2>"
+                return "<h2> incorrect password </h2>" + render_template('setpass.html',user=session['username'])
     else:
         return redirect('/')
     
@@ -85,6 +90,9 @@ def future():
         return render_template('future.html', user=session['username'])
     return redirect("/")
 
+@app.route('/test')
+def test():
+    return auth.test()
 
 if __name__ == "__main__":
     app.debug = True

@@ -1,8 +1,6 @@
 #Made by Simon Chen and Derek Tang
 from flask import Flask
 from flask import session, url_for, request, redirect, render_template
-from pymongo import MongoClient
-import sqlite3
 import auth
 
 app = Flask(__name__)
@@ -78,8 +76,6 @@ def change():
         answer = request.form['answer']
         button = request.form['button']
         if button == "Submit":
-            #if accounts.has_key(username):
-               # return render_template("register.html", message = "There is already an account under your name.")
             if (password == '' or newpassword == '' or confirmnewpassword == '' or answer == ''):
                 return render_template("change.html", message = "Please fill empty fields")
             elif newpassword != confirmnewpassword:
@@ -100,13 +96,10 @@ def recover():
         answer = request.form['answer']
         button = request.form['button']
         if button == "Submit":
-            #if accounts.has_key(username):
-               # return render_template("register.html", message = "There is already an account under your name.")
             if (username == '' or answer == ''):
                 return render_template("recover.html", message = "Please fill empty fields")
-            else:
-                if(auth.recover(username,newpassword)):   
-                    return render_template("recover.html", message = "Your password: &s") % (auth.recover(username,newpassword))
+            else:   
+                return render_template("recover.html", message = auth.recover(username,security,answer))
         elif button == "Cancel":
             return render_template("recover.html")
 

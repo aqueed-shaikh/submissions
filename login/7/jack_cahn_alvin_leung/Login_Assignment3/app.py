@@ -8,7 +8,7 @@ from flask import request
 from flask import url_for,render_template
 from flask import session,request,redirect
 
-from auth import authenticate, adduser
+from auth import authenticate, adduser, changepass
 
 app = Flask(__name__)
 app.secret_key="secret_key"
@@ -79,21 +79,27 @@ def logout():
     session.pop('username',None)
     return redirect(url_for('login'))
 
-if __name__=="__main__":
-    app.debug=True
-    app.run(host="0.0.0.0",port=5005)
-
 @app.route("/changepw",methods=['GET','POST'])
 def changepw():
     if 'username' in session:
         if request.method == 'GET':
             return render_template('changepass.html',msg='')
         elif request.method == 'POST':
-            oldpw = request.form['oldpass'].encode('ascii','ignore')
-            newpw = request.form['newpass'].encode('ascii','ignore')
-            if changepass(session['username'],oldpw,newpw):
-                return redirect(url_for('login'))
-            else:
-                return render_template('changepass.html',msg='Incorrect password')
+            button = request.form['button']
+            if button == 'complete':
+                oldpw = request.form['oldpass'].encode('ascii','ignore')
+                newpw = request.form['newpass'].encode('ascii','ignore')
+                if changepass(session['username'],oldpw,newpw):
+                    return redirect(url_for('login'))
+                else:
+                    return render_template('changepass.html',msg='Incorrect password')
+            else: 
+                return redirect("/changepw")
     else:
         return redirect(url_for('login'))
+
+if __name__=="__main__":
+    app.debug=True
+    app.run(host="0.0.0.0",port=5005)
+
+

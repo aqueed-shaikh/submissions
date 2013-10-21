@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request, render_template, redirect, url_for, session
 from flask.ext import shelve
- 
+import auth2
 
 app=Flask(__name__)
 app.secret_key="key"
@@ -27,7 +27,7 @@ def register():
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
         users = shelve.get_shelve()
-        if users.has_key(username):
+        if (auth2.usedUsername(username)):
             return render_template("register.html")
         users[username] = password
         session["username"] = username
@@ -40,10 +40,9 @@ def login():
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
-        users = shelve.get_shelve()
-        if not users.has_key(username):
+        if not auth2.usedUsername(username):
             return 'Invalid username! <a href ="/login"> Please try again.</a>'
-        elif users[username] != password:
+        elif auth2.check(username, password) :
             return 'Wrong password! <a href ="/login"> Please try again.</a>'
         session["username"] = username
         return redirect(url_for("home"))
