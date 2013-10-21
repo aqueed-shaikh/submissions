@@ -32,8 +32,7 @@ def login():
     if auth.authenticate(username, password):
         session['username'] = username
         return redirect(url_for('home'))
-    return render_template(
-        'login.html',
+    return render_template('login.html',
         message='Please check your username and password again')
 
 
@@ -41,13 +40,21 @@ def login():
 def change():
     if request.method == 'GET':
         return render_template('change.html')
-    username = request.form['username']
-    password = request.form['password']
+    username = session['username']
+    oldpass = request.form['oldpass']
     newpass = request.form['newpass']
-    if auth.authenticate(username, password):
-        auth.change(username, newpass);
-                      
-        
+    cpass = request.form['cpass']
+    if auth.authenticate(username, oldpass):
+        if newpass == cpass:
+            print username
+            auth.change(username, newpass)
+            return redirect(url_for('home'))
+        return render_template('change.html',
+            message='Passwords do not match')
+    return render_template('change.html',
+        message='Check old password again')
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if 'username' in session:
@@ -55,15 +62,19 @@ def register():
     elif request.method == 'GET':
         if 'message' in request.args:
             return render_template('register.html',
-                                    message=request.args['message'])
+                message=request.args['message'])
         return render_template('register.html')
     username = request.form['username'].lower()
     password = request.form['password']
+    cpass = request.form['cpass']
     if auth.exists(username):
         return render_template('register.html',
-                                message='Username already in use')
-    auth.insert(username, password)
-    return redirect(url_for('home'))
+            message='Username already in use')
+    if password == cpass:
+        auth.insert(username, password)
+        return redirect(url_for('home'))
+    return render_template('register.html',
+        message='Passwords do not match')
 
 
 @app.route('/logout')

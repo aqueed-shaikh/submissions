@@ -17,5 +17,3 @@ def add_user(username,pw):
 
 def set_pass(username, pw):
     db.login.update({'username':username}, {"$set": {'pw':pw}}, upsert=False)
-    
-
