@@ -50,9 +50,9 @@ def change():
             auth.change(username, newpass)
             return redirect(url_for('home'))
         return render_template('change.html',
-            message='passwords do not match')
+            message='Passwords do not match')
     return render_template('change.html',
-        message='check old password again')
+        message='Check old password again')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -74,7 +74,7 @@ def register():
         auth.insert(username, password)
         return redirect(url_for('home'))
     return render_template('register.html',
-        message='passwords do not match')
+        message='Passwords do not match')
 
 
 @app.route('/logout')
