@@ -1,20 +1,20 @@
-import sqlite3
+from pymongo import MongoClient
 
 def loginauth(username, password):
-    c = sqlite3.connect('users.db')
+    c = MongoClient()
+    db = c['logindb']
     try:
-        r = c.execute("SELECT password FROM users WHERE username = ? and password = ?", (username,password))
-        if len(r.fetchall()) == 0:
-            return False
+        db.users.find({'username':username, 'password':password})
         return True
     except:
         return False
 
 def regisauth(username, password):
-    c = sqlite3.connect('users.db')
-    r = c.execute("SELECT username FROM login WHERE username = ?", (username))
-    if len(r.fetchall()) == 0:
-        c.execute("INSERT INTO login VALUES (?, ?)", (username, password))
-        return True
-    else:
+    c = MongoClient()
+    db = c['logindb']
+    try:
+        db.users.find({'username':username})
         return False
+    except:
+        db.users.insert({'username':username, 'password':password})
+        return True

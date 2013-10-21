@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import request, render_template, redirect, session, url_for
-import sqlite3
 import utils
 
 app = Flask(__name__)
@@ -21,8 +20,12 @@ def register():
     else:
         username = request.form["username"].encode("ascii", "ignore")
         password = request.form["password"].encode("ascii", "ignore")
-        utils.addUser(username, password)
-        return redirect("/login")
+        password2 = request.form["password2"].encode("ascii", "ignore")
+        a = utils.addUser(username, password, password2)
+        if (a == "good"):
+            return redirect("/login")
+        else:
+            return render_template("register.html", error = a)
         
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
@@ -32,9 +35,18 @@ def login():
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
         if (utils.checkUser(username, password)):
+            session["username"] = username
             return redirect("/")
         else:
-            return redirect("/register")
+            return redirect("/fail")
+
+@app.route("/fail")
+def fail():
+    return """
+<h1>Login failed</h1>
+
+<a href="/login">Try again</a>   <a href="/register">Register</a>
+"""
 
     
 @app.route("/logout")
@@ -50,16 +62,27 @@ def pi():
 <h1>FIRST 3 DIGITS OF PI!!!!!!!!!!!</h1>
  
 3.14
+
+<br>
+<br>
+<br>
+<a href="/">Go back to home</a>
 """
     else:
         return redirect("/login")
+
 
 @app.route("/windows")
 def windows():
     if "username" in session:
         return """
-<h1>REASONS TO BUY WINDOWS 8:<h1>
+<h3>COMPLETE LIST OF REASONS TO BUY WINDOWS 8:</h3>
 
+
+<br>
+<br>
+<br>
+<a href="/">Go back to home</a>
 """
     else:
         return redirect("/login")
