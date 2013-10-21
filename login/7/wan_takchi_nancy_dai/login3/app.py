@@ -1,33 +1,23 @@
 from flask import Flask, session, redirect, request, url_for, render_template
-import auth2
+import auth
 
-app3 = Flask(__name__)
-app3.secret_key = "secret key"
+app = Flask(__name__)
+app.secret_key = "secret key"
 
-@app3.route("/")
-@app3.route("/home")
+@app.route("/")
+@app.route("/home")
 def home():
     if 'user' in session:
-        return render_template("home.html")
+        return render_template("home.html", user = session['user']);
     else:
         return redirect(url_for('login'))
 
-@app3.route("/account", methods = ['GET', 'POST'])
-def account():
-    if request.form['button'].encode("utf8") == "Save":
-        if auth2.changePass( == True:
-            return render_template("account.html", message = "Success")
-        else:
-            return render_template("account.html", message = "Incorrect old password.")
-    else:
-        return render_template("account.html", message = "")
-
-@app3.route("/logout")
+@app.route("/logout")
 def logout():
     session.pop('user', None)
     return redirect(url_for('login'))
 
-@app3.route("/register", methods = ['GET', 'POST'])
+@app.route("/register", methods = ['GET', 'POST'])
 def register():
     if 'user' in session:
         return redirect(url_for('home'))
@@ -36,14 +26,14 @@ def register():
     else:
         button = request.form['button'].encode("utf8")
         if button == "Register":
-            if auth2.register(request.form['user'], request.form['pass']) == True:
+            if auth.register(request.form['user'], request.form['pass']) == True:
                 return redirect(url_for('home'))
             else:
-                return render_template("register.html", message = "User exists already. Please login.")
+                return render_template("register.html", message = "User already exists. Please login.")
         else:
-            return redirect(url_for('login'))
-
-@app3.route("/login", methods = ['GET', 'POST'])
+            return render_template("register.html", message = "")
+        
+@app.route("/login", methods = ['GET', 'POST'])
 def login():
     if 'user' in session:
         return redirect(url_for('home'))
@@ -54,12 +44,28 @@ def login():
         pw = request.form['pass']
         if user == "" or pw == "":
             return render_template("login.html", message = "Please enter your username and password.")
-        elif auth2.login(user, pw) == True:
+        elif auth.login(user, pw) == True:
             session['user'] = user
             return redirect(url_for('home'))
         else:
             return render_template("login.html", message = "Invalid username and password combination. Usernames and passwords are case sensitive. Please try again.")
 
+@app.route("/account", methods = ['GET', 'POST'])
+def account():
+    if not 'user' in session:
+        return redirect(url_for('login'))
+    elif request.method == "GET":
+        return render_template("account.html", message = "")
+    else:
+        user = session['user']
+        old = request.form['old']
+        new = request.form['new']
+        if auth.changePass(user, old, new) == True:
+            return render_template("account.html", message = "Password changed successfully.")
+        else:
+            return render_template("account.html", message = "Unsuccessful. You entered an incorrect password.")
+
+
 if __name__ == "__main__":
-    app3.debug = True
-    app3.run(host = "0.0.0.0", port = 5005)
+    app.debug = True
+    app.run()

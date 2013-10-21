@@ -15,8 +15,11 @@ def get_users_as_list():
 def create_user(username, password):
 	pass
 
+def update_user(username, password):
+	pass
+
 def username_exists(username):
 	pass
 
 def validate_user(username, password):
-	
+	pass

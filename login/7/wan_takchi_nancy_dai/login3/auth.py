@@ -10,14 +10,15 @@ def register(user, pw):
         return True
     
 def checkuser(user):
-    try
+    try:
         db.login.find({'user':user}) #don't allow same username
         return True
     except: 
         return False
 
 def changePass(user, pw, npw):
-    #db.login.update({'user':user, {$set: {'pass':npw}}})
+    if login(user,pw):
+        db.login.update({'user':user}, {$set: {'pass':npw}})
     
 def login(user, pw):
     try
