@@ -27,6 +27,7 @@ def register():
         button = request.form['button'].encode("utf8")
         if button == "Register":
             if auth.register(request.form['user'], request.form['pass']):
+                session['user'] = request.form['user']
                 return redirect(url_for('home'))
             else:
                 return render_template("register.html", message = "User already exists. Please login.")
