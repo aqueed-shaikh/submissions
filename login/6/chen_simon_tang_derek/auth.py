@@ -1,41 +1,51 @@
 from flask import Flask
 from flask import session, url_for, request, redirect, render_template
-import sqlite3
+from pymongo import MongoClient
 
 def work():
-    acc = sqlite3.connect('accounts.db')
+    client = MongoClient()
     try:
-        acc.execute("create table accounts(username text, password text, security text, answer text)")
+        db = client["accounts"]
     except:
         pass
-    return acc
+    return db
 
 
 def register(username,password,security,answer):
-    acc = work()
-    chk = acc.execute("select username from accounts where username = ?", [username] )
-    chk =  len(chk.fetchall())
+    db = work()
+    chk = db.accounts.find_one({'username':username})
     print chk
-    if(chk == 0):
-        acc.execute("insert into accounts(username, password,security,answer) values(?,?,?,?)", [username,password,security,answer]) 
-        acc.commit()
-        return True
+    if(chk == None):
+       db.accounts.insert({'username':username,'password':password,'security':security,'answer':answer})
+       return True
     else:
         return False
    
 
 def authenticate(username,password):
-    acc = work()
-    user = acc.execute("select username from accounts where username = ?", [username] )
-    if(len(user.fetchall()) == 0):
+    db = work()
+    user = [x for x in db.accounts.find({'username':username,'password':password},fields={'_id':False})]
+    if (len(user) == 0):
         return False
-    user = acc.execute("select username from accounts where username = ?", [username] )
-    user =  user.fetchone()[0]
-    print user
-    passw = acc.execute("select password from accounts where username = ?", [username])
-    passw = passw.fetchone()[0]
-    if username == user and password == passw:
+    user =  user[0]
+    if username == user['username'] and password == user['password']:
         return True
     else:
         return False
 
+
+def change(username,newpassword):
+    db = work()
+    db.accounts.update({'username':username},{'$set':{'password':newpassword}})
+    return True
+
+
+
+def recover(username,security,answer):
+    db = work()
+    user = [x for x in db.accounts.find({'username':username},fields={'_id':False})]
+    user = user[0]
+    if(answer == user['answer'] and security == user['security']):
+        return ("Your password is: " + user['password'])
+    else:
+        return ("Your username and security answer do not match. Please try again.")

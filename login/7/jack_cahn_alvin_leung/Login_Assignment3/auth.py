@@ -4,26 +4,33 @@
 #This is Jack Cahn and Alvin Leung's Project
 
 from pymongo import MongoClient
-
-client = MongoClient()
-db = client['jackalvinlogin']
+connection = MongoClient('db.stuycs.org')
+db=connection.admin
+db.authenticate('softdev','softdev')
 
 def adduser(username,password): 
     if authenticateRegister(username): 
         return False
     else: 
-        db.logins.insert({'username':username,
-                          'password':password})
+        db.JackAlvin.insert({'username':username,'password':password})
         return True; 
 
 def authenticate(username,password):
-    users = [user for user in db.logins.find({'username':username,'password':password},
-                                             fields={'_id':False,'username':True})]
-    return len(users) != 0
+    users = db.JackAlvin.find({'username':username,'password':password},
+                              fields={'_id':False})
+    return len([user for user in users]) != 0
 
 def authenticateRegister(username):
-    users = [user for user in db.logins.find({'username':username},
-                                             fields={'_id':False,'username':True})]
-    return len(users) != 0
+    users = db.JackAlvin.find({'username':username},
+                                             fields={'_id':False})
+    return len([user for user in users]) != 0
 def changepw(username,oldpw,newpw):
-    return True #TODO: Write the change password code
+    users = db.JackAlvin.find({'username':username,'password':oldpw},
+                              fields={'_id':False})
+
+    if (len([user for user in users]) == 0):
+        return false
+    else: 
+        db.JackAlvin.remove({'username':username,'password':oldpw})
+        db.JackAlvin.insert({'username':username,'password':newpw})
+        return True

@@ -19,4 +19,4 @@ def authenticate(username, password):
     return len([u for u in user]) > 0
 
 def change(username, newpass):
-    db.login.update({"username":username}, {$set: {"password":newpass}})
+    db.login.update({"username":username}, {'$set': {"password":newpass}})
