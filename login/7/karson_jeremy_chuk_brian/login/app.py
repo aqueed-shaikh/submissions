@@ -52,7 +52,7 @@ select users.username, users.password from users where users.username = ?
 and users.password = ?
 """
             cursor = connection1.execute(q, (username,password)) 
-            results = cursor.fetchall()
+            results = [line for line in cursor]
             if len(results) == 0:
                 return redirect(url_for('login'))
 ##            #if s.has_key(username) and s["%s"%(username)] == password:
@@ -60,7 +60,7 @@ and users.password = ?
                 session["username"] = username
                 #               s.close()
                 connection1.close()
-
+                
                 return redirect('/madlib')
 #            else:
  #               return redirect('/login')
@@ -72,7 +72,7 @@ and users.password = ?
 #breakline~~~~~~~~~~logoutcode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @app.route("/logout")
 def logout(): #This page just pops you from the session
-    session.pop('username')
+    session.pop('username', None)
     return redirect("login")
 #breakline~~~~~~~~~~registercode~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
 @app.route("/register", methods=['GET','POST'])
@@ -103,8 +103,10 @@ def register():
             #s.close()
             q = "INSERT INTO users VALUES(?, ?)"
             connection1.execute(q,(_user,_pass))
+            connection1.commit()
             connection1.close()
-            return redirect ("/madlib")
+#            session['username'] = username
+            return redirect ("/login")
         elif button=="reset":
             return redirect ("/register")
         else:
