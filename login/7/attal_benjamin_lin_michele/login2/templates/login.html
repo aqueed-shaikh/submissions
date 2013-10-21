@@ -1,23 +1,25 @@
 <html>
-<head>
-  <script type="text/javascript">
-    {% if message %}
-      function notify() {
-        alert("{{message}}");
-      };
-      window.onload = notify;
-    {% endif %}
-  </script>
-  <title>Login</title>
-</head>
-<h2>Login</h2>
-<form method=POST>
-  Username:
-  <input type=text name=username>
-  Password:
-  <input type=password name=password>
-  <input type=submit>
-</form>
-
-<a href="/register">Register</a>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../static/css/login.css">
+        <script type="text/javascript">
+            {% if message %}
+                function notify() {
+                    alert("{{message}}");
+                };
+                window.onload = notify;
+            {% endif %}
+        </script>
+        <title>Login</title>
+    </head>
+    <body>
+        <h2>Login</h2>
+        <a href="/register">Register</a>
+        <form method=POST>
+            <div class=description>Username:</div>
+            <input type=text name=username>
+            <div class=description>Password:</div>
+            <input type=password name=password>
+            <input type=submit>
+        </form>
+    </body>
 </html>

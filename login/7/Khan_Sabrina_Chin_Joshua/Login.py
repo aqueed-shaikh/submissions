@@ -10,12 +10,17 @@ from flask import request
 from flask import render_template
 #from flask.ext import shelve
 import auth
-import sqlite3
+#import sqlite3
+from pymongo import MongoClient
 
 app = Flask(__name__)
 #app.config["SHELVE_FILENAME"] = "shelve.db"
 #shelve.init_app(app)
 app.secret_key = "key"
+
+client = MongoClient()
+db = client.db
+users = db.users
 
 @app.route("/")
 def Home():
@@ -24,19 +29,19 @@ def Home():
      else:
           return redirect(url_for("Login"))
 
-@app.route("/Login",methods = ["GET","POST"])
+@app.route("/Login",methods = ["POST", "GET"])
 def Login():
      if "Username" in session:
           return redirect(url_for("Home"))
      elif request.method == "GET":
-        return render_template("Login.html")
+          return render_template("Login.html")
      elif request.method == 'POST':
-        User = request.form['Username']
-        if auth.authenticate(User, request.form['password']):
-            session['Username'] = User
-            return render_template("Home.html")
-        else:
-            return render_template("Login.html") 
+          User = request.form['Username']
+          if auth.authenticate(User, request.form['Password']):
+               session['Username'] = User
+               return render_template("Home.html")
+          else:
+               return render_template("Login.html") 
           #Username = request.form["Username"].encode("ascii","ignore")
           #Password = request.form["Password"].encode("ascii","ignore")
           #Database = shelve.get_shelve()
@@ -48,25 +53,24 @@ def Login():
           #else: 
            #    return render_template("Register.html")
 
-@app.route("/Register", methods = ["GET","POST"])
+@app.route("/Register", methods=['GET','POST'])
 def Register():
      if "Username" in session:
           return redirect(url_for("Home"))
      elif request.method == "GET":
           return render_template("Register.html")
      elif request.method == "POST":
-          User = request.form["username"]
-          if not auth.authenticate(User, request.form['password']):
-               add_user(user, request.form["password"])
-               return render_template('Register.html')
-          else:
+          User = request.form["Username"]
+          if not auth.authenticate(User, request.form['Password']):
+               auth.adduser(User, request.form["Password"])
+               session["Username"] = User
           #Database = shelve.get_shelve()
           #if Username in Database:
           #     return render_template("Register.html")
           #else:
           #     Database[Username] = Password
-               session["Username"] = User
-               return redirect(url_for("Home"))
+              
+          return redirect(url_for("Home"))
 
 @app.route("/Logout")
 def Logout():
