@@ -20,5 +20,5 @@ def changepw(username, oldpw, newpw):
     if len([u for u in users]) == 0:
         return false
     else:
-    	db.users.update({'username': username}, {'$set': {'password': newpw}})
+        db.users.update({'username': username}, {'$set': {'password': newpw}})
 	
