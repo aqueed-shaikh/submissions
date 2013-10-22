@@ -17,6 +17,16 @@ def check(your_username, your_password):
        ans = True
     return ans
 
+def add(your_username, your_password):
+    connection = MongoClient()
+    db = connection['users']
+    db.users.insert({"username": your_username, "password": your_password})
+    return True
 
-    
+def changepassword(your_username, old_password, new_password):
+    connection = MongoClient()
+    db = connection['users']
+    if(check(your_username, old_password)):
+        db.users.update({"password": new_password})
+    return old_password
         
