@@ -18,9 +18,9 @@ app = Flask(__name__)
 #shelve.init_app(app)
 app.secret_key = "key"
 
-client = MongoClient()
-db = client.db
-users = db.users
+Client = MongoClient()
+db = Client.db
+Users = db.Users
 
 @app.route("/")
 def Home():
@@ -36,8 +36,12 @@ def Login():
      elif request.method == "GET":
           return render_template("Login.html")
      elif request.method == 'POST':
-          User = request.form['Username']
-          if auth.authenticate(User, request.form['Password']):
+         # User = request.form['Username']
+         # Password = request.form["Password"]
+          User = dbEntry["Username"]
+          Password = dbEntry["Password"]
+          dbEntry = Users.find_one({"Username":User})
+          if auth.authenticate(User, Password):
                session['Username'] = User
                return render_template("Home.html")
           else:
@@ -71,6 +75,21 @@ def Register():
           #     Database[Username] = Password
               
           return redirect(url_for("Home"))
+
+@app.route("/ChangePassword", methods=['GET','POST'])
+def ChangePassword():
+     if "Username" in session:
+          return redirect(url_for("Home"))
+     elif request.method == "GET":
+          return render_template("ChangePassword.html")
+     elif request.method == "POST":
+          User = request.form["Username"]
+          OldPassword = request.form["OldPassword"]
+          NewPassword = request.form["NewPassword"]
+          if auth.authenticate(User,OldPassword) and len(NewPassword) > 0:
+               OldPassword = NewPassword
+               session["Username"] = User
+          return redirect (url_for("Home"))
 
 @app.route("/Logout")
 def Logout():

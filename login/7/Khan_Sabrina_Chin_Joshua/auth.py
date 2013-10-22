@@ -1,7 +1,7 @@
 #import sqlite3
 
 from pymongo import MongoClient
-Client - MongoClient()
+Client= MongoClient()
 Users = Client.db.Users
 
 #def get_connection():
