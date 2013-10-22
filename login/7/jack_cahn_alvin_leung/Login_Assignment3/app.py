@@ -8,7 +8,7 @@ from flask import request
 from flask import url_for,render_template
 from flask import session,request,redirect
 
-from auth import authenticate, adduser
+from auth import authenticate, adduser, changepass
 
 app = Flask(__name__)
 app.secret_key="secret_key"
@@ -86,7 +86,7 @@ def changepw():
             return render_template('changepass.html',msg='')
         elif request.method == 'POST':
             button = request.form['button']
-            if button == 'login':
+            if button == 'complete':
                 oldpw = request.form['oldpass'].encode('ascii','ignore')
                 newpw = request.form['newpass'].encode('ascii','ignore')
                 if changepass(session['username'],oldpw,newpw):

@@ -1,9 +1,10 @@
 from pymongo import MongoClient
 
-connection = MongoClient('db.stuycs.org')
-db = connection.admin
-db.authenticate('softdev','softdev')
-db.login.insert({'user':'Admin', 'pass':'Admin'})
+#connection = MongoClient('db.stuycs.org')
+#db = connection.admin
+#db.authenticate('softdev','softdev')
+connection = MongoClient()
+db = connection.database
 
 def register(user, pw):
     if checkuser(user) == False:
@@ -19,7 +20,10 @@ def changePass(user, pw, npw):
     if login(user,pw):
         db.login.update({'user':user}, {'$set': {'pass':npw}})
         return True
+    else:
+        return False
+
 def login(user, pw):
-    users = [user for user in db.login.find({'user':user},
-                                            fields={'_id':False,'user':True})]
-    return len(users)!=0
+    users = [user for user in db.login.find({'user':user}, 
+                                           fields={'_id':False,'user':True, 'pass':True})]
+    return users[0]['pass'] == pw

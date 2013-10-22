@@ -24,13 +24,13 @@ def authenticateRegister(username):
     users = db.JackAlvin.find({'username':username},
                                              fields={'_id':False})
     return len([user for user in users]) != 0
-def changepw(username,oldpw,newpw):
+def changepass(username,oldpw,newpw):
     users = db.JackAlvin.find({'username':username,'password':oldpw},
                               fields={'_id':False})
 
     if (len([user for user in users]) == 0):
-        return false
+        return False
     else: 
-        db.JackAlvin.remove({'username':username,'password':oldpw})
-        db.JackAlvin.insert({'username':username,'password':newpw})
+        db.JackAlvin.update({'username':username},
+                            {'$set':{'password':newpw}})
         return True

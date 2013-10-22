@@ -1,23 +1,19 @@
-import pymongo
 from pymongo import MongoClient
-client = MongoClient('db.stuycs.org')
-db=client.admin
-db.authenticate('softdev','softdev')
-#db.createcollection("info")
-#collection = db.collection_names()
 
 def checkUsername(username):
+    client = MongoClient()
+    db=client.admin
     ans = False; 
-    if ((c.info.find_one({'username':username}), fields == {"_id": False})):
-        return ans;
-    else: 
-        ans = true;
-        return ans;
+    if (db.info.find_one({'username':username})):
+        ans = True;
+    return ans;
 
 def checkLogin(username, password): 
+    client = MongoClient()
+    db=client.admin
     ans = False;
     if checkUsername(username):
-        if ((c.info.find({'username': username} , {"password" : password}))):
+        if ((db.info.find_one({'username': username} , {"password" : password}))):
             ans = True;
             return ans;
         else: 
@@ -26,10 +22,27 @@ def checkLogin(username, password):
         return ans;
 
 def addLogin(username, password): 
-    if checkUsername(username) == False:
-        c.info.insert ({'username':username}, {'password':password})
-    else: 
-        print 'try another username'
+    client = MongoClient()
+    db=client.admin
+    if not checkUsername(username) and not checkLogin(username, password):
+        db.info.insert ({'username':username, 'password':password, 'count': 0})
+
+        
+def incrementCount(username):
+    client = MongoClient()
+    db=client.admin
+    if checkUsername(username):
+        account = db.info.find_one({'username':username})
+        account['count'] = account['count'] + 1
+        db.info.save(account)
+
+def getCount(username):
+    client = MongoClient()
+    db=client.admin
+    if checkUsername(username):
+        account = db.info.find_one({'username':username})
+        return account['count']
+
     
         
-        
+    

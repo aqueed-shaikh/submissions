@@ -5,10 +5,26 @@
 	</head>
 
 	<body>
+	  
+	  
 		<h4> Welcome to the Main Page! This is a simple Login Application Framework.</h4> 
 		<h2>Stuy CS Rules!</h2>
 		<h3>For the first 3 digits of pi(!) go <a href="/pi">here</a></h3>
 		<h3>For a complete list of reasons to buy windows 8, go <a href="/windows">here</a></h3>
+		
+		<h4>Change Password:</h4>
+		
+		{% if error=="good" %}Password successfully changed
+		{% elif error=="short" %}Password must be at least 4 characters
+		{% elif error=="match" %}Passwords do not match
+		{% endif %}
+
+	        <form method="POST">
+  		  Password: <input type="password" name="password"> </input>
+		  Retype Password: <input type="password" name="password2"> </input>
+  		  <input type="submit" name="button" value="Submit"> </input>
+                </form>
+
 		<a href="/logout"> Logout! </a><br>
 	</body>
 </html>
