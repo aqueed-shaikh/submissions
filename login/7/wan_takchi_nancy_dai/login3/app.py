@@ -26,7 +26,8 @@ def register():
     else:
         button = request.form['button'].encode("utf8")
         if button == "Register":
-            if auth.register(request.form['user'], request.form['pass']) == True:
+            if auth.register(request.form['user'], request.form['pass']):
+                session['user'] = request.form['user']
                 return redirect(url_for('home'))
             else:
                 return render_template("register.html", message = "User already exists. Please login.")
@@ -44,7 +45,7 @@ def login():
         pw = request.form['pass']
         if user == "" or pw == "":
             return render_template("login.html", message = "Please enter your username and password.")
-        elif auth.login(user, pw) == True:
+        elif auth.login(user, pw):
             session['user'] = user
             return redirect(url_for('home'))
         else:
@@ -60,7 +61,7 @@ def account():
         user = session['user']
         old = request.form['old']
         new = request.form['new']
-        if auth.changePass(user, old, new) == True:
+        if auth.changePass(user, old, new):
             return render_template("account.html", message = "Password changed successfully.")
         else:
             return render_template("account.html", message = "Unsuccessful. You entered an incorrect password.")

@@ -21,6 +21,7 @@ def login():
                       # request.form["pw"]):
         #form = cgi.FieldStorage()
         #if "Button1" in form:
+	#
         ID = request.form['id'].encode('ascii','ignore')
         PW = request.form['pw'].encode('ascii','ignore')
         a = authenticate(ID,PW)
