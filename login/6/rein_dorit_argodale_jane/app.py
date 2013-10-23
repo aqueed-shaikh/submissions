@@ -1,12 +1,9 @@
 from flask import Flask
 from flask import request, render_template, redirect, url_for, session
-from flask.ext import shelve
 import auth
 
 app=Flask(__name__)
 app.secret_key="key"
-app.config['SHELVE_FILENAME'] = 'users.db'
-shelve.init_app(app)
 
 @app.route("/")
 def homepage():
@@ -26,7 +23,6 @@ def register():
     else:
         username = request.form["username"].encode("ascii","ignore")
         password = request.form["password"].encode("ascii","ignore")
-        users = shelve.get_shelve()
         if (auth.usedUsername(username)):
             return render_template("register.html")
         users[username] = password
