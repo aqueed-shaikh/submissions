@@ -1,9 +1,12 @@
 import sqlite3
 
-def authenticate(username,pw):
-    print [username, pw]
+def connection():
     connection = sqlite3.connect("users.db")
     connection.execute("create table if not exists users(username TEXT, pw TEXT)")
+    return connection
+
+def authenticate(username,pw):
+    connection = connection()
     cursor = connection.execute('select pw from users where username="%s"'%username)
     result = [line for line in cursor]
     if len(result) > 0 and result[0][0] == pw:
@@ -11,8 +14,7 @@ def authenticate(username,pw):
     return False
 
 def add_user(username,pw):
-    connection = sqlite3.connect("users.db")
-    connection.execute("create table if not exists users(username TEXT, pw TEXT)")
+    connection = connection()
     cursor = connection.execute('select username from users where username="%s"'%username)
     result = [line for line in cursor]
     if len(result) != 0:
