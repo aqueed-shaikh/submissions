@@ -4,7 +4,7 @@ import csv
 import random
 
 #Returns a list of a list of class1 students and a list of class2 students
-def shuffledLists(file="/Users/sweyn/Dropbox/School/SoftDev/classcode/resources/groupinator/students"):
+def shuffledLists(file="students"):
     file = open(file)
     read = csv.reader(file)
 
