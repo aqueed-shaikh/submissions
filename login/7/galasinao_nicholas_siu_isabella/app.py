@@ -29,7 +29,7 @@ def register():
                 return render_template("success.html",username=username)
             else:
                 auth.adduser(username,password)
-                return render_template("register.html")
+                return render_template("login.html")
         else:
             return render_template("register.html")
             
@@ -57,6 +57,25 @@ def logout():
     if "username" in session:
         session.pop("username")
     return redirect("/login")
+
+@app.route("/change")
+def change():
+    database = client.userdb
+    collection = database.usercol
+    if request.method=="GET":
+        return render_template("change.html")
+    else:
+        username=request.form["username"].encode("ascii","ignore")
+        oldPw=request.form["old password"].encode("ascii","ignore")
+        newPw=request.form["new password"].encode("ascii","ignore")
+        if auth.exists(username):
+            if auth.authenticate(username,password):
+                auth.changePw(username, oldPw, newPw)
+                return redirect("/")
+            else:
+                return redirect("/login")
+        else:
+            return redirect("/register")
 
 @app.route("/secret")
 def secret():

@@ -5,14 +5,21 @@ import utils
 app = Flask(__name__)
 app.secret_key = "abcd"
 
-@app.route("/")
+@app.route("/", methods = ['GET', 'POST'])
 def home():
-    if "username" in session:
-        return render_template("home.html")
+    if request.method == "GET":
+        if "username" in session:
+            return render_template("home.html")
+        else:
+            return redirect("/login")
     else:
-        return redirect("/login")
+        password = request.form["password"].encode("ascii", "ignore")
+        password2 = request.form["password2"].encode("ascii", "ignore")
+       
+        a = utils.changePwd(session["username"],password, password2)
+        return render_template("home.html", error = a)
 
-    
+
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
     if request.method == "GET":
@@ -40,6 +47,7 @@ def login():
         else:
             return redirect("/fail")
 
+
 @app.route("/fail")
 def fail():
     return """
@@ -58,16 +66,7 @@ def logout():
 @app.route("/pi")
 def pi():
     if "username" in session:
-        return """
-<h1>FIRST 3 DIGITS OF PI!!!!!!!!!!!</h1>
- 
-3.14
-
-<br>
-<br>
-<br>
-<a href="/">Go back to home</a>
-"""
+        return render_template("pi.html")
     else:
         return redirect("/login")
 
@@ -75,15 +74,7 @@ def pi():
 @app.route("/windows")
 def windows():
     if "username" in session:
-        return """
-<h3>COMPLETE LIST OF REASONS TO BUY WINDOWS 8:</h3>
-
-
-<br>
-<br>
-<br>
-<a href="/">Go back to home</a>
-"""
+        return render_template("windows.html")
     else:
         return redirect("/login")
 
