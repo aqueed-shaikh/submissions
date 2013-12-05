@@ -1,5 +1,5 @@
 var Orange = function(e) {
-    e.classList.toggle('orange');
+    e.classList.toggle('Orange');
 }
 
 var listItems = document.querySelectorAll('li');
@@ -19,5 +19,4 @@ function CycleDown() {
     curIndex++;
     currentItem = listItems[curIndex % listItems.length];
     Orange(currentItem);
-    console.log("Hello");
 }
