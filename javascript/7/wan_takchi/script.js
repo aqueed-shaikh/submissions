@@ -3,7 +3,7 @@ function changecolor(e){
     for(var x=0;x<items.length;x++){
         if(items[x].style.color === "blue"){
             items[x].style.color = "";
-            if(x+1==items.length){
+            if(x+1===items.length){
                 items[0].style.color="blue";
             }
             else{
