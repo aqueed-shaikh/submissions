@@ -9,6 +9,8 @@ var currentItem = listItems[curIndex];
 function CycleUp() {
     Orange(currentItem);
     curIndex--;
+    if(curIndex < 0) 
+        curIndex = listItems.length - 1;
     currentItem = listItems[curIndex % listItems.length];
     Orange(currentItem);
     console.log("Hello");
