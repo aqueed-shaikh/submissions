@@ -1,2 +1,9 @@
-<input type="button" value="CLICK ME" style="font-family:'Trebuchet MS', Arial, Helvetica, sans-serif;padding:30px;font-size:20px;"
-	onclick="c='00f0f0f00ff00fff0f'.match(/.{3}/g);(typeof i=='undefined')?(i=0):(i=(i==c.length-1?0:i+1));this.style.backgroundColor='#'+c[i]" />
+<ul><li></li><li></li><li></li><li></li><li></li></ul>
+<input type="button" value="cycle"
+	onclick="li=document.querySelectorAll('li');(typeof i=='undefined')?(i=0):0;li[i].className='';i=(i==li.length-1?0:i+1);li[i].className='a'" />
+<style>
+	*{margin:0;padding:0;}
+	li,input{margin:5px;padding:5px;background:#f77;list-style:none;display:block;width:50%;}
+	li:before{content:"hi";}
+	li.a {background:#77f;}
+</style>
