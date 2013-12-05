@@ -3,7 +3,13 @@ function changecolor(e){
     for(var x=0;x<items.length;x++){
         if(items[x].style.color === "blue"){
             items[x].style.color = "";
-            items[x+1].style.color = "blue";
+            if(x+1===items.length){
+                items[0].style.color="blue";
+            }
+            else{
+                items[x+1].style.color = "blue";
+            break;
+            }
         }
     }
 }
