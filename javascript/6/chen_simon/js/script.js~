@@ -1,0 +1,19 @@
+var i = 0;
+
+var cycling = function(li){
+    var li = document.getElementsByTagName('li')
+    if(i < li.length){
+	li[i++].classList.add('green');
+	//li[i].classlist.add('green');
+    }
+    else{
+	//li[i++].classlist.remove('green');
+	i = 0;
+	li[i].classList.add('green');
+    }
+}
+
+
+
+var elts = document.getElementById('cycle')
+elts.addEventListener('click',cycling);
