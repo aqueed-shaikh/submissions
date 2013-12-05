@@ -3,7 +3,7 @@
 from pymongo import MongoClient
 
 client = MongoClient()
-db = client[logins]
+db = client.logins
 
 def adduser(username,password):
     user = {'name':username, 'pw':password}
@@ -17,7 +17,7 @@ def exists(username):
     return ans
 
 def changePw(username, oldPw, newPw):
-    db.logins.update({'name':username}, {$set: {'pw':newPw}})
+    db.logins.update({'name':username}, {'$set': {'pw':newPw}})
 
 def authenticate(username,password):
     cursor = db.logins.find({'name':username,'pw':password})

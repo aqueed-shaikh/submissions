@@ -55,6 +55,16 @@ def profile():
     else:
         return redirect(url_for('login'))
 
+@app.route('/passchange', methods=['GET', 'POST'])
+def passchange():
+    if request.method == 'GET':
+        return render_template('passchange.html')
+    elif request.method == 'POST':
+        if not auth2.changepass(request.form['username'], request.form['oldpassword'], request.form['newpassword']):
+            return render_template('passchange.html')
+        else:
+            return redirect(url_for('login'))
+
 @app.route('/friends')
 def friends():
     if 'username' in session:

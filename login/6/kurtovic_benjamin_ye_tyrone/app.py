@@ -29,6 +29,19 @@ def login():
     else:
         return fail("login", error)
 
+@app.route("/changepass", methods=["GET", "POST"])
+def changepass():
+    if "username" not in session:
+        return redirect("/login")
+    if request.method == "GET":
+        return render_template("changepass.html")
+    error = utils.changepass(session["username"], request.form["oldpass"],
+                             request.form["newpass"])
+    if error:
+        return fail("changepass", error)
+    else:
+        return redirect("/")
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":

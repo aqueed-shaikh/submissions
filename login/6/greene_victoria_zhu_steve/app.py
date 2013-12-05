@@ -2,13 +2,13 @@
 
 from flask import Flask, render_template, url_for, redirect, request, session
 from random import randint
-from sqlauth import *
+from mongoauth import *
 
 app = Flask(__name__)
 app.secret_key = 'WOW SUPER SECRET KEY!!!!!!!!!!!!!!'
 
 def logged_in():
-	if not username_exists(session['username']):
+	if 'username' in session and not username_exists(session['username']):
 		session.pop('username', None)
 	return 'username' in session and session['username'] != None
 
@@ -68,7 +68,7 @@ def settings():
 		if password != password_confirm:
 			error = 'The two passwords are not equal.'
 		else:
-			update_user(username, password)
+			update_user(session['username'], password)
 	return render_template('settings.html', title='Settings', error=error)
 
 @app.route('/page')
