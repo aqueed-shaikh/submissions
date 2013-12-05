@@ -1,0 +1,24 @@
+<center>
+<h3>This test cycles through the list, changing each element of the list to green</h3>
+</center>
+
+<style>
+  .green{ color:#00ff00;}
+</style>
+
+<ul>
+<li>ele1</li>
+<li>ele2</li>
+<li>ele3</li>
+<li>ele4</li>
+<li>ele5</li>
+<li>ele5</li>
+<li>ele6</li>
+<li>ele7</li>
+<li>ele8</li>
+<li>ele9</li>
+<li>ele10</li>
+</ul>
+
+<input  type="submit" id="cycle" value="Cycle"></input>
+<script src="script.js"></script>
