@@ -6,7 +6,7 @@ var i = -1; //starter point (blank)
 var elts = document.querySelectorAll('li');
 
 var next = function(e){
-  //untoggle previous
+    //untoggle previous
     if (i > -1)
 	elts[i].classList.toggle('red');
     
