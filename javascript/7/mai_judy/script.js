@@ -7,40 +7,40 @@ var elts = document.querySelectorAll('li');
 
 var next = function(e){
   //untoggle previous
-	if (i > -1)
-		elts[i].classList.toggle('red');
-
-	//update current + loop if necessary
-	i++; 
-	if (i == elts.length) 
-		i = 0; 
-
-	//toggle current
-	elts[i].classList.toggle('red'); 
+    if (i > -1)
+	elts[i].classList.toggle('red');
+    
+    //update current + loop if necessary
+    i++; 
+    if (i == elts.length) 
+	i = 0; 
+    
+    //toggle current
+    elts[i].classList.toggle('red'); 
 }
 
 
 var back = function(e){
-	//untoggle previous
-	if (i > -1)
-		elts[i].classList.toggle('red'); 
-
-	//update current + loop if necessary
-	if (i == -1) 
-		i++; //account for initial back
-	i--;
-	if (i == -1) 
-	i = elts.length-1; 
-
-	//toggle current
+    //untoggle previous
+    if (i > -1)
 	elts[i].classList.toggle('red'); 
+    
+    //update current + loop if necessary
+    if (i == -1) 
+	i++; //account for initial back
+    i--;
+    if (i == -1) 
+	i = elts.length-1; 
+    
+    //toggle current
+    elts[i].classList.toggle('red'); 
 }
 
 
 var reset = function(e){
-	if (i != -1)
-		elts[i].classList.toggle('red');
-	i = -1;
+    if (i != -1)
+	elts[i].classList.toggle('red');
+    i = -1;
 }
 
 
