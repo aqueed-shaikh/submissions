@@ -4,6 +4,7 @@ function changecolor(e){
         if(items[x].style.color === "blue"){
             items[x].style.color = "";
             items[x+1].style.color = "blue";
+            break;
         }
     }
 }
