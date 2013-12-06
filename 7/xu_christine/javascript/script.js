@@ -1,13 +1,29 @@
+	var start = 0
+	
+	var pink = function (e){
+		console.log(e);
+		this.classList.toggle('pink');
 
-<!DOCTYPE html>
+}
 
-<html>
-<body>
-h
-<h1>Welcome to my first JavaScript! </h1>
+	var purple = function(e) {
+		console.log(e);
+		this.classList.toggle('purple');
+		
+}
 
-<p>
-   <input type="submit" value="Button1" id="b1">
-   <input type="submit" value="Button2" id="b2">
+	var change = function (e){
+	console.log(e);
+	var items = document.querySelectorAll('li');
+	for (var i = 0; i < items.length; i++) {
+            items[i].classList.toggle('pink');
+        }
+	}
+}
 
-</p>
+	var button = document.getElementById('b1);
+	button.addEventListener('click',change);
+
+
+//not done, will complete soon.
+	
