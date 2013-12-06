@@ -1,0 +1,52 @@
+<style>
+    .red {background-color:#ff0000};
+    .blue {background-color:#0000ff};
+    .grow{font-size:20px};
+</style>
+
+<h1> Practice-y Thing </h1>
+<h5> by Victoria Chung </h5>
+
+<ol>
+    <li>one</li>
+    <li>two</li>
+    <li>three</li>
+    <li>four</li>
+    <li>five</li>
+    <li>six</li>
+    <li>seven</li>
+</ol>
+
+<input onclick="foo()" type="submit" value="turn me on!" id="b1">
+
+<script src="script.js"></script>
+
+<script>
+    var elts = document.querySelectorAll('li');
+    var counter = 0;
+    function currentElt() {
+        var current = counter % elts.length;
+        var previous;
+        if (current == 0) {
+            previous = elts[elts.length - 1];
+        } else {
+            previous = elts[current - 1];
+        }
+        current = elts[counter % elts.length];
+        return [previous, current];
+    }
+
+    function foo() {
+        var elements = currentElt();
+        if (counter == 0) {
+            redback(elements[1]);
+            changeFont(elements[1]);
+        } else {
+            redback(elements[0]);
+            revertFont(elements[0]);
+            redback(elements[1]);
+            changeFont(elements[1]);
+        }
+        counter++;
+    }
+</script>
