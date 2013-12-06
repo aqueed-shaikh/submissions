@@ -8,8 +8,8 @@ var cycle = function(c){
     if(i == 0)
 	list[i].classList.add("green");
     else{
-	list[i%5-1].classList.toggle("green");
-	list[i%5].classList.toggle("green");
+	list[(i%list.length)-1].classList.toggle("green");
+	list[i%list.length].classList.toggle("green");
     } 
     i++;
 	
