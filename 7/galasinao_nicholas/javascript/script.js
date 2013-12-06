@@ -1,17 +1,17 @@
-var button = document.getElementById("c");
-button.addEventListener("click", cycle);
+var i = 0;
+var list = document.querySelectorAll("li");	
 
-var i = 0;	
-
-var cycle = function(c){
-    console.log(c);
-    var list = document.querySelectorAll("li");
+var cycle = function(d){
+    console.log(d);
     if(i == 0)
 	list[i].classList.add("green");
     else{
-	list[(i%list.length)-1].classList.toggle("green");
-	list[i%list.length].classList.toggle("green");
+	list[(i - 1) % list.length].classList.toggle("green");
+	list[i % list.length].classList.toggle("green");
     } 
     i++;
 	
 }
+
+var button = document.getElementById("c");
+button.addEventListener("click", cycle);
