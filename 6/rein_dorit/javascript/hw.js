@@ -9,18 +9,10 @@ var length = elements.length - 1;
 
 function colChange(){
     if(index < 0)
-	index = length;
-    thisItem = elements[index]
-    green(thisItem);
+        index = length;
+    thisItem = elements[index % elements.length]
+     green(thisItem);
     index--;
+  
     console.log("tester");
-}
-
-function colBack(){
-    if (index > length)
-	index = 0;
-    thisItem = elements[index]
-    green(thisItem);
-    index++;
-    console.log("newtest")
 }
