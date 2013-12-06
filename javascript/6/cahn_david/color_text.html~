@@ -1,0 +1,20 @@
+<h1>This is David Cahn's javascript assignment</h1>
+
+<style>
+.red {color: #ff0000;}
+.blue {color:#0000ff;}
+.green {color:#00ff00;}
+.black {color:#000000;}
+</style>
+
+<ul>
+<li>one</li>
+<li>two</li>
+<li>three</li>
+<li>four</li>
+<li>five</li>
+<li>six</li>
+</ul>
+
+<input id="button1" type="submit" name="b1"></input>
+<script src="script.js"></script>
