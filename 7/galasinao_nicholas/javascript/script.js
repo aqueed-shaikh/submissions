@@ -1,10 +1,11 @@
 var button = document.getElementById("c");
 button.addEventListener("click", cycle);
 
+var i = 0;	
+
 var cycle = function(c){
     console.log(c);
     var list = document.querySelectorAll("li");
-    var i = 0;
     if(i == 0)
 	list[i].classList.add("green");
     else{
