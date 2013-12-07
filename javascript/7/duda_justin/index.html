@@ -1,0 +1,63 @@
+<html>
+<head>
+
+  <style>
+    .blue{color:#0000ff;}
+  </style>
+
+  <script>
+    var listPos = 0;
+
+    var cycleColor = function(){
+   
+
+    var lis = document.querySelectorAll('li');
+    
+    if(listPos > 0){
+    var last = lis[listPos-1];
+    last.classList.toggle('blue');
+    }
+    
+    if(listPos < 10){
+	var next = lis[listPos];
+	next.classList.toggle('blue');
+    }
+	if(listPos == 10){
+	listPos = 0;
+	}
+	else{
+	listPos++;
+	}
+    }
+		 
+		 
+  </script>
+
+</head>
+
+
+
+<body>
+<h3> Click on the "Cycle" button to cycle a change in color through the below list</h3>
+
+<ol id="list">
+  <li>one</li>
+  <li>two</li>
+  <li>three</li>
+  <li>four</li>
+  <li>five</li>
+  <li>six</li>
+  <li>seven</li>
+  <li>eight</li>
+  <li>nine</li>
+  <li>ten</li>
+</ol>
+
+<input type="button" value="Cycle" onclick="cycleColor('list')"></button>
+
+</body>
+
+
+
+
+</html>
