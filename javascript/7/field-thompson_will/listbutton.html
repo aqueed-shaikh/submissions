@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+  <title>JavaScript Test</title>
+  <script>
+   var i = -1;
+   function move(event) {
+     var last = document.getElementById(i.toString());
+     if (event.target.id == "down") {
+       i ++;
+     }
+     else {
+       i --;
+     }
+     i = i > 9 ? 0 : i < 0 ? 9 : i; // wrap
+     var next = document.getElementById(i.toString());
+     last.className = "";
+     next.className = "selected";
+   }
+  </script>
+</head>
+
+
+<ul>
+  <li id="0">Zéro</li>
+  <li id="1">Un</li>
+  <li id="2">Deux</li>
+  <li id="3">Trois</li>
+  <li id="4">Quatre</li>
+  <li id="5">Cinq</li>
+  <li id="6">Six</li>
+  <li id="7">Sept</li>
+  <li id="8">Huit</li>
+  <li id="9">Neuf</li>
+</ul>
+
+<input type="button" id="up" value="Up" onclick="move(event)"/>
+<input type="button" id="down" value="Down" onclick="move(event)"/>
+
+
+<style>
+ ul {
+   list-style-type:none;
+ }
+ li {
+   font-size:2em
+ }
+ li.selected {
+   font-weight:bold;
+   font-size:5em;
+ }
+</style>
