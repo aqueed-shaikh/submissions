@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Javascript Assignment</title>
+		<style>
+			ul {
+				margin: 0;
+				padding: 0;
+			}
+			li {
+				list-style: none;
+				background-color: #38B8FF;
+				width: 200px;
+				height: 50px;
+				margin: 10px 0;
+			}
+			#button {
+				display: block;
+				width: 200px;
+				height: 40px;
+				line-height: 40px;
+				color: white;
+				text-align: center;
+				font-family: sans-serif;
+				background-color: #353535;
+				cursor: pointer;
+			}
+			.active {
+				background-color: #CA233D;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<a id="button">Cycle</a>
+		<script>
+			var $ = function(q) { return document.querySelectorAll(q); };
+			var lis = $("li");
+			var prev = 0, cur = 0;
+			$("#button")[0].addEventListener("click", function() {
+				lis[prev].className = "";
+				lis[cur].className = "active";
+				prev = cur;
+				cur = (cur + 1) % lis.length;
+			});
+		</script>
+	</body>
+</html>

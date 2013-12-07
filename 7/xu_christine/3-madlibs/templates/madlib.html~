@@ -1,0 +1,13 @@
+<h1> This is the demo page </h1>
+
+
+<h3> {{d['name']}}'s Home page</h3>
+<h3> {{d['name']}} is {{ d.age }} years old</h3>
+<hr>
+
+<ul>
+{% for item in d.rootsfor %}
+<li> {{item}} </li>
+{% endfor %}
+</ul>
+<hr>

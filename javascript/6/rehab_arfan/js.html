@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <title>Javascript Assignment</title>
+    <style>
+      ul {
+           margin: 0;
+           padding: 0;
+         }
+      li {
+           background-color: #00ff00;
+           width: 150px;
+           height: 40px;
+           margin: 5px 0;
+          }
+      #myButton {
+                  background-color:transparent;
+	          -moz-border-radius:28px;
+	          -webkit-border-radius:28px;
+	          border-radius:28px;
+	          border:1px solid #11f524;
+	          display:inline-block;
+               	  cursor:pointer;
+	          color:#e612e6;
+	          font-family:arial;
+	          font-size:17px;
+	          padding:16px 31px;
+	          text-decoration:none;
+	          text-shadow:0px 1px 0px #17690a;
+               }
+      #myButton:hover {
+	                background-color:transparent;
+                      }
+      #myButton:active {
+	                 position:relative;
+	                 top:1px;
+                       }
+      .active {
+                background-color: yellow;
+              }
+    </style>
+  </head>
+
+  <body>
+    <ul>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+
+    <a id="myButton">Cycle</a>
+
+    <script>
+        var elts = document.querySelectorAll("li");
+	var i = 0, j = 0;
+	var cycle = function(e){
+	     elts[i].className = "";
+             elts[j].className = "active";
+             i = j;
+             j = (j + 1) % elts.length;
+	}
+	document.querySelectorAll("#myButton")[0].addEventListener("click", cycle);
+    </script>
+  </body>
+  
+</html>
