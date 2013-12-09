@@ -1,0 +1,9 @@
+<ul><li></li><li></li><li></li><li></li><li></li></ul>
+<input type="button" value="cycle"
+	onclick="li=document.querySelectorAll('li');(typeof i=='undefined')?(i=0):0;li[i].className='';i=(i==li.length-1?0:i+1);li[i].className='a'" />
+<style>
+	*{margin:0;padding:0;}
+	li,input{margin:5px;padding:5px;background:#f77;list-style:none;display:block;width:50%;}
+	li:before{content:"hi";}
+	li.a {background:#77f;}
+</style>

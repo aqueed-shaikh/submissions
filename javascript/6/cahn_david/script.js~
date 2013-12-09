@@ -1,0 +1,17 @@
+window.onload=starter;
+
+function starter () {
+    var list =  document.querySelectorAll('li');
+    list[0].classList.add ('red');
+    currentColor = 0;
+}
+
+var colorNextElement = function() {
+    var list =  document.querySelectorAll('li');
+    list [currentColor].classList.remove ('red')
+    currentColor = currentColor + 1;
+    list [currentColor].classList.add ('red');
+}
+
+document.getElementById("button1").addEventListener("click",colorNextElement);
+

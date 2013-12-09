@@ -1,0 +1,24 @@
+<h1> Register Page </h1>
+
+
+{% if invalid == 'True' %}
+<font color="red">Your passwords aren't the same</font>
+<br>
+{% endif %}
+
+
+{% if repeat == 'True' %}
+<font color="red">This username has been taken already</font>
+<br>
+{% endif %}
+
+
+<form method = "POST">
+
+Username: <input type="text" name="username" value=""><br>
+Password: <input type="password" name="password" value=""><br>
+Re-type Password: <input type="password" name="passwordretype" value =""><br>
+
+<input type="submit" name="button" value="Register">
+
+</form>

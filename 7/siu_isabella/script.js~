@@ -1,0 +1,11 @@
+var n = 0;
+var blue = function(e){
+    var items = document.querySelectorAll('li');
+    if (n!=0)
+	items[(n-1)%8].classList.toggle('blue');
+    elements[n%10].classList.toggle('blue');
+    n++;
+}
+
+var a = document.getElementById('btn');
+a.addEventListener('click',blue)

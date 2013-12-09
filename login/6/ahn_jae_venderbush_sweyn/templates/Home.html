@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title> Home </title>
+<style> 
+<link rel="stylesheet" type="text/css" href="#{ url_for('static', filename='stylesheets/home.css')}">
+</style> 
+</head>
+<body>
+<h2> Welcome {{username}}! Choose what you would like to do! </h2> 
+<p><a href="http://www.google.com">
+<input type="button" name="button" value="Go to Google">
+</a>
+</p>
+
+<p><a href="http://bert.stuy.edu/pbrooks/schedules/schedules.py"><input type="button" name="button" value="Check today's schedule times">
+</a>
+</p>
+<p>  
+<a href="http://c9.io">
+<input type="button" name="button" value="Work on HTML in the Cloud">
+</a> 
+</p>
+<p>  
+<a href="/count">
+<input type="button" name="button" value="Go to Count Page">
+</a> 
+</p>
+<p> 
+<a href="logout">Logout</a>
+</p>
+</body> 
+</html> 

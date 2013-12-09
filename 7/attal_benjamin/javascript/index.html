@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <style>
+      .green {background-color: green;}
+      .blue {background-color: blue;}
+      .red {background-color: red;}
+      .white {}
+    </style>
+
+  </head>
+  <body>
+    <ul>
+      <li>dan</li>
+      <li>mike</li>
+      <li>jim</li>
+      <li>dave</li>
+      <li>frank</li>
+    </ul>
+    <input type=submit value=AMURICA>
+  <body>
+  <script type=text/javascript>
+    var amurican_names =  ['dan', 'mike', 'jim', 'dave', 'frank'];
+    var euro_names = ['yuri', 'dmitri', 'franz', 'vladmir', 'boris'];
+
+    function arrays_equal(a,b) { return !(a<b || b<a); }
+
+    var empty = function(el) {
+      while(el.hasChildNodes()) {
+        el.removeChild(el.lastChild);
+      }
+    };
+
+
+    var toggleNames = function(el) {
+      var names = [], color1, color2, color3, rmColor, buttonContent, i;
+      for(i = 0; i < el.children.length; i++) {
+        names = names.concat([el.children[i].innerText]);
+      }
+
+      if(arrays_equal(amurican_names, names)) {
+        names = euro_names;
+        color1 = 'red';
+        color2 = 'white';
+        color3 = 'green';
+        rmColor = 'blue';
+        buttonContent = 'Darn euro nations';
+      } else {
+        console.log(names);
+        console.log(amurican_names);
+        console.log(arrays_equal(amurican_names, names));
+        names = amurican_names;
+        color1 = 'red';
+        color2 = 'white';
+        color3 = 'blue';
+        rmColor = 'green';
+        buttonContent = 'AMURICA';
+      }
+
+      for(i = 0; i < names.length; i++) {
+        el.children[i].innerText = names[i];
+        if(i % 3 === 0)
+          el.children[i].classList.add(color1);
+        else if(i % 3 === 1)
+          el.children[i].classList.add(color2);
+        else {
+          el.children[i].classList.remove(rmColor);
+          el.children[i].classList.add(color3);
+        }
+      }
+
+      document.querySelectorAll('input')[0].value = buttonContent;
+    };
+
+    var butt = document.querySelectorAll('input')[0];
+    var el = document.querySelectorAll('ul')[0];
+    butt.onclick = function(e) {
+      console.log('hello');
+      toggleNames(el);
+    };
+  </script>
+</html>

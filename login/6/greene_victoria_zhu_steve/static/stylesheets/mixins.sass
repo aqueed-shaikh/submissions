@@ -1,0 +1,40 @@
+@mixin vendor($property, $value)
+	-webkit-#{$property}: $value
+	-moz-#{$property}: $value
+	-ms-#{$property}: $value
+	-o-#{$property}: $value
+	#{$property}: $value
+
+@mixin placeholder-font($fontFamily, $fontWeight)
+	::-webkit-input-placeholder
+		font-weight: $fontWeight
+		font-family: $fontFamily
+	\:-moz-placeholder
+		font-weight: $fontWeight
+		font-family: $fontFamily
+	::-moz-placeholder
+		font-weight: $fontWeight
+		font-family: $fontFamily
+	\:-ms-input-placeholder
+		font-weight: $fontWeight
+		font-family: $fontFamily
+
+// Inner mixin for centering an inner block vertically and horizontally within its parent div
+@mixin center-inner
+	display: inline-block
+	vertical-align: middle
+
+// Outer mixin
+// automatically centers the first span child
+@mixin center-outer
+	height: 100%
+	text-align: center
+	&:before
+		@include vendor(user-select, none)
+		display: inline-block
+		height: 100%
+		content: ''
+		vertical-align: middle
+		font-size: 0
+	& > span:first-child
+		@include center-inner

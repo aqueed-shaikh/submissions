@@ -1,0 +1,9 @@
+<h1>Enter your id</h1>
+
+<form method="POST">
+ID: <input type="text" name="id" value="">
+<input type="submit" name="Button1" value="Submit">
+<input type="submit" name="Button2" value="Register">
+
+</form>
+

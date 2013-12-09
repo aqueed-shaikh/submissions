@@ -1,0 +1,13 @@
+#Zhu Julie, Jason Zhen
+
+from flask import Flask
+from flask import session, url_for, request, redirect, render_template
+
+app= Flask(__name__)
+app.debug-True
+app.secret_key="sekrit"
+import auth
+
+@app.route("/")
+def index():
+    

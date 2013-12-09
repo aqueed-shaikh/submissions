@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheets/application.css') }}">
+</head>
+<body>
+	<div class="center-outer">
+	    <span>
+	    	<div class="container">
+	    		<h1 class="title">
+		    		{{ title }}
+	    		</h1>
+	    		= if error
+	    			<p class="error">
+	    				{{ error }}
+	    			</p>
+	    		= endif
+				= block body
+				= endblock
+			</div>
+			= block bottomlink
+			= endblock
+		</span>
+	</div>
+</body>
+</html>

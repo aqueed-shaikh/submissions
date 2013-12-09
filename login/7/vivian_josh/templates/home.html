@@ -1,0 +1,20 @@
+<html>
+    <body>
+        {% if logged_in %}
+        <a href="logout">Logout</a> 
+        {% else %}
+        <a href="login">Login</a> | 
+        <a href="register">Register</a> 
+        {% endif %}
+        <br>
+        <hr>
+        {% if logged_in %}
+        Welcome, {{ username }}
+        <br>
+        Check out your <a href="/profile">Profile</a>
+        <br>
+        {% endif %}
+        <br>
+        All users (for debug, duh): {{ everyone }}
+    </body>
+</html>
