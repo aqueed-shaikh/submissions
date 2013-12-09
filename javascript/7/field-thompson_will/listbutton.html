@@ -14,15 +14,15 @@
      }
      i = i > 9 ? 0 : i < 0 ? 9 : i; // wrap
      var next = document.getElementById(i.toString());
-     last.className = "";
      next.className = "selected";
+     last.className = "";
    }
   </script>
 </head>
 
 
 <ul>
-  <li id="0">Zéro</li>
+  <li id="0">Z&eacute;ro</li>
   <li id="1">Un</li>
   <li id="2">Deux</li>
   <li id="3">Trois</li>
@@ -47,7 +47,7 @@
  }
  li.selected {
    font-weight:bold;
- color:maroon;
+   color:maroon;
    font-size:5em;
  }
 </style>
