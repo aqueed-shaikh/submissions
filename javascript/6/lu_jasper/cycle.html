@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Color Cycle</title>
+    <style>
+        .red {
+            background-color:red;
+        }
+    </style>
+</head>
+<body>
+    <ul id="carousel">
+        <li>Something</li>
+        <li>Something</li>
+        <li>Something</li>
+        <li>Something</li>
+        <li>Something</li>
+        <li>Something</li>
+        <li>Something</li>
+        <li>Something</li>
+    </ul>
+    <button id="cycle">CYCLE!</button>
+
+    <script>
+        var btn = document.querySelectorAll('#cycle')[0];
+        var car = document.querySelectorAll('#carousel')[0];
+        var n = -1;
+        var toggleCar = function (n) {
+            if(n>= 0)
+                car.children[n].classList.toggle("red");
+            if (++n != car.children.length)
+                car.children[n].classList.toggle("red");
+        }
+        btn.addEventListener("click", function () {
+            toggleCar(n);
+            ++n;
+            if (n == car.children.length) {
+                n = -1;
+            }
+        });
+    </script>
+</body>
+</html>

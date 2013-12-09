@@ -8,7 +8,7 @@
   <li> is </li>
   <li> not </li>
   <li> green </i>
-<li> ! </li>
+  <li> ! </li>
 </ul>
 <input id="B1" type="submit" name="Up" value="UP" onClick="Up()"></input>
 <input id="B2" type="submit" name="Down" value="DOWN" onClick="Down()"></input>
@@ -18,24 +18,35 @@
   }
   
   var elements = document.querySelectorAll('li');
-  var Index = 0;
-  var Item = elements[Index];
+  var current= 0;
+  var item= elements[current];
 
   function Up(){
-  green(Item);
-  Index--;
-  if(Index < 0) 
-             Index = elements.length - 1;
-	     Item = elements[Index % elements.length];
-	     green(Item);
-	     console.log("test");
-	     }
+  green(item);
+  if(current != 0) {
+             current--;
+             item = elements [ current % elements.length];
+             green(item); 
+                }
+  else {
+          current = elements.length - 1;
+          item = elements [ current % elements.length];
+          green(item);
+       }
+    }
 
 
-	     function Down() {
-	     green(Item);
-	     Index++;
-	     Item = elements[Index % elements.length];
-	     green(currentItem);
-	     }
+  function Down() {
+  if (current != 0){
+            green(item);
+            current++;
+            item = elements[current% elements.length];
+            green(item);
+                   }
+  else {
+            current++;
+            item = elements[current% elements.length];
+            green(item);
+       }
+   }
 	     </script>
