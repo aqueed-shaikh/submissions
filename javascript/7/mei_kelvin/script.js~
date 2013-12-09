@@ -1,0 +1,9 @@
+var i = 0;
+var elts = document.getElementsbyTagName('li');
+var blah = function(e){
+    elts[i % elt.length].classList.toggle('red');
+    i++;
+    elts[i % elt.length].classList.toggle('red');
+}
+var foo = document.getElementById('blah');
+button.addEventListener('click',blah);

@@ -1,0 +1,26 @@
+
+<html>
+  <head>
+    <title>LOLJAVASCRIPTS</title>
+
+
+    <style>
+      .red {color:#ff0000;}
+    </style>
+
+  </head>
+  <body>
+    <ol>
+      <li class ="red">uno</li>
+      <li>dos</li>
+      <li>tres</li>
+      <li>cuatro</li>
+      <li>cinco</li>
+    </ol>
+
+    <input type="submit" value="Poof" id="blah">
+
+
+    <script src="script.js"></script>
+  </body>
+</html>
