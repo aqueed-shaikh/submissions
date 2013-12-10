@@ -1,0 +1,44 @@
+ul {
+	padding:0px;
+}
+body { 
+	background-image:url('change.png');
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:right bottom; 
+	text-align:center;  
+}
+li {
+	margin:0 0 5px 0;
+	background:#fa131c;
+	list-style:none;
+	width:150px;
+	height:30px;
+	border-style:solid;
+	border-color:white;
+}
+#button {
+	width:150px;
+	height:30px;
+	line-height:30px;
+	color:white;
+	text-align:center;
+	background-color:#313131;
+	cursor:default;
+	border-style:solid;
+	border-color:white;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.change {
+	background-color:#00304d;
+}
+.center{
+	position: fixed;
+	top: 10%;
+	left: calc(50% - 75px);
+}

@@ -1,0 +1,52 @@
+<h1> Javascript Hw! </h1>
+
+<style>
+  .green {color:#339966;}
+</style>
+<ul>
+  <li> this </li>
+  <li> is </li>
+  <li> not </li>
+  <li> green </i>
+  <li> ! </li>
+</ul>
+<input id="B1" type="submit" name="Up" value="UP" onClick="Up()"></input>
+<input id="B2" type="submit" name="Down" value="DOWN" onClick="Down()"></input>
+<script>
+  var green = function(q){
+  q.classList.toggle('green');
+  }
+  
+  var elements = document.querySelectorAll('li');
+  var current= 0;
+  var item= elements[current];
+
+  function Up(){
+  green(item);
+  if(current != 0) {
+             current--;
+             item = elements [ current % elements.length];
+             green(item); 
+                }
+  else {
+          current = elements.length - 1;
+          item = elements [ current % elements.length];
+          green(item);
+       }
+    }
+
+
+  function Down() {
+  if (current != 0){
+            green(item);
+            current++;
+            item = elements[current% elements.length];
+            green(item);
+                   }
+  else {
+            current++;
+            item = elements[current% elements.length];
+            green(item);
+       }
+   }
+	     </script>

@@ -1,0 +1,57 @@
+<style type="text/css">
+ .red {color: #ff0000;}
+</style>
+
+<h1>Here is the header of the list</h1>
+This page has javascript that does stuff!
+
+<ul>
+<li>Item one</li>
+<li>Item two</li>
+<li>Item three</li>
+<li>Item four</li>
+<li>Item five</li>
+<li>Item six</li>
+<li>Item seven</li>
+
+</ul>
+
+<button id="upbutton" type = 'button' name="Up">Up</input>
+<button id="downbutton" type='button' name="Down">Down</input>
+
+<script type="text/javascript">
+
+    var listItems = document.querySelectorAll('li');
+    var index = 0;
+    var upbutton = document.getElementById('upbutton');
+    var downbutton = document.getElementById('downbutton');
+
+    var toggleRed = function(q){
+        q.classList.toggle('red');
+    }
+
+    var downWithRed = function(e){
+        toggleRed(listItems[index]);
+        if (index == 6)
+            index = 0;
+        else
+            index++;
+        toggleRed(listItems[index]);
+    }
+
+    var upWithRed = function(e){
+        toggleRed(listItems[index]);
+        if (index == 0)
+            index = 6;
+        else
+            index--;
+        toggleRed(listItems[index]);
+    }
+
+    toggleRed(listItems[index]);
+
+    upbutton.addEventListener('click', upWithRed);
+    downbutton.addEventListener('click', downWithRed);
+
+
+</script>

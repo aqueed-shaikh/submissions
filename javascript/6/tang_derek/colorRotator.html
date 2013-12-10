@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+        <head>
+                <title>A tribute to Matt Groening and Space Time</title>
+                <style>
+                    ol {
+                                padding: 0;
+                        }
+                    li {
+                        background-color: #FF9933;
+                        width: 216px;
+                        font-size: 20px;
+                        margin-top: 9pt;
+                        margin-bottom: 9pt;
+                        }
+                    h1 {
+                        font-size: 32px;
+                        }
+                    .rotate {
+                        background-color: #b6ff00;
+                        color:black
+                            }
+                     #button {
+                                width: 216px;
+                                color: black;
+                                text-align: center;
+                                font-size: 20px;
+                                font-family: Futurama Alien Alphabet One;
+                                background-color: #66C88F;
+                                cursor: pointer;
+                        }
+
+                </style>
+        </head>
+
+        <body>
+            <h1>Will There Ever Be a Rainbow? C.M Burns</h1>
+                <ol>
+                        <li>William Hartnell</li>
+                        <li>Patrick Troughton</li>
+                        <li>Jon Pertwee</li>
+                        <li>Tom Baker</li>
+                        <li>Peter Davison</li>
+                        <li>Colin Baker</li>
+                        <li>Sylvester McCoy</li>
+                        <li>Paul McGann</li>
+                        <li>John Hurt</li>
+                        <li>Christopher Eccleston</li>
+                        <li>David Tennant</li>
+                        <li>Matt Smith</li>
+                        <li>Peter Capaldi</li>
+                </ol>
+                <a id="button">The Magic Button</a>
+
+                <script>
+                    var $ = function (q) { return document.querySelectorAll(q); };
+                    var list = $("li");
+                    var prev = 0, cur = 1;
+                    list[0].className = "rotate";
+                    $("#button")[0].addEventListener("click", function () {
+                        list[prev].className = "";
+                        list[cur].className = "rotate";
+                        prev = cur;
+                        cur++;
+                        if (cur >= list.length){
+                            cur = 0;
+                        }
+                    });
+                </script>
+
+        </body>
+</html>
