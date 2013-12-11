@@ -1,0 +1,119 @@
+<html>
+  <head>
+
+<input type="button" value="Rainbow Attack" id="1"/>
+<input type="button" value="Ok enough im easily dissoriented" id="2" />
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+var time = 1500;
+var running = 1;
+var multiplier = .8;
+var dgreen = '#2E8B57';
+var green = '#32CD32';
+var lgreen = '#00FF00';
+var dred = '#B22222';
+var red = '#FF0000';
+var lred = '#FF4500';
+var dyellow = '#ADFF2F';
+var yellow = '#FFFF00';
+var lyellow = '#FFA500';
+var dpurple = '#8B008B';
+var purple = '#9400D3';
+var lpurple = '#FF00FF';
+var dblue = '#00008B';
+var blue = '#0000FF';
+var lblue = '#6495ED';
+var white = '#FFFFFF';
+var black = '#000000';
+var colorwheelideal = [yellow, lyellow, lred, red, dred, lpurple,
+      purple, dpurple, dblue, blue, lblue, dgreen, green, lgreen,
+          dyellow];
+var colorwheel = [black, black, black, black, black, black, black,
+black, black, black, black, black, black, black, black];
+var i = 0;
+
+      function drawChart() {
+
+
+
+        var data = google.visualization.arrayToDataTable([
+          ['mychart','15'],['yey',1],['yey',1],['yey',1],['yey',1],['yey',1],['yey',1],['yey',1],
+          ['yey',1],['yey',1],['yey',1],['yey',1],['yey',1],['yey',1],['yey',1],['yey',1]
+        ]);
+
+var options = {
+          backgroundColor: {strokeWidth: 0, fill: black},
+pieSliceBorderColor: black,
+chartArea: {width: 10000},
+  enableInteractivity: false,
+  pieSliceText: 'none',
+  tooltip: {trigger: 'none'},
+          legend: 'none',
+          colors: colorwheel
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+      }
+
+updateTime = function() {
+if (time < .0000003) 
+multiplier = 1.25;
+  if (time > 1000)
+multiplier = .8;
+time *= multiplier;
+}
+
+main = function() {
+document.getElementById('1').removeEventListener('click',swag);
+colorwheel[i%15] = colorwheelideal[i%15];
+colorwheel[(i-1)%15] = black;
+updateOptions();
+i+=1;
+drawChart();
+updateTime();
+if (running == 1)
+setTimeout(main, time);
+else
+document.getElementById('1').addEventListener('click', swag);
+}
+
+stahp = function() {}
+
+
+
+updateOptions = function() {
+options = {
+          backgroundColor: {strokeWidth: 0, fill: black},
+  enableInteractivity: false,
+pieSliceBorderColor: black,
+  pieSliceText: 'none',
+  tooltip: {trigger: 'none'},
+          legend: 'none',
+          colors: colorwheel
+        };
+}
+ swag = function() {
+document.getElementById('2').addEventListener('click', stahp);
+running = 1;
+main();
+}
+
+stahp = function() {
+running = 0;
+document.getElementById('2').removeEventListener('click', stahp);
+}
+
+document.getElementById('1').addEventListener('click', swag);
+document.getElementById('2').addEventListener('click', stahp);
+
+
+    </script>
+  <body bgcolor = black>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+  </body>
+    </html>
