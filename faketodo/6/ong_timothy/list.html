@@ -1,0 +1,42 @@
+<script src="list.js"></script>
+
+<h1>To Do List</h1>
+<ul id="todo">
+</ul>
+
+
+<h1>Finished</h1>
+<ul id="finished">
+</ul>
+
+
+<br><br>
+
+<b>Add Things:</b>
+<input id="input" type="text"></input>
+<input id="submit" type="submit"></input>
+
+<script>
+  var button = document.getElementById("submit");
+  button.addEventListener("click", addtolist);
+
+  function addtolist(e) {
+  var input = document.getElementById("input").value;
+  var newli = document.createElement("li");
+  newli.innerHTML = input;
+  newli.addEventListener("click", finished);
+  var list = document.getElementById("todo");
+  list.appendChild(newli);
+  }
+
+  function finished(e) {
+  var doneli = document.getElementById("todo").removeChild(this);
+  document.getElementById("finished").appendChild(this);
+  this.removeEventListener("click", finished);
+  this.addEventListener("click", remove);
+  }
+
+  function remove(e) {
+  document.getElementById("finished").removeChild(this);
+  }
+</script>
