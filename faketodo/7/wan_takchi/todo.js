@@ -10,5 +10,16 @@ var main = function(){
         finished.appendChild(this);
         this.addEventListener("click", removeFromList);
     }
+    var ToDo = function(){
+        var item = document.getElementById("things");
+        var input = item.value;
+        var todoitem = document.createElement("li");
+        todoitem.appendChild(document.createTextNode(input));
+        todoitem.addEventListener("click",isFinished);
+        todolist.appendChild(todoitem);
+        item.value = "";
+    }
 
-  }();
+    var sub = document.getElementById("submit");
+    sub.addEventListener("click",ToDo);
+}();
