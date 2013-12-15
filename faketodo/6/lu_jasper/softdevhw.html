@@ -1,0 +1,64 @@
+ <html>
+ <style>
+ li {
+ 	transition:.1s ease-in;
+ }
+
+ #td li:hover {
+ 	background:rgba(0,0,255,0.75);
+ 	color:white;
+ 	cursor:pointer;
+ }
+
+ #d li:hover {
+ 	background:rgba(255,0,0,0.75);
+ 	color:white;
+ 	cursor:pointer;
+ }
+ </style>
+ <body>
+ 	<h1> TO DO: </h1>
+ 	<ol id="td">
+ 	</ol>
+ 	<hr />
+ 	<h1> DONE: </h1>
+ 	<ol id="d">
+ 	</ol>
+ 	<hr />
+ 	<h1>Input:</h1>
+ 	<form id='add'>
+	 	<textarea id="i"></textarea>
+	 	<input type="submit" value="Add"/>
+	 </form>
+ 	<script>
+ 		var todoList = document.querySelectorAll('#td')[0];
+ 		var doneList = document.querySelectorAll('#d')[0];
+
+ 		var toTodo = function(temp) {
+ 			temp.addEventListener('click', toDone)
+ 			document.querySelectorAll('#td')[0].appendChild(temp);
+ 		}
+
+ 		var toGone = function() {
+ 			this.remove();
+ 		}
+
+ 		var toDone = function() {
+ 			this.addEventListener('click', toGone);
+ 			doneList.appendChild(this);
+ 			console.log(doneList);
+ 			//this.remove();
+ 		}
+
+ 		var form = document.querySelectorAll('#add')[0];
+ 		form.addEventListener("submit",	function(e) {
+ 			e.preventDefault();	
+ 			var temp = document.createElement('li');
+ 			var text = document.querySelectorAll('#i')[0];
+ 			temp.innerHTML = text.value;
+ 			text.value = '';
+ 			toTodo(temp);
+	 	});
+ 	</script>
+ </body>
+ </html>
