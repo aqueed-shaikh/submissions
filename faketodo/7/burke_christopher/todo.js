@@ -40,6 +40,7 @@ var closure = function(){
 
     var undo = function(e) {
 	var listItems = done.childNodes;
+	done.classList.toggle('blue');
 	done.classList.toggle('red');
 	if (done.classList.contains('red')) {
 	    for(var i = 0; i < listItems.length; i++) {
