@@ -1,6 +1,6 @@
 function addItem()
 {
-    var ToBeAdded = document.getElementById("text").value;
+    var toBeAdded = document.getElementById("text").value;
     var Item = document.createElement("li");
     Item.innerHTML = toBeAdded;
     Item.addEventListener("click", PopToDone);
