@@ -10,7 +10,7 @@ var main = function(){
         finished.appendChild(this);
         this.addEventListener("click", removeFromList);
     }
-    var ToDo = function(){
+    var move = function(){
         var item = document.getElementById("things");
         var input = item.value;
         var todoitem = document.createElement("li");
@@ -21,5 +21,5 @@ var main = function(){
     }
 
     var sub = document.getElementById("submit");
-    sub.addEventListener("click",ToDo);
+    sub.addEventListener("click",move);
 }();
