@@ -1,0 +1,47 @@
+<html>
+<body>
+<h1 class = "purple" >FakeToDo!!</h1>
+
+<h2>To Do</h2>
+<ul id='todo'> </ul>
+
+<h2>Done</h2>
+<ul id='done'> </ul>
+
+<h2>Add A Task</h2>
+<input type='text' id='task'>
+<input type='Submit' id='submit' onclick='addTask()' value='submit'>
+
+<script type="text/javascript">
+
+function removeTask() {
+document.getElementById('done').removeChild(this);
+}
+
+function completeTask() {
+document.getElementById('todo').removeChild(this);
+this.removeEventListener('click', completeTask);
+this.addEventListener('click', removeTask);
+document.getElementById('done').appendChild(this);
+}
+
+function addTask(){
+var task = document.getElementById('task').value;
+if (task.length &gt 0) {
+var newLi = document.createElement("li");
+newLi.appendChild(document.createTextNode(task);
+newLi.addEventListener('click', completeTask);
+var list = document.getElementById('todo');
+list.appendChild(newListItem);    
+document.getElementById('task').value = "";
+}
+else
+    return;
+}
+    
+</script>
+<style>
+.purple {font color: "#660099"}
+</style>
+</body>
+</html>
