@@ -21,6 +21,6 @@ var main = function(){
 	txtbx.value = "";
     }
 
-    var submitbtn = document.getElementById("submit");
-    submitbtn.addEventListener("click",movetodo);
+    var sub = document.getElementById("submit");
+    sub.addEventListener("click",movetodo);
 }();
