@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Javascript Assignment</title>
+	<style>
+	* {
+		margin: 0;
+	}
+	body {
+		font-family: sans-serif;
+	}
+	input {
+		border: 2px solid #4D90FE;
+		border-right: none;
+		outline: none;
+	}
+	input:focus {
+	}
+	ul {
+		padding-left: 26px;
+	}
+	li {
+		cursor: pointer;
+	}
+	.container {
+		margin: 40px auto;
+		box-shadow: 0px 0px 2px 1px #888;
+		width: 300px;
+	}
+	.list-container {
+		padding: 20px;
+	}
+	.title {
+		text-align: center;
+		border-bottom: 1px solid gray;
+		padding-bottom: 6px;
+		margin-bottom: 13px;
+	}
+	#todo {
+		margin-bottom: 10px;
+	}
+	.add-container {
+		overflow: hidden;
+		width: 100%;
+	}
+	.add {
+		display: block;
+		float: right;
+		width: 50px;
+		color: white;
+		line-height: 38px;
+		text-align: center;
+		cursor: pointer;
+		background-color: #4D90FE;
+	}
+	.input-wrapper {
+		overflow: hidden;
+	}
+	#text {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0.5em;
+		font-size: 16px;
+	}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="list-container">
+			<h1 class="title">Fake TODO</h1>
+			<h2>TODO</h2>
+			<ul id="todo"></ul>
+			<h2>DONE</h2>
+			<ul id="done"></ul>
+		</div>
+		<form class="add-container" onsubmit="add(); return false">
+			<a class="add" onclick="add()">Add</a>
+			<div class="input-wrapper">
+				<input id="text" type="text" placeholder="Add a new entry">
+			</div>
+		</form>
+	</div>
+
+	<script>
+		function $(q) {
+			return document.querySelectorAll(q);
+		};
+
+		var $text = $('#text')[0],
+			$todo = $('#todo')[0],
+			$done = $('#done')[0];
+
+		function add() {
+			var item = document.createElement('li'),
+				text = document.createTextNode($text.value);
+			if (text.length > 0) {
+				item.appendChild(text);
+				item.addEventListener('click', done);
+				$todo.appendChild(item);
+				$text.value = "";
+			}
+		}
+
+		function done() {
+			var el = this;
+			el.removeEventListener('click', done);
+			el.addEventListener('click', remove);
+			$todo.removeChild(el);
+			$done.appendChild(el);
+		}
+
+		function remove() {
+			$done.removeChild(this);
+		}
+	</script>
+</body>
+
+</html>
