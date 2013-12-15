@@ -1,0 +1,29 @@
+
+<h1>To Do List</h1>
+<ul id="a"></ul>
+
+<h1>Done List</h1>
+<ul id="b"></ul>
+
+<br /><br /><input id="todo" >
+<input onclick="add()" id="button" type="button" value="Add" style="width:100px;" />
+
+<script>
+
+        function add() {
+                var todo = document.getElementById("todo").value;
+                if (!todo.length) return;
+                var li = document.createElement("li");
+                li.innerHTML = todo;
+                li.addEventListener("click", done);
+                document.getElementById("a").appendChild(li);
+        }
+        function done() {
+                var li = document.getElementById("a").removeChild(this);
+                document.getElementById("b").appendChild(this);
+                this.removeEventListener("click", done);
+                this.addEventListener("click", function() {
+                        document.getElementById("b").removeChild(this);
+                });
+        }
+</script>
