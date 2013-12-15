@@ -1,0 +1,42 @@
+<html>
+  
+  <h1> To Do </h1>
+  <ul id='todo'> 
+    
+  </ul>
+  
+  <h1> Done </h1>
+  <ul id='done'>
+    
+  </ul>
+  
+  <input type='text' id='task'>
+  <input type='Submit' id='submit' value='Add' onclick="add()"></input>
+  
+  
+
+  <script>
+    
+    function done(){
+    var a = document.getElementById('todo').removeChild(this);
+    document.getElementById('done').appendChild(this);
+    this.removeEventListener('click', done)
+    this.addEventListener('click', remove)
+    document.getElementById('done').appendChild(this);
+    }
+    
+    function add(){
+    var task = document.getElementById('task').value;
+    if(!task.length)
+    return;
+    var item = document.createElement('li');
+    item.appendChild(task);
+    item.addEventListener('click', done);
+    document.getElementById('todo').appendChild(item);
+    }
+    
+    function remove(){
+    document.getElementById('done').removeChild(this);
+    }
+  </script>
+</html>

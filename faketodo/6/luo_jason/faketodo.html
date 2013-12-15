@@ -1,0 +1,43 @@
+<html>
+  
+  <h1> Who to kill </h1>
+  <ul id='todo'> 
+    
+  </ul>
+  
+  <h1> Killed </h1>
+  <ul id='done'>
+    
+  </ul>
+  
+  <input type='text' id='task'>
+  <input type='Submit' id='submit' value='Add' onclick="add()"></input>
+  
+  
+
+  <script>
+    
+    function done(){
+    var a = document.getElementById('todo').removeChild(this);
+    document.getElementById('done').appendChild(this);
+    this.removeEventListener('click', done)
+    this.addEventListener('click', remove)
+    document.getElementById('done').appendChild(this);
+    }
+    
+    function add(){
+    var task = document.getElementById('task').value;
+    if(!task.length) return;
+    var item = document.createElement('li');
+    var value = document.createTextNode(task);
+    item.appendChild(value);
+    item.addEventListener('click', done);
+    document.getElementById('todo').appendChild(item);
+    document.getElementById('task').value="";
+    }
+    
+    function remove(){
+    document.getElementById('done').removeChild(this);
+    }
+  </script>
+</html>
