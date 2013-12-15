@@ -1,0 +1,22 @@
+<style>
+.blue{background-color:#0000ff;}
+</style>
+
+<h1>FakeToDo App!</h1>
+<strong>Jeremy Karson</strong><br>
+Mr. Zamansky's Software Development Class<br>
+Period 7<br>
+<h2>TODO:</h2>
+<ul id="todolist"></ul>
+
+
+<h2>DONE:</h2>
+<ul id="donelist"></ul>
+
+
+<h2>INPUT:</h2>
+<input type="text" value="" id="thingtodo">
+<input type="submit" value="submit" id="submit">
+</form>
+
+<script src="JKfaketodo.js"></script>
