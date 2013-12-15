@@ -1,26 +1,34 @@
+<style>
+.red {color:#ff0000;}
+.blue {color:#0000ff;}
+</style>
+
+
 <h1>TODO LIST</h1>
 
 <h2>Things To-Do</h2>
 
-<ul>
+<ul id="todo">
 </ul>
 
 <br>
 
 <h2>Things Done</h2>
 
-<ul>
+<ul id="done">
 </ul>
 
 <br>
 
 <h2>Add Thing To Do</h2>
-<form>
-  <input type="text" id="new">
-</form>
+
+<input type="text" id="new">
 
 
-<input type="button" value="Submit" id="submit">
+<input type="button" value="Add Thing" id="add">
+<br>
+<br>
+<input type="button" value="Undo Things" id="undo">
 
 
 <script src="todo.js"></script>
