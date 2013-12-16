@@ -1,0 +1,29 @@
+* {
+    font-family:Helvetica;
+}
+
+#ToDoBox {
+    border:1px solid black;
+    height:200px;
+    width:300px;
+    display:inline-block;
+    position:relative;
+    left:40%;
+    top:20%;
+    overflow:scroll;    
+}
+
+#Button {
+    color:white;
+    background-color:#00CCFF;
+    border:none;
+    border-radius:3px;
+}
+
+#done {
+    color:#00FF99;
+}
+
+#todo {
+    color:#FF1919;
+}
