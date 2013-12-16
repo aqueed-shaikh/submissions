@@ -1,0 +1,57 @@
+
+<html>
+  <head>
+    <title>Andrew Zarenberg - Period 6</title>
+
+    <style type="text/css">
+      body {
+         padding:10px;
+         font-family:Arial,Verdana;
+         background:#dddddd;
+      }
+
+      li.li_default {
+         font-style:italic;
+         font-weight:bold;
+      }
+
+      div.todo_body {
+         font-size:25px;
+         font-weight:bold;
+      }
+      div.todo_body:hover { text-decoration:underline; cursor:pointer; }
+
+      div.todo_time {
+         font-style:italic;
+         font-size:15px;
+      }
+
+      div.done_time {
+         font-weight:bold;
+         font-size:15px;
+      }
+
+      #todo li:not(#todo_default) { color:#5E610B; }
+      #done li:not(#done_default) { color:#00aa00; }
+    </style>
+  </head>
+  <body>
+
+    <h1>To-do</h1>
+    <h4>Click an item to move it to the <u>Done</u> list</h4>
+    <ul id="todo"><li id="todo_default" class="li_default">Empty</li></ul>
+
+    <h1>Done</h1>
+    <h4>Click an item to remove it</h4>
+    <ul id="done"><li id="done_default" class="li_default">Empty</li></ul>
+
+
+    <form id="fm">
+      Add a to-do item: <input id="inp" size="30" type="text" />
+      <input type="submit" value="Add" />
+    </form>
+
+    <script type="text/javascript" src="todo.js"></script>
+
+  </body>
+</html>
