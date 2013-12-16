@@ -1,0 +1,44 @@
+
+<style>
+* {
+    font-family:"Trebuchet MS";
+	color:#FFCC99;
+}
+body { 
+        background-image:url('bg.jpg');
+        background-repeat:repeat;
+        background-attachment:fixed;
+        text-align:center;  
+}
+li {
+	color: white;
+}
+#button {
+        width:95px;
+        height:30px;
+        line-height:30px;
+        color:white;
+        text-align:center;
+        background-color:#663300;
+        border-style:solid;
+        border-color:white;
+}
+#text {
+	color:#313131;
+}
+</style>
+
+<title>Hit List</title>
+<h1>Hit List</h1>
+<h2>Alive</h2>
+<ol id="alive">
+</ol>
+
+<h2>Dead</h2>
+<ul id="dead">
+</ul>
+
+<input type="text" id="text">
+<input id="button" type="submit" name="b" onclick="add();"></input>
+
+<script src="script.js"></script>
