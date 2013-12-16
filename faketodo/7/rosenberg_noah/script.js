@@ -2,16 +2,21 @@ var moveToDone = function(){
     var done = document.getElementById("done");
     var todo = document.getElementById("todo");
     done.appendChild(this);
-    todo.removeChild(this);
 }
 
-var red = function(){
-    this.classList.toggle('red');
+var newTodoItem = function(){
+    console.log()
+    var todo = document.getElementById('todo');
+    var newItem = document.getElementById('newItem').value;
+    if (newItem == "")
+	return;
+    var node = document.createTextNode(newItem);
+    var li = document.createElement('li');
+    li.appendChild(node);
+    todo.appendChild(li);
+    li.addEventListener('click',moveToDone);
+    document.getElementById('newItem').value = "";    
 }
 
-var elts = document.querySelectorAll('li');
-for(var i = 0; i < elts.length; i++){
-    if elts[i].parentElement.id == "todo"{
-	elts[i].addEventListener("click",red);
-    }
-}
+var button = document.getElementById('b1');
+button.addEventListener('click', newTodoItem);
