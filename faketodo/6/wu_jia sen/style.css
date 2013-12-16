@@ -1,0 +1,27 @@
+body { 
+	background-image:url('Bucket.png');
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:right bottom; 
+	text-align:center;  
+}
+h2 {
+	width:300px;
+	height:27px;
+	background-color:#300000;
+	color:white;
+	margin:auto;
+}	
+ul {
+	padding:0px;
+	height:180px;
+	overflow: auto
+}
+#button {
+	width:150px;
+	height:30px;
+	line-height:30px;
+	color:white;
+	background-color:#313131;
+	cursor:default;
+}
