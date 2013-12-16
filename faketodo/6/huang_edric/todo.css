@@ -8,9 +8,7 @@ html {
 body {
     background: #fff;
     border-radius: 20px;
-    -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
-    -moz-box-shadow: 0 0 10px #ddd;
     -webkit-box-shadow: 0 0 10px #ddd;
     box-shadow: 0 0 30px #ddd;
     color: #222;
