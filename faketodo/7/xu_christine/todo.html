@@ -1,0 +1,60 @@
+<h1><u> The No Procrastination List </u></h1>
+
+<body>
+	<br/>
+
+	<h2> DO IT NOW! </h2>
+	<ol id="todo">
+	</ol>
+	
+	<br/>
+	<br/>
+
+	<h2> Already Done! </h2>
+	
+	<ol id= "done">
+	</ol>
+	
+	<br/>
+	<br/>
+	
+	<input type="text" id="add" value="">
+	<button type="submit" id="submit">ADD ME</button>
+<script>
+
+
+var main = function() { 
+
+	var list1 = document.getElementById("todo");
+	var list2 = document.getElementById("done");
+   
+	var removestuff = function(){
+		list2.removeChild(this);
+    }
+	
+	var move = function(){
+		list2.appendChild(this);
+		this.addEventListener("click",removestuff);
+	}
+
+	var moveback = function(){
+		var boxybox = document.getElementById("add");
+        var input = boxybox.value;
+        var index = document.createElement("li");
+        index.appendChild(document.createTextNode(input));
+     
+		index.addEventListener("click",move);
+        list1.appendChild(index);
+        boxybox.value = "";
+	}
+	//I recieved help from Alvin Leung (Period 6)
+	
+	var submitt= document.getElementById("submit"); 
+    submitt.addEventListener("click",moveback);
+}();
+
+</script>
+</body>
+
+
+
