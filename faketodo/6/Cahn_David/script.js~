@@ -1,0 +1,25 @@
+function addNewTask () {
+    var taskVal = document.getElementById ("newTask").value;
+    var newTask = document.createElement ("li");
+    var newTaskName = document.createTextNode (taskVal);
+    newTask.appendChild (newTaskName);
+    newTask.addEventListener ('click','done');
+    
+    var allTasks = document.getElementById ('toDo');
+    allTasks.appendChild (newTask);
+
+    var taskVal = document.getElementById ("newTask").value = "";
+}
+
+function Done () {
+    var allTasks = document.getElementById ('toDo');
+    allTasks.removeChild (this); 
+    var completedTasks = document.getElementById ("Done");
+    completedTasks.appendChild (this);
+    this.addEventListener ('click', deleteTask);
+}
+
+function deleteTask () {
+    var completedTasks = document.getElementById ("Done");
+    completedTasks.removeChild (this);
+}
