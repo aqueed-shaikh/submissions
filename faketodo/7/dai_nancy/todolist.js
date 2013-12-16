@@ -7,8 +7,8 @@ var main = function(){
     }
     
     var complete = function(){
-	done.addChild(this);
 	this.addEventListener("click", remove);
+	done.appendChild(this);
     }
 
     var add = function(){
