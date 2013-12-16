@@ -8,11 +8,12 @@ function addItem()
 }
 
 function PopToDone() 
-{
-    var Item = document.getElementById("todo");
-    document.getElementById("done").appendChild(Item);
+{ 
+    
     this.removeEventListener("click", PopToDone);
     this.addEventListener("click", Delete);
+    document.getElementById("done").appendChild(this);
+
 }
 
 function Delete() 
