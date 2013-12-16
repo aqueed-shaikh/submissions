@@ -1,0 +1,80 @@
+html {
+    background: #e8e8e8;
+    font: normal 1em/1.5 Sans, arial, sans-serif;
+    min-height: 100%;
+    text-align: center;
+}
+
+body {
+    background: #fff;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-box-shadow: 0 0 10px #ddd;
+    -webkit-box-shadow: 0 0 10px #ddd;
+    box-shadow: 0 0 30px #ddd;
+    color: #222;
+    font-size: 86%;
+    margin: 5em auto;
+    max-width: 600px;
+    padding: 2em 5em 3em;
+    text-align: left;
+}
+
+h1 {
+    font: normal 2.5em georgia,"lucida bright","times new roman",serif;
+    line-height: 1.1;
+    margin: 0;
+    margin-bottom: 1em; 
+    padding: 0;
+}
+
+h2 {
+    font: normal 2em/1.8 georgia,"lucida bright","times new roman",serif;
+    margin: 0;
+    margin-top: 1em; 
+}
+
+field {
+    border: none;
+    margin: 0;
+    margin-bottom: 1em; 
+    outline: none;
+}
+
+input {
+    font-size: 2em;
+}
+
+input[type=text] {
+    width: 500px;
+}
+
+.todo-items {
+    margin: 0 0 1em;
+    padding: 0;
+}
+
+.todo-items li {
+    background: url(check.png) 0 -278px no-repeat;
+    list-style: none;
+    padding: 4px 0 0 28px;
+}
+
+.todo-items li:hover {
+    color: #f96;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.todo-items li.done {
+    background-position: 0 2px;
+    color: #666;
+}
+
+.todo-items li.todo + li.done {
+    background-position: 0 1.3em;
+    border-top: 2px solid #ccc;
+    margin-top: 1.5em;
+    padding-top: 1.5em;
+}

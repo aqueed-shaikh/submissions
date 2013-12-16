@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title> Fake ToDo List </title>
+    <link href="todo.css" type="text/css" rel="stylesheet">
+  </head>
+  
+  <body>
+    <h1> Fake To-Do List Using JavaScript </h1>
+
+    <field>
+      <input type="text" id="item"  placeholder="Add new item.">
+      <input type="submit" id="submit" onclick="addItem()" value="GO!">
+    </field>
+
+    <h2>To-Do</h2>
+    <ol id="todo" class="todo-items">
+    </ol>
+    <h2>Done</h2>
+    <ol id="done" class="todo-items">
+    </ol>
+
+    <script type="text/javascript">
+      function completeItem(){
+      var list = document.getElementById('todo');
+      list.removeChild(this);
+      this.className = "done"; 
+      this.removeEventListener('click', completeItem);
+      this.addEventListener('click', removeItem);
+      document.getElementById('done').appendChild(this);
+      }
+      
+      function removeItem(){
+      document.getElementById('done').removeChild(this);
+      }
+      
+      function addItem(){
+      var item = document.getElementById('item').value;
+      if (!item.length) 
+         return;
+      var newItem = document.createElement("li");
+      var newValue = document.createTextNode(item);
+      newItem.appendChild(newValue);
+      console.log(newItem); 
+      newItem.addEventListener('click', completeItem);
+      var list = document.getElementById('todo');
+      console.log(list); 
+      list.appendChild(newItem);    
+      document.getElementById('item').value = "";
+      }    
+      
+    </script>
+    
+  </body>
+</html>
