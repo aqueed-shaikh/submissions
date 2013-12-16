@@ -2,6 +2,8 @@ var moveToDone = function(){
     var done = document.getElementById("done");
     var todo = document.getElementById("todo");
     done.appendChild(this);
+    this.removeEventListener("click",moveToDone);
+    this.addEventListener("click",removeFromDone);
 }
 
 var newTodoItem = function(){
@@ -18,5 +20,11 @@ var newTodoItem = function(){
     document.getElementById('newItem').value = "";    
 }
 
-var button = document.getElementById('b1');
+var removeFromDone = function(){
+    var done = document.getElementById("done");
+    done.removeChild(this);
+}
+
+
+button = document.getElementById('b1');
 button.addEventListener('click', newTodoItem);
