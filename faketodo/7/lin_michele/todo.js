@@ -1,7 +1,7 @@
 var main = function(){
 
     var todo = document.getElementById("todo");
-    var todone = documentgetElementById("todone");
+    var todone = document.getElementById("todone");
 
     var remove = function(){
 	todone.removeChild(this);
