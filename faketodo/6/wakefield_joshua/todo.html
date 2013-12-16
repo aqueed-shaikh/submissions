@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<h1> To Do List </h1>
+</head>
+
+<body>
+<h3> Staufe Tao Dio </h3>
+<ul id='stahrt'></ul>
+
+<h3> Eye Guive Uupe </h3>
+<ul id='stahp'></ul>
+
+<input type='text' id='thing'>
+<input type='Submit' id='newTask' onclick='addItem()' value='Ahde Niu Soemthyhng Tyu Du'>
+
+<script type="text/javascript">
+var listless = document.getElementById('stahp');
+
+function done(){
+    var liist = document.getElementById('stahrt');
+    liist.removeChild(this);
+    this.removeEventListener('click',done);
+    listless.appendChild(this);
+    this.addEventListener('click',kill);
+}
+
+function kill(){
+    listless.removeChild(this);
+    this.removeEventListener('click',kill);
+}
+
+function addItem(){
+    var list = document.getElementById('stahrt');
+    var ne = document.createElement("li");
+    var val = document.getElementById('thing').value
+    if (!val.length) 
+        return;
+    var y = document.createTextNode(val);
+    ne.appendChild(y);
+    list.appendChild(ne);
+    ne.addEventListener('click',done);
+    document.getElementById('thing').value = "";
+}
+
+
+</script>
+
+
+</body>
+</html>
