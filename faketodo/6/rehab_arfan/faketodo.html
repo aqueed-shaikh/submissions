@@ -1,0 +1,51 @@
+<html>
+
+<style>
+        *{
+                font-family:Helvetica;
+        }
+        li {
+                cursor:pointer;
+        }
+        li:hover {
+                text-decoration:underline;
+        }
+</style>
+
+<h2>To Do List</h2>
+<ul id="todo"></ul>
+
+<h2>Done List</h2>
+<ul id="done"></ul>
+
+<h2>Add Task</h2><input type="text" id="task">
+<input type="Submit" id="submit" onclick="addTask()" value="Add">
+
+<script>
+
+function completeTask(){
+    document.getElementById('todo').removeChild(this);
+    this.removeEventListener('click', completeTask);
+    this.addEventListener('click', removeTask);
+    document.getElementById('done').appendChild(this);
+}
+
+function removeTask(){
+    document.getElementById('done').removeChild(this);
+}
+
+function addTask(){
+    var task = document.getElementById('task').value;
+    if (!task.length) return;
+    var newListItem = document.createElement("li");
+    var newListValue = document.createTextNode(task);
+    newListItem.appendChild(newListValue);
+    newListItem.addEventListener('click', completeTask)
+    var list = document.getElementById('todo');
+    list.appendChild(newListItem);    
+    document.getElementById('task').value = "";
+}    
+
+</script>
+
+</html>
