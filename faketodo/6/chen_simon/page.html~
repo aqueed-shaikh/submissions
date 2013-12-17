@@ -1,0 +1,15 @@
+<script src="todo.js"></script>
+
+<center>
+<h3>To Do</h3>
+<ul id="todo">
+</ul>
+<h3>Done</h3>
+<ul id="done">
+</ul>
+
+<input id="input" type="text" placeholder="Add Things"></input>
+<input id="submit" type="submit"></input>
+</center>
+
+
